@@ -17,6 +17,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.springframework.retry.RetryCallback;
+import org.springframework.retry.RetryContext;
+import org.springframework.retry.RetryListener;
+import org.springframework.retry.listener.RetryListenerSupport;
 import org.springframework.retry.support.RetryTemplate;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -533,8 +538,8 @@ public class Work extends WorkDeployVarFile {
 			@Override
 			public <T extends Object, E extends Throwable> void onError(RetryContext context,
 					RetryCallback<T, E> callback, Throwable throwable) {
-				boolean canRetry = endpoint.retryPolicy().canRetry(context);
-				log.warn("Request failed, canRetry={}, retryContext={}", canRetry, context);
+//				boolean canRetry = endpoint.retryPolicy().canRetry(context);
+//				log.warn("Request failed, canRetry={}, retryContext={}", canRetry, context);
 			}
 		} };
 		retryTemplate.setListeners(listenter);
@@ -551,7 +556,7 @@ public class Work extends WorkDeployVarFile {
 			final HttpEntity<String> request = new HttpEntity<>(requestJSON, headers);
 
 			final RestTemplate template = new RestTemplate();
-			final RetryTemplate retryTemplate = retryTemplate(restClientEndPoint);
+			final RetryTemplate retryTemplate = retryTemplate(strUrl);
 			final ResponseEntity<String> response = retryTemplate
 					.execute(retryContetx -> template.exchange(uri, method, request, String.class));
 
@@ -559,8 +564,8 @@ public class Work extends WorkDeployVarFile {
 				log.info("[Responded] Rest API: {}, time: {}", uri, sw.stop());
 			} else {
 				log.warn("[Request Error] Rest API {} responded with error: {}", uri, response.getBody());
-				throw new ServiceErrorException(response.getStatusCode().value(),
-						"[Request Error] Rest API responded with error", response.getBody());
+//				throw new ServiceErrorException(response.getStatusCode().value(),
+//						"[Request Error] Rest API responded with error", response.getBody());
 			}
 
 			return response;
@@ -570,24 +575,22 @@ public class Work extends WorkDeployVarFile {
 			final String errMsg = clientError.getMessage();
 			if (clientError.getStatusCode() == HttpStatus.NOT_FOUND) {
 				log.warn("[Resource Not Found] Rest API: {}, asset: {}", uri, errMsg);
-				throw new ServiceErrorException(clientError.getStatusCode().value(),
-						String.format("Resource Not Found: %s", errMsg), responseBody);
+//				throw new ServiceErrorException(clientError.getStatusCode().value(),
+//						String.format("Resource Not Found: %s", errMsg), responseBody);
 			} else {
 				log.warn("Connect to Rest API failed: {}, errorMsg: {}", uri, errMsg);
-				throw new ServiceErrorException(clientError.getStatusCode().value(),
-						String.format("Connect to rest API failed, errorMsg: %s", errMsg), responseBody);
+//				throw new ServiceErrorException(clientError.getStatusCode().value(),
+//						String.format("Connect to rest API failed, errorMsg: %s", errMsg), responseBody);
 			}
 		} catch (HttpServerErrorException serverError) {
 			final String responseBody = serverError.getResponseBodyAsString();
 			final String errMsg = serverError.getMessage();
 			log.warn("Connect to Rest API failed: {}, errorMsg: {}", uri, errMsg);
-			throw new ServiceErrorException(serverError.getStatusCode().value(),
-					String.format("Connect to Rest API failed, errorMsg: %s", errMsg), responseBody);
-		} catch (ServiceErrorException e) {
-			throw e;
+//			throw new ServiceErrorException(serverError.getStatusCode().value(),
+//					String.format("Connect to Rest API failed, errorMsg: %s", errMsg), responseBody);
 		} catch (RuntimeException e) {
 			log.error("Connect to Rest API failed:{}, errorMsg: {}", uri, e.getMessage(), e);
-			return null;
 		}
+		return null;
 	}
 }
