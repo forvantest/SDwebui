@@ -18,11 +18,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.retry.RetryCallback;
-import org.springframework.retry.RetryContext;
-import org.springframework.retry.RetryListener;
-import org.springframework.retry.listener.RetryListenerSupport;
-import org.springframework.retry.support.RetryTemplate;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +25,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.retry.RetryCallback;
+import org.springframework.retry.RetryContext;
+import org.springframework.retry.RetryListener;
+import org.springframework.retry.listener.RetryListenerSupport;
+import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -38,18 +39,26 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.common.base.Stopwatch;
 
 import lombok.extern.slf4j.Slf4j;
 import vam.dto.MetaJson;
+import vam.dto.OperatorDTO;
+import vam.dto.PredictDTO;
+import vam.dto.Txt2ImgDTO;
 import vam.dto.VarFileDTO;
 import vam.dto.enumration.BestGirl;
 import vam.dto.enumration.BestScene;
 import vam.dto.meta.Dependence;
 import vam.util.FileUtil;
-import com.google.common.base.Stopwatch;
+import vam.util.SDUtils;
+
 @Slf4j
 @Service("work")
 public class Work extends WorkDeployVarFile {
+	String host = "127.0.0.1";
+	String endpoint1 = "/sdapi/v1/txt2img";
+	String endpoint2 = "/run/predict/";
 
 	@Autowired
 	public WorkUnDeployVarFile workUnDeployVarFile;
@@ -398,11 +407,12 @@ public class Work extends WorkDeployVarFile {
 
 		Map<String, Integer> sumMap = new HashMap<>();
 		for (VarFileDTO varFileDTO : varFileService.findAll()) {
-			if(StringUtils.contains(varFileDTO.getFullPath(), "\\base") || StringUtils.contains(varFileDTO.getFullPath(), "\\best_"))
+			if (StringUtils.contains(varFileDTO.getFullPath(), "\\base")
+					|| StringUtils.contains(varFileDTO.getFullPath(), "\\best_"))
 				log.debug("target:" + varFileDTO.getFullPath());
 			else
 				continue;
-			
+
 			allVarSet.add(varFileDTO.makeKey());
 			Set<String> dependSet = varFileDTO.getDependencies();
 			for (String key : dependSet) {
@@ -418,7 +428,8 @@ public class Work extends WorkDeployVarFile {
 				.sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, LinkedHashMap::new));
 
-		Map<String, Integer> lackMap = sortedSumMap.entrySet().stream().filter(x -> !validateVarExist(x.getKey(),allVarSet))
+		Map<String, Integer> lackMap = sortedSumMap.entrySet().stream()
+				.filter(x -> !validateVarExist(x.getKey(), allVarSet))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, LinkedHashMap::new));
 
 		Map<String, Map<String, Integer>> creatorMap = new HashMap<>();
@@ -445,60 +456,60 @@ public class Work extends WorkDeployVarFile {
 		}
 	}
 
-	private boolean validateVarExist(String varName,Set<String> allVarSet ) {
-		if(StringUtils.endsWith(varName, "latest"))
-			varName=StringUtils.replace(varName, "latest", "1");
+	private boolean validateVarExist(String varName, Set<String> allVarSet) {
+		if (StringUtils.endsWith(varName, "latest"))
+			varName = StringUtils.replace(varName, "latest", "1");
 		return allVarSet.contains(varName);
 	}
-	
+
 	public void girlAnalysis() {
 //		Set<String> allVarSet = new HashSet<>();
 		Map<String, Set<String>> authorMap = new HashMap<>();
 		for (VarFileDTO varFileDTO : varFileService.findAll()) {
-			if(StringUtils.contains(varFileDTO.getFullPath(), "\\best_girl"))
-				log.debug("+++target:" , varFileDTO.getFullPath());
+			if (StringUtils.contains(varFileDTO.getFullPath(), "\\best_girl"))
+				log.debug("+++target:", varFileDTO.getFullPath());
 //			else
 //				continue;
-			
-			if(Objects.isNull(varFileDTO.getFemaleCount()) || varFileDTO.getFemaleCount()==0) {
-				log.info("---no girl:" , varFileDTO.getVarFileName());
+
+			if (Objects.isNull(varFileDTO.getFemaleCount()) || varFileDTO.getFemaleCount() == 0) {
+				log.info("---no girl:", varFileDTO.getVarFileName());
 				continue;
 			}
-			
+
 //			if(varFileDTO.getFemaleCount()>1) {
 //				log.info("---many girl:{} {}",varFileDTO.getFemaleCount(), varFileDTO.getVarFileName());
 //				continue;
 //			}
 
-			if(Objects.isNull(varFileDTO.getSceneJsonList()) || varFileDTO.getSceneJsonList().size()==0) {
-				log.info("---no scene:" , varFileDTO.getVarFileName());
+			if (Objects.isNull(varFileDTO.getSceneJsonList()) || varFileDTO.getSceneJsonList().size() == 0) {
+				log.info("---no scene:", varFileDTO.getVarFileName());
 				continue;
 			}
 
-			if(varFileDTO.getSceneJsonList().size()>1) {
-				log.info("---many scene:{} {}",varFileDTO.getSceneJsonList().size(), varFileDTO.getVarFileName());
+			if (varFileDTO.getSceneJsonList().size() > 1) {
+				log.info("---many scene:{} {}", varFileDTO.getSceneJsonList().size(), varFileDTO.getVarFileName());
 				continue;
 			}
-			
-			String creatorName=varFileDTO.getCreatorName();
+
+			String creatorName = varFileDTO.getCreatorName();
 //			allVarSet.add(varFileDTO.makeKey());
 //			Set<String> dependSet = varFileDTO.getDependencies();
-			Set<String> authorSet=authorMap.get(creatorName);
-			if(authorSet==null) {
-				authorSet=new HashSet<>();
+			Set<String> authorSet = authorMap.get(creatorName);
+			if (authorSet == null) {
+				authorSet = new HashSet<>();
 				authorMap.put(creatorName, authorSet);
 			}
 			authorSet.add(varFileDTO.makeKey());
 		}
-		
+
 		Map<String, Set<String>> sortedSumMap = authorMap.entrySet().stream()
-				.sorted(Map.Entry.comparingByValue((o1, o2) -> Integer.compare(o1.size(), o2.size()) ))
-						.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+				.sorted(Map.Entry.comparingByValue((o1, o2) -> Integer.compare(o1.size(), o2.size())))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
 		for (String author : sortedSumMap.keySet()) {
-			System.out.println("creator:"+author+"  girlCount:"+sortedSumMap.get(author).size());	
+			System.out.println("creator:" + author + "  girlCount:" + sortedSumMap.get(author).size());
 		}
-		
+
 //		Map<String, Integer> lackMap = sortedSumMap.entrySet().stream().filter(x -> !validateVarExist(x.getKey(),allVarSet))
 //				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, LinkedHashMap::new));
 //
@@ -525,11 +536,11 @@ public class Work extends WorkDeployVarFile {
 //			}
 //		}
 	}
-	
+
 	public static URI buildUri(String host, String endpoint) {
-		return UriComponentsBuilder.newInstance().scheme("https").host(host).path(endpoint).build().toUri();
+		return UriComponentsBuilder.newInstance().scheme("http").host(host).port(7860).path(endpoint).build().toUri();
 	}
-	
+
 	private RetryTemplate retryTemplate(String strUrl) {
 		final RetryTemplate retryTemplate = new RetryTemplate();
 //		retryTemplate.setRetryPolicy(endpoint.retryPolicy());
@@ -545,18 +556,31 @@ public class Work extends WorkDeployVarFile {
 		retryTemplate.setListeners(listenter);
 		return retryTemplate;
 	}
-	
-	public ResponseEntity<String> callRestClientAPI(String strUrl, HttpHeaders headers,
-			String requestJSON, HttpMethod method, String host) {
 
-		final URI uri = buildUri(host, strUrl);
+	/**
+	 * @param accessToken
+	 * @return
+	 */
+	private HttpHeaders buildRequestHeader(final String accessToken) {
+		final HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		if (Objects.nonNull(accessToken)) {
+			// headers.set(HEADER_AUTHORIZATION, BEARER_TYPE + accessToken);
+		}
+		return headers;
+	}
+
+	public ResponseEntity<String> callRestClientAPI(String requestJSON, HttpMethod method) {
+		HttpHeaders headers = buildRequestHeader(null);
+		final URI uri = buildUri(host, endpoint2);
 		try {
 			final Stopwatch sw = Stopwatch.createStarted();
 
 			final HttpEntity<String> request = new HttpEntity<>(requestJSON, headers);
 
 			final RestTemplate template = new RestTemplate();
-			final RetryTemplate retryTemplate = retryTemplate(strUrl);
+			final RetryTemplate retryTemplate = retryTemplate(endpoint2);
 			final ResponseEntity<String> response = retryTemplate
 					.execute(retryContetx -> template.exchange(uri, method, request, String.class));
 
@@ -592,5 +616,22 @@ public class Work extends WorkDeployVarFile {
 			log.error("Connect to Rest API failed:{}, errorMsg: {}", uri, e.getMessage(), e);
 		}
 		return null;
+	}
+
+	public void txt2img() {
+
+		OperatorDTO operatorDTO = new OperatorDTO();
+		Txt2ImgDTO txt2ImgDTO = new Txt2ImgDTO();
+		PredictDTO predict = new PredictDTO();
+		predict.setData(SDUtils.toDataList(operatorDTO, txt2ImgDTO));
+
+		String requestJSON;
+		try {
+			requestJSON = objectMapper.writeValueAsString(predict);
+			callRestClientAPI(requestJSON, HttpMethod.POST);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

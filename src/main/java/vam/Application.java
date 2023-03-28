@@ -6,6 +6,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableAutoConfiguration
@@ -28,9 +30,9 @@ public class Application extends SpringBootServletInitializer {
 	}
 
 	private static void mession(Work work) {
-		work.clearUseLessDB();
-		work.loadVarFileIntoDB("AllPackages/");
-		work.moveReference(null);
+//		work.clearUseLessDB();
+//		work.loadVarFileIntoDB("AllPackages/");
+//		work.moveReference(null);
 //		work.moveReference(BestScene.Ispinox.getDescription());
 //		work.deploy("AA_ALL/");
 //		work.deployBestGirl(BestGirl.Archer);
@@ -108,7 +110,7 @@ public class Application extends SpringBootServletInitializer {
 //		work.switchAuthor("FRK");
 //		work.switchAuthor("Eros");
 
-		// work.createLinkFile();
+		work.txt2img();  
 //		work.unDeploy(BestGirl.Archer);
 //		work.unDeploy("Dnaddr");
 //		work.unDeploy("VAMDoll");
@@ -142,5 +144,10 @@ public class Application extends SpringBootServletInitializer {
 //		work.deploy("yesmola");
 
 //		work.allUnHide("girl/realclone-support");
+	}
+
+	private static void callRestClientAPI(String string, HttpMethod post) {
+		// TODO Auto-generated method stub
+		
 	}
 }
