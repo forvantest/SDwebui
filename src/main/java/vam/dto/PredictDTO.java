@@ -22,10 +22,17 @@ public class PredictDTO implements Comparable {
 	private List<Object> data = new ArrayList<>();
 	private String session_hash = "kw8l71zrw3d";
 
+	public PredictDTO(Integer fn_index, List<Object> data) {
+		super();
+		this.fn_index = fn_index;
+		this.data = data;
+	}
+	
 	@Override
 	public int compareTo(Object o) {
 		PredictDTO predictDTO = (PredictDTO) o;
 		return fn_index - predictDTO.getFn_index();
 	}
+
 
 }

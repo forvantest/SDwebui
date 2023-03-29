@@ -17,8 +17,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 import vam.dto.MetaJson;
+import vam.dto.OperatorDTO;
 import vam.dto.SceneJson;
 import vam.dto.VarFileDTO;
+import vam.entity.Operator;
 import vam.entity.VarFile;
 
 @Slf4j
@@ -128,4 +130,15 @@ public class MapperUtils {
 
 		return true;
 	}
+
+	public OperatorDTO convertOperatorDTO(Operator e) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Operator convertOperator(OperatorDTO e) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

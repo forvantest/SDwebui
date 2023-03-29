@@ -49,6 +49,7 @@ import vam.dto.Txt2ImgDTO;
 import vam.dto.VarFileDTO;
 import vam.dto.enumration.BestGirl;
 import vam.dto.enumration.BestScene;
+import vam.dto.enumration.CheckPoint;
 import vam.dto.meta.Dependence;
 import vam.util.FileUtil;
 import vam.util.SDUtils;
@@ -618,20 +619,31 @@ public class Work extends WorkDeployVarFile {
 		return null;
 	}
 
-	public void txt2img() {
-
+	public void txt2img(int batch_size) {
 		OperatorDTO operatorDTO = new OperatorDTO();
+		operatorDTO.setBatch_size(batch_size);
 		Txt2ImgDTO txt2ImgDTO = new Txt2ImgDTO();
 		PredictDTO predict = new PredictDTO();
 		predict.setData(SDUtils.toDataList(operatorDTO, txt2ImgDTO));
 
-		String requestJSON;
+		doPost(predict);
+	}
+
+	public void switchCheckPoint(CheckPoint checkPoint) {
+		List<Object> data = new ArrayList<>();
+		data.add(checkPoint.getFilename());
+		PredictDTO predict = new PredictDTO(591, data);
+
+		doPost(predict);
+	}
+
+	private void doPost(PredictDTO predict) {
 		try {
-			requestJSON = objectMapper.writeValueAsString(predict);
-			callRestClientAPI(requestJSON, HttpMethod.POST);
+			String requestJSON = objectMapper.writeValueAsString(predict);
+			//callRestClientAPI(requestJSON, HttpMethod.POST);
+			log.info("done");
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-
 	}
 }

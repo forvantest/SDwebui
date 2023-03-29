@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
+import vam.dto.LoraDTO;
 import vam.dto.OperatorDTO;
 import vam.dto.OutputFile;
 import vam.dto.Txt2ImgDTO;
@@ -45,26 +46,33 @@ public class SDUtils {
 		dataList.add("None");// 27
 		dataList.add(operatorDTO.getLoRA());// 28
 		dataList.add(operatorDTO.getSepeNet());// 29
-		dataList.add("LoRA");// 30
-		dataList.add("3loraGuofeng3Lora_v32LoraBigLight(cb303d82768c)");// 31
-		dataList.add(0);// 32
-		dataList.add(0);// 33
-		dataList.add("LoRA");// 34
-		dataList.add("3loraGuofeng3Lora_v32LoraBigLight(cb303d82768c)");// 35
-		dataList.add(0);// 36
-		dataList.add(0);// 37
-		dataList.add("LoRA");// 38
-		dataList.add("3loraGuofeng3Lora_v32LoraBigLight(cb303d82768c)");// 39
-		dataList.add(0);// 40
-		dataList.add(0);// 41
-		dataList.add("LoRA");// 42
-		dataList.add("3loraGuofeng3Lora_v32LoraBigLight(cb303d82768c)");// 43
-		dataList.add(0);// 44
-		dataList.add(0);// 45
-		dataList.add("LoRA");// 46
-		dataList.add("3loraGuofeng3Lora_v32LoraBigLight(cb303d82768c)");// 47
-		dataList.add(0);// 48
-		dataList.add(0);// 49
+
+		for (int i = 0; i < 5; i++) {
+			LoraDTO loraDTO = operatorDTO.getLoraDTOList().get(i);
+			dataList.addAll(loraDTO.pack());// 29
+		}
+
+//		dataList.add("LoRA");// 30
+//		dataList.add("3loraGuofeng3Lora_v32LoraBigLight(cb303d82768c)");// 31
+//		dataList.add(0);// 32
+//		dataList.add(0);// 33
+//		dataList.add("LoRA");// 34
+//		dataList.add("3loraGuofeng3Lora_v32LoraBigLight(cb303d82768c)");// 35
+//		dataList.add(0);// 36
+//		dataList.add(0);// 37
+//		dataList.add("LoRA");// 38
+//		dataList.add("3loraGuofeng3Lora_v32LoraBigLight(cb303d82768c)");// 39
+//		dataList.add(0);// 40
+//		dataList.add(0);// 41
+//		dataList.add("LoRA");// 42
+//		dataList.add("3loraGuofeng3Lora_v32LoraBigLight(cb303d82768c)");// 43
+//		dataList.add(0);// 44
+//		dataList.add(0);// 45
+//		dataList.add("LoRA");// 46
+//		dataList.add("3loraGuofeng3Lora_v32LoraBigLight(cb303d82768c)");// 47
+//		dataList.add(0);// 48
+//		dataList.add(0);// 49
+
 		dataList.add(null);// 50
 		dataList.add("Refresh models");// 51
 		dataList.add(null);// 52

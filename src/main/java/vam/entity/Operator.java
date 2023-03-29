@@ -1,36 +1,31 @@
-package vam.dto;
+package vam.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
-@Slf4j
-@JsonInclude(Include.NON_NULL)
 @Data
-public class OperatorDTO implements Comparable {
+@NoArgsConstructor
+@Accessors(chain = true)
+@JsonInclude(Include.NON_NULL)
+@Entity
+@Table(name = "operator")
+public class Operator implements Serializable, Comparable {
 
-	public OperatorDTO() {
-		super();
-		
-		//default lora
-		{
-			loRA=false;
-			loraDTOList.add(new LoraDTO("3loraGuofeng3Lora_v32LoraBigLight(cb303d82768c)"));
-			loraDTOList.add(new LoraDTO());
-			loraDTOList.add(new LoraDTO());
-			loraDTOList.add(new LoraDTO());
-			loraDTOList.add(new LoraDTO());
-		}
-		
-	}
 	private String key = "";
 	
-
+	private String checkPoint = null;
+	
 	private Integer batch = 1;
 	private Integer batch_amount = 1;
 
@@ -50,19 +45,12 @@ public class OperatorDTO implements Comparable {
 	public Boolean loRA = true;
 	public Boolean sepeNet = false;
 
-	private Double clipArt = 0.9;
-	private Integer clipStep = 5;
-	private String learnRatio = "0.0001";
-	public Boolean ballDiff = false;
-	private String embedding = "None";
-	private String embeddingDesc = "";
-	private Double ballAngle = 0.1;
+	private List<String> loraList = new ArrayList<>();
 
-	private List<LoraDTO> loraDTOList = new ArrayList<>();
-
+	private String filename = "";
 	@Override
 	public int compareTo(Object o) {
-		OperatorDTO operatorDTO = (OperatorDTO) o;
+		Operator operatorDTO = (Operator) o;
 		return batch - operatorDTO.getBatch();
 	}
 
