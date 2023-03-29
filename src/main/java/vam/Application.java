@@ -1,8 +1,5 @@
 package vam;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -10,8 +7,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-
-import vam.dto.enumration.CheckPoint;
 
 @Configuration
 @EnableAutoConfiguration
@@ -113,11 +108,10 @@ public class Application extends SpringBootServletInitializer {
 //		work.switchAuthor(BestScene.androinz);
 //		work.switchAuthor("FRK");
 //		work.switchAuthor("Eros");
-		List<CheckPoint> myChoose = Arrays.asList(CheckPoint._3GUOFENG3_V32LIGHT, CheckPoint.CHIKMIX_V2);
-		for (CheckPoint checkPoint : myChoose) {
-			work.switchCheckPoint(checkPoint);
-			work.txt2img(17);
-		}
+//		work.switchCheckPoint(CheckPoint.FANTASTICMIXREAL_V10);
+
+		work.txt2img();
+
 //		work.unDeploy(BestGirl.Archer);
 //		work.unDeploy("Dnaddr");
 //		work.unDeploy("VAMDoll");

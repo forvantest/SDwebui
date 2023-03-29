@@ -43,8 +43,9 @@ import com.google.common.base.Stopwatch;
 
 import lombok.extern.slf4j.Slf4j;
 import vam.dto.MetaJson;
-import vam.dto.OperatorDTO;
+import vam.dto.PlayRecordDTO;
 import vam.dto.PredictDTO;
+import vam.dto.ResultDTO;
 import vam.dto.Txt2ImgDTO;
 import vam.dto.VarFileDTO;
 import vam.dto.enumration.BestGirl;
@@ -572,7 +573,7 @@ public class Work extends WorkDeployVarFile {
 		return headers;
 	}
 
-	public ResponseEntity<String> callRestClientAPI(String requestJSON, HttpMethod method) {
+	private ResponseEntity<String> callRestClientAPI(String requestJSON, HttpMethod method) {
 		HttpHeaders headers = buildRequestHeader(null);
 		final URI uri = buildUri(host, endpoint2);
 		try {
@@ -619,31 +620,91 @@ public class Work extends WorkDeployVarFile {
 		return null;
 	}
 
-	public void txt2img(int batch_size) {
-		OperatorDTO operatorDTO = new OperatorDTO();
-		operatorDTO.setBatch_size(batch_size);
-		Txt2ImgDTO txt2ImgDTO = new Txt2ImgDTO();
-		PredictDTO predict = new PredictDTO();
-		predict.setData(SDUtils.toDataList(operatorDTO, txt2ImgDTO));
-
-		doPost(predict);
+	private boolean txt2img(CheckPoint checkPoint, int batch) {
+		PlayRecordDTO playRecordDTO = new PlayRecordDTO();
+		playRecordDTO.setCheckPoint(checkPoint);
+		for (int i = 0; i < batch; i++) {
+			log.info("txt2img {}:{}", checkPoint.name(), i);
+			boolean result1 = doPost2(playRecordDTO);
+			if (result1)
+				log.info("txt2img done {}:{}", checkPoint.name(), i);
+			else {
+				log.error("txt2img failed {}:{}", checkPoint.name(), i);
+				return false;
+			}
+		}
+		return true;
 	}
 
-	public void switchCheckPoint(CheckPoint checkPoint) {
+	private boolean doPost2(PlayRecordDTO playRecordDTO) {
+		try {
+			Txt2ImgDTO txt2ImgDTO = new Txt2ImgDTO();
+			PredictDTO predict = new PredictDTO();
+			predict.setData(SDUtils.toDataList(1, 1, playRecordDTO, txt2ImgDTO));
+			String requestJSON = objectMapper.writeValueAsString(predict);
+			ResponseEntity<String> rs = callRestClientAPI(requestJSON, HttpMethod.POST);
+			if (rs.getStatusCodeValue() == 200) {
+				ResultDTO resultDTO = objectMapper.readValue(rs.getBody(), ResultDTO.class);
+				List<Object> objectList = resultDTO.getData();
+				Object firstObject = objectList.get(0);
+				if (firstObject instanceof List) {
+					List list = (List) firstObject;
+					Map map = (Map) list.get(0);
+					log.info("return {}", map.get("name"));
+					playRecordDTO.setFilename((String) map.get("name"));
+					playRecordService.save(playRecordDTO);
+				}
+				return true;
+			}
+			log.info("post error: {}", rs.getStatusCodeValue());
+			return false;
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	private void switchCheckPoint(CheckPoint checkPoint) {
 		List<Object> data = new ArrayList<>();
 		data.add(checkPoint.getFilename());
 		PredictDTO predict = new PredictDTO(591, data);
+		boolean result1 = doPost1(predict);
 
-		doPost(predict);
+		if (result1) {
+			data = new ArrayList<>();
+			predict = new PredictDTO(592, data);
+			boolean result2 = doPost1(predict);
+		}
 	}
 
-	private void doPost(PredictDTO predict) {
+	private boolean doPost1(PredictDTO predict) {
 		try {
 			String requestJSON = objectMapper.writeValueAsString(predict);
-			//callRestClientAPI(requestJSON, HttpMethod.POST);
-			log.info("done");
+			ResponseEntity<String> rs = callRestClientAPI(requestJSON, HttpMethod.POST);
+			if (rs.getStatusCodeValue() == 200) {
+				log.info("post done");
+				return true;
+			}
+			log.info("post error: {}", rs.getStatusCodeValue());
+			return false;
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public void txt2img() {
+		// List<CheckPoint> myChoose = Arrays.asList(CheckPoint._3GUOFENG3_V32LIGHT,
+		// CheckPoint.CHIKMIX_V2);
+		for (int n = 0; n <= 12; n++) {
+			for (CheckPoint checkPoint : CheckPoint.values()) {
+//			work.switchCheckPoint(checkPoint);
+				boolean result1 = txt2img(checkPoint, 10);
+				if (!result1) {
+					System.out.println("\n\n work failed!");
+					break;
+				}
+			}
 		}
 	}
 }

@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +18,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 import vam.dto.MetaJson;
-import vam.dto.OperatorDTO;
+import vam.dto.PlayRecordDTO;
 import vam.dto.SceneJson;
 import vam.dto.VarFileDTO;
-import vam.entity.Operator;
+import vam.entity.PlayRecord;
 import vam.entity.VarFile;
 
 @Slf4j
@@ -131,14 +132,23 @@ public class MapperUtils {
 		return true;
 	}
 
-	public OperatorDTO convertOperatorDTO(Operator e) {
+	public PlayRecordDTO convertOperatorDTO(PlayRecord e) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Operator convertOperator(OperatorDTO e) {
-		// TODO Auto-generated method stub
-		return null;
+	public PlayRecord convertPlayRecord(PlayRecordDTO playRecordDTO) {
+		PlayRecord playRecord = new PlayRecord();
+		BeanUtils.copyProperties(playRecordDTO, playRecord);
+		playRecord.setTask(findTask(playRecordDTO.getFilename()));
+		playRecord.setCheckPoint(playRecordDTO.getCheckPoint().getFilename());
+		return playRecord;
+	}
+
+	private String findTask(String filename) {
+		int idx = StringUtils.indexOf(filename, "txt2img-images");
+		String task = StringUtils.substring(filename, idx + 15, idx + 31);
+		return task;
 	}
 
 }

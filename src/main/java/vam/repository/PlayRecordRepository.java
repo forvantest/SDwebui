@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import vam.entity.Operator;
+import vam.entity.PlayRecord;
 import vam.entity.VarFile;
 
 @Repository
-public interface OperatorRepository extends JpaRepository<Operator, Long> {
+public interface PlayRecordRepository extends JpaRepository<PlayRecord, Long> {
 
-	List<Operator> findByKey(String key);
+	List<PlayRecord> findByKey(String key);
 
 }

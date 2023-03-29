@@ -7,34 +7,35 @@ import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 import vam.dto.LoraDTO;
-import vam.dto.OperatorDTO;
-import vam.dto.OutputFile;
+import vam.dto.OutputFileDTO;
+import vam.dto.PlayRecordDTO;
 import vam.dto.Txt2ImgDTO;
 
 @Slf4j
 @Component
 public class SDUtils {
-	public static List<Object> toDataList(OperatorDTO operatorDTO, Txt2ImgDTO txt2ImgDTO) {
+	public static List<Object> toDataList(int batch, int batch_amount, PlayRecordDTO playRecordDTO,
+			Txt2ImgDTO txt2ImgDTO) {
 		List<Object> dataList = new ArrayList<>();
 		dataList.add("task(dob24x4iiky9vcv)");// 0
-		dataList.add(operatorDTO.getPrompt());// 1
-		dataList.add(operatorDTO.getNegative_prompt());// 2
+		dataList.add(playRecordDTO.getPrompt());// 1
+		dataList.add(playRecordDTO.getNegative_prompt());// 2
 		dataList.add(new ArrayList<>());// 3
-		dataList.add(operatorDTO.getSteps());// 4
-		dataList.add(operatorDTO.getSampler_name());// 5
+		dataList.add(playRecordDTO.getSteps());// 4
+		dataList.add(playRecordDTO.getSampler_name());// 5
 		dataList.add(txt2ImgDTO.getRestore_faces());// 6
 		dataList.add(txt2ImgDTO.getTiling());// 7
-		dataList.add(operatorDTO.getBatch());// 8
-		dataList.add(operatorDTO.getBatch_amount());// 9
-		dataList.add(operatorDTO.getCfg_scale());// 10
-		dataList.add(operatorDTO.getSeed());// 11
-		dataList.add(operatorDTO.getN_iter());// 12
+		dataList.add(batch);// 8
+		dataList.add(batch_amount);// 9
+		dataList.add(playRecordDTO.getCfg_scale());// 10
+		dataList.add(playRecordDTO.getSeed());// 11
+		dataList.add(playRecordDTO.getN_iter());// 12
 		dataList.add(0);// 13
 		dataList.add(0);// 14
 		dataList.add(0);// 15
 		dataList.add(true);// 16
-		dataList.add(operatorDTO.getHeight());// 17
-		dataList.add(operatorDTO.getWidth());// 18
+		dataList.add(playRecordDTO.getHeight());// 17
+		dataList.add(playRecordDTO.getWidth());// 18
 		dataList.add(false);// 19
 		dataList.add(0);// 20
 		dataList.add(2);// 21
@@ -44,11 +45,11 @@ public class SDUtils {
 		dataList.add(0);// 25
 		dataList.add(new ArrayList<>());// 26
 		dataList.add("None");// 27
-		dataList.add(operatorDTO.getLoRA());// 28
-		dataList.add(operatorDTO.getSepeNet());// 29
+		dataList.add(playRecordDTO.getLoRA());// 28
+		dataList.add(playRecordDTO.getSepeNet());// 29
 
 		for (int i = 0; i < 5; i++) {
-			LoraDTO loraDTO = operatorDTO.getLoraDTOList().get(i);
+			LoraDTO loraDTO = playRecordDTO.getLoraDTOList().get(i);
 			dataList.addAll(loraDTO.pack());// 29
 		}
 
@@ -76,13 +77,13 @@ public class SDUtils {
 		dataList.add(null);// 50
 		dataList.add("Refresh models");// 51
 		dataList.add(null);// 52
-		dataList.add(operatorDTO.getClipArt());// 53
-		dataList.add(operatorDTO.getClipStep());// 54
-		dataList.add(operatorDTO.getLearnRatio());// 55
-		dataList.add(operatorDTO.getBallDiff());// 56
-		dataList.add(operatorDTO.getEmbedding());// 57
-		dataList.add(operatorDTO.getEmbeddingDesc());// 58
-		dataList.add(operatorDTO.getBallAngle());// 59
+		dataList.add(playRecordDTO.getClipArt());// 53
+		dataList.add(playRecordDTO.getClipStep());// 54
+		dataList.add(playRecordDTO.getLearnRatio());// 55
+		dataList.add(playRecordDTO.getBallDiff());// 56
+		dataList.add(playRecordDTO.getEmbedding());// 57
+		dataList.add(playRecordDTO.getEmbeddingDesc());// 58
+		dataList.add(playRecordDTO.getBallAngle());// 59
 		dataList.add(false);// 60
 		dataList.add(false);// 61
 		dataList.add(false);// 62
@@ -106,7 +107,7 @@ public class SDUtils {
 		dataList.add(null);// 80
 		dataList.add(false);// 81
 		dataList.add(50);// 82
-		dataList.add(new OutputFile());// 83
+		dataList.add(new OutputFileDTO());// 83
 		dataList.add("");// 84
 		dataList.add("");// 85
 		dataList.add("");// 86

@@ -24,8 +24,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 import vam.dto.VarFileDTO;
+import vam.repository.PlayRecordService;
 import vam.repository.VarFileService;
 import vam.util.FileUtil;
+import vam.util.MapperUtils;
 import vam.util.OsUtils;
 import vam.util.TranslateUtils;
 import vam.util.ZipUtils;
@@ -62,7 +64,13 @@ public abstract class WorkVarFile {
 	public VarFileService varFileService;
 
 	@Autowired
+	PlayRecordService playRecordService;
+
+	@Autowired
 	public ObjectMapper objectMapper;
+
+	@Autowired
+	MapperUtils mapperUtils;
 
 	public WorkVarFile() {
 		super();
