@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import vam.dto.enumration.CheckPoint;
+import vam.dto.enumration.SampleName;
 
 @Slf4j
 @JsonInclude(Include.NON_NULL)
@@ -43,7 +44,7 @@ public class PlayRecordDTO implements Comparable {
 	private Integer width = 768;
 	private Integer height = 1024;
 
-	private String sampler_name = "Euler a";
+	private SampleName samplerName;
 	public Boolean loRA = false;
 	public Boolean sepeNet = false;
 

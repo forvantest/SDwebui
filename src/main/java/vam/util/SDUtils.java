@@ -22,7 +22,7 @@ public class SDUtils {
 		dataList.add(playRecordDTO.getNegative_prompt());// 2
 		dataList.add(new ArrayList<>());// 3
 		dataList.add(playRecordDTO.getSteps());// 4
-		dataList.add(playRecordDTO.getSampler_name());// 5
+		dataList.add(playRecordDTO.getSamplerName().getOpCode());// 5
 		dataList.add(txt2ImgDTO.getRestore_faces());// 6
 		dataList.add(txt2ImgDTO.getTiling());// 7
 		dataList.add(batch);// 8

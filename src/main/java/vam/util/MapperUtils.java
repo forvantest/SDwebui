@@ -142,6 +142,7 @@ public class MapperUtils {
 		BeanUtils.copyProperties(playRecordDTO, playRecord);
 		playRecord.setTask(findTask(playRecordDTO.getFilename()));
 		playRecord.setCheckPoint(playRecordDTO.getCheckPoint().getFilename());
+		playRecord.setSampler_name(playRecordDTO.getSamplerName().getOpCode());
 		return playRecord;
 	}
 

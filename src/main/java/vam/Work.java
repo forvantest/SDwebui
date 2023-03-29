@@ -51,6 +51,7 @@ import vam.dto.VarFileDTO;
 import vam.dto.enumration.BestGirl;
 import vam.dto.enumration.BestScene;
 import vam.dto.enumration.CheckPoint;
+import vam.dto.enumration.SampleName;
 import vam.dto.meta.Dependence;
 import vam.util.FileUtil;
 import vam.util.SDUtils;
@@ -620,9 +621,10 @@ public class Work extends WorkDeployVarFile {
 		return null;
 	}
 
-	private boolean txt2img(CheckPoint checkPoint, int batch) {
+	private boolean txt2img(CheckPoint checkPoint, SampleName sampleName, int batch) {
 		PlayRecordDTO playRecordDTO = new PlayRecordDTO();
 		playRecordDTO.setCheckPoint(checkPoint);
+		playRecordDTO.setSamplerName(sampleName);
 		for (int i = 0; i < batch; i++) {
 			log.info("txt2img {}:{}", checkPoint.name(), i);
 			boolean result1 = doPost2(playRecordDTO);
@@ -694,12 +696,16 @@ public class Work extends WorkDeployVarFile {
 	}
 
 	public void txt2img() {
+		List<SampleName> myChoose = Arrays.asList(SampleName.DPM_PLUS_SDE_KARRAS, SampleName.DPM_PLUS_2M_KARRAS,
+				SampleName.DPM_PLUS_2S_A_KARRAS, SampleName.DPM2_A_KARRAS, SampleName.DPM2_KARRAS,
+				SampleName.LMS_KARRAS, SampleName.EULER_A);
+
 		// List<CheckPoint> myChoose = Arrays.asList(CheckPoint._3GUOFENG3_V32LIGHT,
 		// CheckPoint.CHIKMIX_V2);
-		for (int n = 0; n <= 12; n++) {
+		for (SampleName sampleName : myChoose) {
 			for (CheckPoint checkPoint : CheckPoint.values()) {
 //			work.switchCheckPoint(checkPoint);
-				boolean result1 = txt2img(checkPoint, 10);
+				boolean result1 = txt2img(checkPoint, sampleName, 10);
 				if (!result1) {
 					System.out.println("\n\n work failed!");
 					break;
