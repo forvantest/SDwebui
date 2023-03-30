@@ -140,6 +140,8 @@ public class MapperUtils {
 	public PlayRecord convertPlayRecord(PlayRecordDTO playRecordDTO) {
 		PlayRecord playRecord = new PlayRecord();
 		BeanUtils.copyProperties(playRecordDTO, playRecord);
+		playRecord.setPrompt(playRecordDTO.getPrompt().getPositive());
+		playRecord.setNegative_prompt(playRecordDTO.getPrompt().getNegative());
 		playRecord.setTask(findTask(playRecordDTO.getFilename()));
 		playRecord.setCheckPoint(playRecordDTO.getCheckPoint().getFilename());
 		playRecord.setSampler_name(playRecordDTO.getSamplerName().getOpCode());
@@ -147,8 +149,9 @@ public class MapperUtils {
 	}
 
 	private String findTask(String filename) {
-		int idx = StringUtils.indexOf(filename, "txt2img-images");
-		String task = StringUtils.substring(filename, idx + 15, idx + 31);
+		int idx_start = StringUtils.indexOf(filename, "txt2img-images") + 15;
+		int idx_end = StringUtils.indexOf(filename, "-", idx_start);
+		String task = StringUtils.substring(filename, idx_start, idx_end + 1);
 		return task;
 	}
 

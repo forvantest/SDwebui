@@ -51,6 +51,7 @@ import vam.dto.VarFileDTO;
 import vam.dto.enumration.BestGirl;
 import vam.dto.enumration.BestScene;
 import vam.dto.enumration.CheckPoint;
+import vam.dto.enumration.Prompt;
 import vam.dto.enumration.SampleName;
 import vam.dto.meta.Dependence;
 import vam.util.FileUtil;
@@ -621,8 +622,9 @@ public class Work extends WorkDeployVarFile {
 		return null;
 	}
 
-	private boolean txt2img(CheckPoint checkPoint, SampleName sampleName, int batch) {
+	private boolean txt2img(Prompt prompt, CheckPoint checkPoint, SampleName sampleName, int batch) {
 		PlayRecordDTO playRecordDTO = new PlayRecordDTO();
+		playRecordDTO.setPrompt(prompt);
 		playRecordDTO.setCheckPoint(checkPoint);
 		playRecordDTO.setSamplerName(sampleName);
 		for (int i = 0; i < batch; i++) {
@@ -697,20 +699,19 @@ public class Work extends WorkDeployVarFile {
 
 	public void txt2img() {
 		List<SampleName> myChoose = Arrays.asList(SampleName.DPM_PLUS_SDE_KARRAS, SampleName.DPM_PLUS_2M_KARRAS,
-				SampleName.DPM_PLUS_2S_A_KARRAS, SampleName.DPM2_A_KARRAS, SampleName.DPM2_KARRAS,
-				SampleName.LMS_KARRAS, SampleName.EULER_A);
-
+				SampleName.DPM_PLUS_2S_A_KARRAS, SampleName.DPM2_A_KARRAS, SampleName.DPM2_KARRAS, SampleName.EULER_A);
 		// List<CheckPoint> myChoose = Arrays.asList(CheckPoint._3GUOFENG3_V32LIGHT,
 		// CheckPoint.CHIKMIX_V2);
-		for (SampleName sampleName : myChoose) {
-			for (CheckPoint checkPoint : CheckPoint.values()) {
-//			work.switchCheckPoint(checkPoint);
-				boolean result1 = txt2img(checkPoint, sampleName, 10);
+		for (CheckPoint checkPoint : CheckPoint.values()) {
+			switchCheckPoint(checkPoint);
+			for (SampleName sampleName : myChoose) {
+				boolean result1 = txt2img(Prompt.PORN_M_LEG, checkPoint, sampleName, 2);
 				if (!result1) {
 					System.out.println("\n\n work failed!");
 					break;
 				}
 			}
+			System.out.println("\n\n finish: " + checkPoint.name());
 		}
 	}
 }

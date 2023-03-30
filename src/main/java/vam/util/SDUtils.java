@@ -18,8 +18,8 @@ public class SDUtils {
 			Txt2ImgDTO txt2ImgDTO) {
 		List<Object> dataList = new ArrayList<>();
 		dataList.add("task(dob24x4iiky9vcv)");// 0
-		dataList.add(playRecordDTO.getPrompt());// 1
-		dataList.add(playRecordDTO.getNegative_prompt());// 2
+		dataList.add(playRecordDTO.getPrompt().getPositive());// 1
+		dataList.add(playRecordDTO.getPrompt().getNegative());// 2
 		dataList.add(new ArrayList<>());// 3
 		dataList.add(playRecordDTO.getSteps());// 4
 		dataList.add(playRecordDTO.getSamplerName().getOpCode());// 5
