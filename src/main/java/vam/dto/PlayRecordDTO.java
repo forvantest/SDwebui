@@ -69,12 +69,12 @@ public class PlayRecordDTO implements Comparable {
 	public Object getHeight() {
 		if (Objects.nonNull(prompt))
 			return prompt.getHeight();
-		return 1024;
+		return 1920;
 	}
 
 	public Object getWidth() {
 		if (Objects.nonNull(prompt))
 			return prompt.getWidth();
-		return 1024;
+		return 1280;
 	}
 }

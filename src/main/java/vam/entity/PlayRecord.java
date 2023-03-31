@@ -35,8 +35,8 @@ public class PlayRecord implements Serializable, Comparable {
 
 	private Integer steps = 25;
 	private Integer cfg_scale = 7;
-	private Integer width = 768;
-	private Integer height = 1024;
+	private Integer width = 1280;
+	private Integer height = 1920;
 
 	private Integer seed = -1;
 	private Integer n_iter = -1;

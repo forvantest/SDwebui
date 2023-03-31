@@ -40,6 +40,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.google.common.base.Stopwatch;
 
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,7 @@ import vam.dto.MetaJson;
 import vam.dto.PlayRecordDTO;
 import vam.dto.PredictDTO;
 import vam.dto.ResultDTO;
+import vam.dto.ResultDetailDTO;
 import vam.dto.Txt2ImgDTO;
 import vam.dto.VarFileDTO;
 import vam.dto.enumration.BestGirl;
@@ -579,7 +581,7 @@ public class Work extends WorkDeployVarFile {
 		return headers;
 	}
 
-	private ResponseEntity<String> callRestClientAPI(String requestJSON, HttpMethod method) {
+	private ResponseEntity<String> callRestClientAPI(String endpoint2, String requestJSON, HttpMethod method) {
 		HttpHeaders headers = buildRequestHeader(null);
 		final URI uri = buildUri(host, endpoint2);
 		try {
@@ -644,13 +646,60 @@ public class Work extends WorkDeployVarFile {
 		return true;
 	}
 
+	private boolean txt2img2(Prompt prompt, CheckPoint checkPoint, SampleName sampleName, int batch) {
+		Txt2ImgDTO txt2ImgDTO = new Txt2ImgDTO();
+		txt2ImgDTO.setPrompt(prompt.getPositive());
+		txt2ImgDTO.setNegative_prompt(prompt.getNegative());
+		txt2ImgDTO.setSampler_name(sampleName.getOpCode());
+		txt2ImgDTO.setWidth(prompt.getWidth());
+		txt2ImgDTO.setHeight(prompt.getHeight());
+		for (int i = 0; i < batch; i++) {
+			log.info("txt2img {}:{} {}", checkPoint.name(), i, sampleName.name());
+			boolean result1 = doPost3(txt2ImgDTO);
+			if (result1)
+				log.info("txt2img done {}:{} {}", checkPoint.name(), i, sampleName.name());
+			else {
+				log.error("txt2img failed {}:{} {}", checkPoint.name(), i, sampleName.name());
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private boolean doPost3(Txt2ImgDTO txt2ImgDTO) {
+		ResponseEntity<String> rs = null;
+		try {
+			String requestJSON = objectMapper.writeValueAsString(txt2ImgDTO);
+			rs = callRestClientAPI(endpoint1, requestJSON, HttpMethod.POST);
+			if (rs.getStatusCodeValue() == 200) {
+				ResultDetailDTO resultDetailDTO = objectMapper.readValue(rs.getBody(), ResultDetailDTO.class);
+				List<String> objectList = resultDetailDTO.getImages();
+//				Object firstObject = objectList.get(0);
+//				if (firstObject instanceof List) {
+//					List list = (List) firstObject;
+//					Map map = (Map) list.get(0);
+//					log.info("return {}", map.get("name"));
+//				}
+				return true;
+			}
+			log.info("post error: {}", rs.getStatusCodeValue());
+			return false;
+		} catch (UnrecognizedPropertyException e) {
+			e.printStackTrace();
+			return false;
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	private boolean doPost2(PlayRecordDTO playRecordDTO) {
 		try {
 			Txt2ImgDTO txt2ImgDTO = new Txt2ImgDTO();
 			PredictDTO predict = new PredictDTO();
 			predict.setData(SDUtils.toDataList(1, 1, playRecordDTO, txt2ImgDTO));
 			String requestJSON = objectMapper.writeValueAsString(predict);
-			ResponseEntity<String> rs = callRestClientAPI(requestJSON, HttpMethod.POST);
+			ResponseEntity<String> rs = callRestClientAPI(endpoint2, requestJSON, HttpMethod.POST);
 			if (rs.getStatusCodeValue() == 200) {
 				ResultDTO resultDTO = objectMapper.readValue(rs.getBody(), ResultDTO.class);
 				List<Object> objectList = resultDTO.getData();
@@ -688,7 +737,7 @@ public class Work extends WorkDeployVarFile {
 	private boolean doPost1(PredictDTO predict) {
 		try {
 			String requestJSON = objectMapper.writeValueAsString(predict);
-			ResponseEntity<String> rs = callRestClientAPI(requestJSON, HttpMethod.POST);
+			ResponseEntity<String> rs = callRestClientAPI(endpoint2, requestJSON, HttpMethod.POST);
 			if (rs.getStatusCodeValue() == 200) {
 				log.info("post done");
 				return true;
@@ -710,7 +759,7 @@ public class Work extends WorkDeployVarFile {
 			System.out.println("\n\n checkpoint: " + checkPoint.name());
 			switchCheckPoint(checkPoint);
 			for (SampleName sampleName : myChoose) {
-				boolean result1 = txt2img(Prompt.PORN_SIT, checkPoint, sampleName, 2);
+				boolean result1 = txt2img2(Prompt.PORN_M_LEG, checkPoint, sampleName, 2);
 				if (!result1) {
 					System.out.println("\n\n work failed!");
 					break;
