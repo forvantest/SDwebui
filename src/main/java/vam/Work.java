@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -60,7 +61,10 @@ import vam.util.SDUtils;
 @Slf4j
 @Service("work")
 public class Work extends WorkDeployVarFile {
-	String host = "127.0.0.1";
+
+	@Value("${server.Host}")
+	private String host;
+
 	String endpoint1 = "/sdapi/v1/txt2img";
 	String endpoint2 = "/run/predict/";
 
@@ -541,7 +545,7 @@ public class Work extends WorkDeployVarFile {
 //		}
 	}
 
-	public static URI buildUri(String host, String endpoint) {
+	public URI buildUri(String host, String endpoint) {
 		return UriComponentsBuilder.newInstance().scheme("http").host(host).port(7860).path(endpoint).build().toUri();
 	}
 
@@ -628,12 +632,12 @@ public class Work extends WorkDeployVarFile {
 		playRecordDTO.setCheckPoint(checkPoint);
 		playRecordDTO.setSamplerName(sampleName);
 		for (int i = 0; i < batch; i++) {
-			log.info("txt2img {}:{}", checkPoint.name(), i);
+			log.info("txt2img {}:{} {}", checkPoint.name(), i, sampleName.name());
 			boolean result1 = doPost2(playRecordDTO);
 			if (result1)
-				log.info("txt2img done {}:{}", checkPoint.name(), i);
+				log.info("txt2img done {}:{} {}", checkPoint.name(), i, sampleName.name());
 			else {
-				log.error("txt2img failed {}:{}", checkPoint.name(), i);
+				log.error("txt2img failed {}:{} {}", checkPoint.name(), i, sampleName.name());
 				return false;
 			}
 		}
@@ -703,9 +707,10 @@ public class Work extends WorkDeployVarFile {
 		// List<CheckPoint> myChoose = Arrays.asList(CheckPoint._3GUOFENG3_V32LIGHT,
 		// CheckPoint.CHIKMIX_V2);
 		for (CheckPoint checkPoint : CheckPoint.values()) {
+			System.out.println("\n\n checkpoint: " + checkPoint.name());
 			switchCheckPoint(checkPoint);
 			for (SampleName sampleName : myChoose) {
-				boolean result1 = txt2img(Prompt.PORN_M_LEG, checkPoint, sampleName, 2);
+				boolean result1 = txt2img(Prompt.PORN_SIT, checkPoint, sampleName, 2);
 				if (!result1) {
 					System.out.println("\n\n work failed!");
 					break;

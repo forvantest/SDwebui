@@ -150,8 +150,8 @@ public class MapperUtils {
 
 	private String findTask(String filename) {
 		int idx_start = StringUtils.indexOf(filename, "txt2img-images") + 15;
-		int idx_end = StringUtils.indexOf(filename, "-", idx_start);
-		String task = StringUtils.substring(filename, idx_start, idx_end + 1);
+		int idx_end = StringUtils.indexOf(filename, "-", idx_start + 10);
+		String task = StringUtils.substring(filename, idx_start, idx_end);
 		return task;
 	}
 

@@ -2,6 +2,7 @@ package vam.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -22,10 +23,10 @@ public class PlayRecordDTO implements Comparable {
 	private CheckPoint checkPoint = null;
 	private SampleName samplerName = null;
 	private Prompt prompt = Prompt.PORN_M_LEG;
-	private Integer steps = 25;
+	private Integer steps = 35;
 	private Integer cfg_scale = 7;
-	private Integer width = 768;
-	private Integer height = 1024;
+//	private Integer width = 768;
+//	private Integer height = 1024;
 
 	private Integer seed = -1;
 	private Integer n_iter = -1;
@@ -65,4 +66,15 @@ public class PlayRecordDTO implements Comparable {
 		return seed - playRecordDTO.getSeed();
 	}
 
+	public Object getHeight() {
+		if (Objects.nonNull(prompt))
+			return prompt.getHeight();
+		return 1024;
+	}
+
+	public Object getWidth() {
+		if (Objects.nonNull(prompt))
+			return prompt.getWidth();
+		return 1024;
+	}
 }

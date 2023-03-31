@@ -1,11 +1,11 @@
 package vam.dto.enumration;
 
 public enum CheckPoint {
+	V08_V08("V08_V08.safetensors"), 
 	_3GUOFENG3_V32LIGHT("3Guofeng3_v32Light.safetensors"), 
 	CHIKMIX_V2("chikmix_V2.safetensors"),
 	BEAUTYPROMIX_V1("beautypromix_v1.safetensors"), 
 	_3MOONNIREAL_3MOONNIREALV2("3moonNIReal_3moonNIRealV2.safetensors"),
-	V08_V08("V08_V08.safetensors"), 
 	BASIL_MIX_FIXED("Basil_mix_fixed.safetensors"),
 	CHILLOUTMIX_NIPRUNEDFP32FIX("chilloutmix_NiPrunedFp32Fix.safetensors"),
 	CHILLOUTMIX_NI_FP16("ChilloutMix-ni-fp16.safetensors"), 
