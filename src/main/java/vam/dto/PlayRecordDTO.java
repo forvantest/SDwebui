@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -43,7 +45,7 @@ public class PlayRecordDTO implements Comparable {
 	private String embeddingDesc = "";
 	private Double ballAngle = 0.1;
 
-	private String filename;
+	private String fullpath;
 
 	public PlayRecordDTO() {
 		super();
@@ -76,5 +78,11 @@ public class PlayRecordDTO implements Comparable {
 		if (Objects.nonNull(prompt))
 			return prompt.getWidth();
 		return 1280;
+	}
+
+	public String getFilename() {
+		int startIndex = StringUtils.lastIndexOf(fullpath, "\\");
+		String filename = StringUtils.substring(fullpath, startIndex + 1);
+		return filename;
 	}
 }

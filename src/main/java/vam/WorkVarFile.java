@@ -54,6 +54,8 @@ public abstract class WorkVarFile {
 	protected String VAR_EXTENSION = ".var";
 	protected String DEPEND_TXT_EXTENSION = ".depend.txt";
 
+	protected String WEBUI_SOME_PATH = "C:\\Games\\";
+
 	@Autowired
 	public ZipUtils zipUtils;
 

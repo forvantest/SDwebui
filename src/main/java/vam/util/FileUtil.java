@@ -1,13 +1,17 @@
 package vam.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import vam.dto.PlayRecordDTO;
 
 @Slf4j
 public class FileUtil {
@@ -156,4 +160,49 @@ public class FileUtil {
 		}
 	}
 
+	public static void moveDirTo(String WEBUI_SOME_PATH, String model, String reason) {
+		String srcPath = WEBUI_SOME_PATH + "sd-webui\\outputs\\txt2img-images";
+		Path sDir = Paths.get(srcPath);
+		String targetPath = WEBUI_SOME_PATH + "txt2img-images\\" + model + "\\";
+		FileUtil.checkFolderExist(targetPath);
+		Path tDir = Paths.get(targetPath);
+		if (!FileUtil.checkFileExist(srcPath)) {
+			System.out.println("\n--X--moving failed src not exist " + reason + ": " + srcPath);
+		} else if (!sDir.endsWith(tDir)) {
+			try {
+				System.out.println("\n---moving " + reason + ": " + sDir);
+				Files.move(sDir, tDir, StandardCopyOption.COPY_ATTRIBUTES);
+				// FileUtil.deleteFolderIfEmpty(fullPath);
+				// this.setFullPath(targetPath);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else if (FileUtil.checkFileExist(targetPath)) {
+			log.debug("\n--X--moving failed target exist " + reason + ": " + targetPath);
+		} else {
+			log.error("\n---moving failed " + reason + ": " + sDir);
+		}
+	}
+
+	public static void moveFileTo(String WEBUI_SOME_PATH, String model, PlayRecordDTO playRecordDTO, String reason) {
+		String srcPath = playRecordDTO.getFullpath();
+		Path sDir = Paths.get(srcPath);
+		String targetPath = WEBUI_SOME_PATH + "txt2img-images\\" + model + "\\";
+		FileUtil.checkFolderExist(targetPath);
+		Path tDir = Paths.get(targetPath, playRecordDTO.getFilename());
+		if (!FileUtil.checkFileExist(srcPath)) {
+			System.out.println("\n--X--moving failed src not exist " + reason + ": " + srcPath);
+		} else if (!sDir.endsWith(tDir)) {
+			try {
+				System.out.println("\n---moving " + reason + ":" + sDir + " to:" + tDir);
+				Files.move(sDir, tDir, StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else if (FileUtil.checkFileExist(targetPath + playRecordDTO.getFilename())) {
+			log.debug("\n--X--moving failed target exist " + reason + ": " + targetPath + playRecordDTO.getFilename());
+		} else {
+			log.error("\n---moving failed " + reason + ": " + sDir);
+		}
+	}
 }

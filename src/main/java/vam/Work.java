@@ -628,22 +628,22 @@ public class Work extends WorkDeployVarFile {
 		return null;
 	}
 
-	private boolean txt2img(Prompt prompt, CheckPoint checkPoint, SampleName sampleName, int batch) {
+	private PlayRecordDTO txt2img(Prompt prompt, CheckPoint checkPoint, SampleName sampleName, int batch) {
 		PlayRecordDTO playRecordDTO = new PlayRecordDTO();
 		playRecordDTO.setPrompt(prompt);
 		playRecordDTO.setCheckPoint(checkPoint);
 		playRecordDTO.setSamplerName(sampleName);
 		for (int i = 0; i < batch; i++) {
 			log.info("txt2img {}:{} {}", checkPoint.name(), i, sampleName.name());
-			boolean result1 = doPost2(playRecordDTO);
-			if (result1)
+			String filename = doPost2(playRecordDTO);
+			if (filename != null)
 				log.info("txt2img done {}:{} {}", checkPoint.name(), i, sampleName.name());
 			else {
 				log.error("txt2img failed {}:{} {}", checkPoint.name(), i, sampleName.name());
-				return false;
+				return null;
 			}
 		}
-		return true;
+		return playRecordDTO;
 	}
 
 	private boolean txt2img2(Prompt prompt, CheckPoint checkPoint, SampleName sampleName, int batch) {
@@ -693,14 +693,16 @@ public class Work extends WorkDeployVarFile {
 		}
 	}
 
-	private boolean doPost2(PlayRecordDTO playRecordDTO) {
+	private String doPost2(PlayRecordDTO playRecordDTO) {
 		try {
 			Txt2ImgDTO txt2ImgDTO = new Txt2ImgDTO();
 			PredictDTO predict = new PredictDTO();
 			predict.setData(SDUtils.toDataList(1, 1, playRecordDTO, txt2ImgDTO));
 			String requestJSON = objectMapper.writeValueAsString(predict);
 			ResponseEntity<String> rs = callRestClientAPI(endpoint2, requestJSON, HttpMethod.POST);
-			if (rs.getStatusCodeValue() == 200) {
+			if (rs == null) {
+				log.info("post error: {}", rs.getStatusCodeValue());
+			} else if (rs.getStatusCodeValue() == 200) {
 				ResultDTO resultDTO = objectMapper.readValue(rs.getBody(), ResultDTO.class);
 				List<Object> objectList = resultDTO.getData();
 				Object firstObject = objectList.get(0);
@@ -708,16 +710,16 @@ public class Work extends WorkDeployVarFile {
 					List list = (List) firstObject;
 					Map map = (Map) list.get(0);
 					log.info("return {}", map.get("name"));
-					playRecordDTO.setFilename((String) map.get("name"));
-					playRecordService.save(playRecordDTO);
+					playRecordDTO.setFullpath((String) map.get("name"));
+					// playRecordService.save(playRecordDTO);
 				}
-				return true;
+				return playRecordDTO.getFilename();
 			}
 			log.info("post error: {}", rs.getStatusCodeValue());
-			return false;
+			return null;
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 
@@ -752,20 +754,23 @@ public class Work extends WorkDeployVarFile {
 
 	public void txt2img() {
 		List<SampleName> myChoose = Arrays.asList(SampleName.DPM_PLUS_SDE_KARRAS, SampleName.DPM_PLUS_2M_KARRAS,
-				SampleName.DPM_PLUS_2S_A_KARRAS, SampleName.DPM2_A_KARRAS, SampleName.DPM2_KARRAS, SampleName.EULER_A);
-		// List<CheckPoint> myChoose = Arrays.asList(CheckPoint._3GUOFENG3_V32LIGHT,
-		// CheckPoint.CHIKMIX_V2);
-		for (CheckPoint checkPoint : CheckPoint.values()) {
-			System.out.println("\n\n checkpoint: " + checkPoint.name());
-			switchCheckPoint(checkPoint);
-			for (SampleName sampleName : myChoose) {
-				boolean result1 = txt2img2(Prompt.PORN_M_LEG, checkPoint, sampleName, 2);
-				if (!result1) {
-					System.out.println("\n\n work failed!");
-					break;
+				SampleName.DPM_PLUS_2S_A_KARRAS, SampleName.EULER_A);
+		CheckPoint[] myCheckPoint = CheckPoint.getSortedValues();
+		for (int i = 0; i < 10000; i++) {
+			for (CheckPoint checkPoint : myCheckPoint) {
+				System.out.println("\n\n checkpoint: " + checkPoint.name());
+				switchCheckPoint(checkPoint);
+				for (SampleName sampleName : myChoose) {
+					PlayRecordDTO playRecordDTO = txt2img(Prompt.PORN_M_LEG, checkPoint, sampleName, 1);
+					if (playRecordDTO == null) {
+						System.out.println("\n\n work failed!");
+						break;
+					} else {
+						FileUtil.moveFileTo(WEBUI_SOME_PATH, checkPoint.name(), playRecordDTO, "txt2img over");
+					}
 				}
+				System.out.println("\n\n finish: " + checkPoint.name());
 			}
-			System.out.println("\n\n finish: " + checkPoint.name());
 		}
 	}
 }
