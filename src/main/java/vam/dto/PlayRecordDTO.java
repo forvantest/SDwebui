@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import vam.dto.enumration.CheckPoint;
+import vam.dto.enumration.Lora;
 import vam.dto.enumration.Prompt;
 import vam.dto.enumration.SampleName;
 
@@ -25,7 +26,7 @@ public class PlayRecordDTO implements Comparable {
 	private CheckPoint checkPoint = null;
 	private SampleName samplerName = null;
 	private Prompt prompt = Prompt.PORN_M_LEG;
-	private Integer steps = 35;
+	private Integer steps = 20;
 	private Integer cfg_scale = 7;
 //	private Integer width = 768;
 //	private Integer height = 1024;
@@ -36,6 +37,7 @@ public class PlayRecordDTO implements Comparable {
 	private Boolean loRA = false;
 	private Boolean sepeNet = false;
 	private List<LoraDTO> loraDTOList = new ArrayList<>();
+	private List<Lora> loraList = new ArrayList<>();
 
 	private Double clipArt = 0.9;
 	private Integer clipStep = 5;
@@ -84,5 +86,18 @@ public class PlayRecordDTO implements Comparable {
 		int startIndex = StringUtils.lastIndexOf(fullpath, "\\");
 		String filename = StringUtils.substring(fullpath, startIndex + 1);
 		return filename;
+	}
+
+	public String getKey() {
+		int startIndex = StringUtils.lastIndexOf(fullpath, "\\");
+		int endIndex = StringUtils.indexOf(fullpath, "-", startIndex + 8);
+		String key = StringUtils.substring(fullpath, startIndex + 1, endIndex);
+		return key;
+	}
+
+	public String getIdentifyName() {
+		String identifyName = String.format("%s lora_%s weight_%.1f sample_%s step_%s.png", getKey(), loraList.get(0).name(),
+				loraList.get(0).getWeight(), samplerName, steps);
+		return identifyName;
 	}
 }

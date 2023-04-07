@@ -114,12 +114,40 @@ public enum Prompt {
 			+ " ((sex)), ((fucked by man)), ((POV from below)), ((Sexual penetration)), ((vast cum on woman's legs)), ((vast cum on woman's pussy)), "
 			+ "((5 fingers)), hetero, ((1girl above 1man)), ((1man below 1girl)), (((cowgirl position))), (straddling), luxury hotel, ((suite room)), "
 			+ "professional modelshoot style photo elegant woman, classy bedroom, wet, water on body, wet body, drops on face realistic, "
-			+ "sharp focus, 8k high definition, insanely detailed, intricate, elegant, sunrays through window, curtains, wing eyeliner, eyeliner wings, "
+			+ "sharp focus, 8k high definition, insanely detailed, intricate, elegant, sunrays through window, curtains, "
 			+ "hyper-realistic, ultra detailed, full body, detailed lingerie, stockings, showing tongue, (kissing:1.15), "
-			+ "horny, (Kpop idol),  doggystyle, perfect hand, "
-			+ "<lora:koreanDollLikeness_v15:0.45>, <lora:taiwanDollLikeness_v10:0.15> <lora:cuteGirlMix4_v10:0.15>",
+			+ "horny, (Kpop idol),  doggystyle, perfect hand ",
 			"paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, "
 			+ "acnes, skin blemishes, age spot, glans,",
+			512, 768, Sets.newHashSet()),
+	PORN_GIRL5(
+			"very attractive Beautiful nude 16 years old girl, shy smile , lying in bed, (((full body))) (((bukkake))):1.6, "
+			+ "(((creampie))):1.9,  "
+			+ "(((she is having vaginal sex with long dildo))):1.9,  "
+			+ "(((dildo penetrating wet vagina))):1.7, ((huge amount of dripping sperm inside pussy)):1.7, "
+			+ "(((anus exposed))), (((bukkake))):1.6, ((huge amount of dripping sperm on legs and belly))1.7, "
+			+ "virgin, spreading legs, legs up, perfect pussy, angelic woman,  "
+			+ "  (perfect breast),nsfw, 8k, GIRL,high heels,((( PERFECT FACE))), "
+			+ "DETAILED PUPILS, ,FEMININE, (HIGH DETAIL), LONG HAIR, best quality, full body,high quality, "
+			+ "realistic lighting, symmetrical natural eyes, fascinating makeup, long legs, pale skin, stunning lady, "
+			+ "sensual mouth, natural eyes, beautiful realistic face, glamour photo, vogue style, RAW, high detail, "
+			+ "sharp focus, smooth, aesthetic, extremely detailed, photo_\\(ultra\\), photorealistic, realistic, "
+			+ "post-processing, max detail, roughness, real life, ultra realistic, photorealism, photography, "
+			+ "8k uhd, photography, perfect hands, nipples, (big breasts, pink nipples:1.2) ",
+			//+ "<lora:samdoesartsSamYang_offsetRightFilesize:0.6>,<lora:cuteGirlMix4_v10:0.4> ",
+			"pubic hair not visible, animal ears, large breasts, large boobs, text, logo, "
+			+ "((big hands, un-detailed skin, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime)), "
+			+ "((ugly mouth, ugly eyes, missing teeth, crooked teeth, close up, cropped, out of frame)), "
+			+ "worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, "
+			+ "mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, "
+			+ "bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, "
+			+ "malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, "
+			+ "long neck,(more than two arm per body:1.5), (more than two leg per body:1.5), "
+			+ "(more than five fingers on one hand:1.5), multi arms, multi legs, bad arm anatomy, bad leg anatomy, "
+			+ "bad hand anatomy, bad finger anatomy, bad detailed background, unclear architectural outline, "
+			+ "non-linear background, elf-ears, hair crosses the screen border, obesity, fat, lowres, worst quality, "
+			+ "low quality, blurry, mutated hands and fingers, disfigured, fused, cloned, duplicate, artist name, "
+			+ "giantess, odd eyes, long fingers, long neck, watermarked ",
 			512, 768, Sets.newHashSet()),;
 	private String positive;
 	private String lora;

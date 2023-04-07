@@ -189,7 +189,7 @@ public class FileUtil {
 		Path sDir = Paths.get(srcPath);
 		String targetPath = WEBUI_SOME_PATH + "txt2img-images\\" + model + "\\";
 		FileUtil.checkFolderExist(targetPath);
-		Path tDir = Paths.get(targetPath, playRecordDTO.getFilename());
+		Path tDir = Paths.get(targetPath, playRecordDTO.getIdentifyName());
 		if (!FileUtil.checkFileExist(srcPath)) {
 			System.out.println("\n--X--moving failed src not exist " + reason + ": " + srcPath);
 		} else if (!sDir.endsWith(tDir)) {

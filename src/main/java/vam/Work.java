@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -55,6 +56,7 @@ import vam.dto.VarFileDTO;
 import vam.dto.enumration.BestGirl;
 import vam.dto.enumration.BestScene;
 import vam.dto.enumration.CheckPoint;
+import vam.dto.enumration.Lora;
 import vam.dto.enumration.Prompt;
 import vam.dto.enumration.SampleName;
 import vam.dto.meta.Dependence;
@@ -629,11 +631,12 @@ public class Work extends WorkDeployVarFile {
 		return null;
 	}
 
-	private PlayRecordDTO txt2img(Prompt prompt, CheckPoint checkPoint, SampleName sampleName, int batch) {
+	private PlayRecordDTO txt2img(Prompt prompt, Lora lora, CheckPoint checkPoint, SampleName sampleName, int batch) {
 		PlayRecordDTO playRecordDTO = new PlayRecordDTO();
 		playRecordDTO.setPrompt(prompt);
 		playRecordDTO.setCheckPoint(checkPoint);
 		playRecordDTO.setSamplerName(sampleName);
+		playRecordDTO.getLoraList().add(lora);
 		for (int i = 0; i < batch; i++) {
 			log.info("txt2img {}:{} {}", checkPoint.name(), i, sampleName.name());
 			String filename = doPost2(playRecordDTO);
@@ -754,22 +757,42 @@ public class Work extends WorkDeployVarFile {
 	}
 
 	public void txt2img() {
-		List<SampleName> myChoose = Arrays.asList(SampleName.DPM_PLUS_SDE_KARRAS, SampleName.DPM_PLUS_2M_KARRAS,
+		List<SampleName> mySample = Arrays.asList(SampleName.DPM_PLUS_SDE_KARRAS, SampleName.DPM_PLUS_2M_KARRAS,
 				SampleName.DPM_PLUS_2S_A_KARRAS, SampleName.EULER_A);
-		//CheckPoint[] myCheckPoint = CheckPoint.getSortedValues();
-		Set<CheckPoint> myCheckPoint =Sets.newHashSet(CheckPoint.UBERREALISTICPORNMERGE_URPMV13);
+		// CheckPoint[] myCheckPoint = CheckPoint.getSortedValues();
+		Set<CheckPoint> myCheckPoint = Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX);
 //		Set<CheckPoint> myCheckPoint = Prompt.PORN_M_LEG.getCheckPointSet();
+
+		HashSet<Lora> myLora = new LinkedHashSet<>();
+		myLora.add(Lora.TAIWANDOLLLIKENESS_V10);
+		myLora.add(Lora.CUTEGIRLMIX4_V10);
+		myLora.add(Lora.CUTEKOREANGIRLLORA_CUTEKOREANGIRLLORA);
+		myLora.add(Lora.KOREAN_BEAUTIFULGIRL);
+		myLora.add(Lora.KOREAN_DOLL_LIKENESS);
+		myLora.add(Lora.KOREANDOLLLIKENESS_V10066);
+		myLora.add(Lora.KOREANDOLLLIKENESS_V15);
+		myLora.add(Lora.KOREANGALLOCONLORA_1);
+		myLora.add(Lora.KOREANGIRLS_KGIRLSCC);
+		myLora.add(Lora.KBEAUKOREANBEAUTY_V15);
+		myLora.add(Lora.EASTASIANDOLL_V40);
+		
 		for (int i = 0; i < 10000; i++) {
 			for (CheckPoint checkPoint : myCheckPoint) {
 				System.out.println("\n\n checkpoint: " + checkPoint.name());
-				//switchCheckPoint(checkPoint);
-				for (SampleName sampleName : myChoose) {
-					PlayRecordDTO playRecordDTO = txt2img(Prompt.PORN_GIRL4, checkPoint, sampleName, 1);
-					if (playRecordDTO == null) {
-						System.out.println("\n\n work failed!");
-						break;
-					} else {
-						FileUtil.moveFileTo(WEBUI_SOME_PATH, checkPoint.name(), playRecordDTO, "txt2img over");
+				// switchCheckPoint(checkPoint);
+				for (Lora lora : myLora) {
+					for (float j = 0.1f; j <= 1f; j += 0.2f) {
+						lora.setWeight(j);
+						for (SampleName sampleName : mySample) {
+							PlayRecordDTO playRecordDTO = txt2img(Prompt.PORN_GIRL5, lora, checkPoint, sampleName, 1);
+							if (playRecordDTO == null) {
+								System.out.println("\n\n work failed!");
+								break;
+							} else {
+								String outputDir = String.format("%s_%s", checkPoint.name(), lora.name());
+								FileUtil.moveFileTo(WEBUI_SOME_PATH, outputDir, playRecordDTO, "txt2img over");
+							}
+						}
 					}
 				}
 				System.out.println("\n\n finish: " + checkPoint.name());
