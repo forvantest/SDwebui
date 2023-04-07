@@ -77,40 +77,43 @@ public class SDUtils {
 		dataList.add(null);// 50
 		dataList.add("Refresh models");// 51
 		dataList.add(null);// 52
-		dataList.add(playRecordDTO.getClipArt());// 53
-		dataList.add(playRecordDTO.getClipStep());// 54
-		dataList.add(playRecordDTO.getLearnRatio());// 55
-		dataList.add(playRecordDTO.getBallDiff());// 56
-		dataList.add(playRecordDTO.getEmbedding());// 57
-		dataList.add(playRecordDTO.getEmbeddingDesc());// 58
-		dataList.add(playRecordDTO.getBallAngle());// 59
-		dataList.add(false);// 60
+		dataList.add(null);// 53
+		dataList.add(playRecordDTO.getClipArt());// 54
+		dataList.add(playRecordDTO.getClipStep());// 55
+		dataList.add(playRecordDTO.getLearnRatio());// 56
+		dataList.add(playRecordDTO.getBallDiff());// 57
+		dataList.add(playRecordDTO.getEmbedding());// 58
+		dataList.add(playRecordDTO.getEmbeddingDesc());// 59
+		dataList.add(playRecordDTO.getBallAngle());// 60
 		dataList.add(false);// 61
 		dataList.add(false);// 62
-		dataList.add("positive");// 63
-		dataList.add("comma");// 64
-		dataList.add(0);// 65
-		dataList.add(false);// 66
+		dataList.add(false);// 63
+		dataList.add("positive");// 64
+		dataList.add("comma");// 65
+		dataList.add(0);// 66
 		dataList.add(false);// 67
-		dataList.add("");// 68
-		dataList.add("Seed");// 69
-		dataList.add("");// 70
-		dataList.add("Nothing");// 71
-		dataList.add("");// 72
-		dataList.add("Nothing");// 73
-		dataList.add("");// 74
-		dataList.add(true);// 75
-		dataList.add(false);// 76
+		dataList.add(false);// 68
+		dataList.add("");// 69
+		dataList.add("Seed");// 70
+		dataList.add("");// 71
+		dataList.add("Nothing");// 72
+		dataList.add("");// 73
+		dataList.add("Nothing");// 74
+		dataList.add("");// 75
+		dataList.add(true);// 76
 		dataList.add(false);// 77
 		dataList.add(false);// 78
-		dataList.add(0);// 79
-		dataList.add(null);// 80
-		dataList.add(false);// 81
-		dataList.add(50);// 82
-		dataList.add(new OutputFileDTO());// 83
-		dataList.add("");// 84
-		dataList.add("");// 85
-		dataList.add("");// 86
+		dataList.add(false);// 79
+		dataList.add(0);// 80
+		dataList.add(null);// 81
+		dataList.add(false);// 82
+		dataList.add(null);// 83
+		dataList.add(false);// 84
+		dataList.add(50);// 85
+		dataList.add(new OutputFileDTO());// 86
+		dataList.add("");// 87
+		dataList.add("");// 88
+		dataList.add("");// 89
 		return dataList;
 
 	}

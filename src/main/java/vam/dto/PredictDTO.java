@@ -18,7 +18,7 @@ public class PredictDTO implements Comparable {
 		super();
 	}
 
-	private Integer fn_index = 211;
+	private Integer fn_index = 236;
 	private List<Object> data = new ArrayList<>();
 	private String session_hash = "kw8l71zrw3d";
 

@@ -42,6 +42,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.Sets;
 
 import lombok.extern.slf4j.Slf4j;
 import vam.dto.MetaJson;
@@ -726,12 +727,12 @@ public class Work extends WorkDeployVarFile {
 	private void switchCheckPoint(CheckPoint checkPoint) {
 		List<Object> data = new ArrayList<>();
 		data.add(checkPoint.getFilename());
-		PredictDTO predict = new PredictDTO(591, data);
+		PredictDTO predict = new PredictDTO(647, data);
 		boolean result1 = doPost1(predict);
 
 		if (result1) {
 			data = new ArrayList<>();
-			predict = new PredictDTO(592, data);
+			predict = new PredictDTO(648, data);
 			boolean result2 = doPost1(predict);
 		}
 	}
@@ -755,13 +756,15 @@ public class Work extends WorkDeployVarFile {
 	public void txt2img() {
 		List<SampleName> myChoose = Arrays.asList(SampleName.DPM_PLUS_SDE_KARRAS, SampleName.DPM_PLUS_2M_KARRAS,
 				SampleName.DPM_PLUS_2S_A_KARRAS, SampleName.EULER_A);
-		CheckPoint[] myCheckPoint = CheckPoint.getSortedValues();
+		//CheckPoint[] myCheckPoint = CheckPoint.getSortedValues();
+		Set<CheckPoint> myCheckPoint =Sets.newHashSet(CheckPoint.UBERREALISTICPORNMERGE_URPMV13);
+//		Set<CheckPoint> myCheckPoint = Prompt.PORN_M_LEG.getCheckPointSet();
 		for (int i = 0; i < 10000; i++) {
 			for (CheckPoint checkPoint : myCheckPoint) {
 				System.out.println("\n\n checkpoint: " + checkPoint.name());
-				switchCheckPoint(checkPoint);
+				//switchCheckPoint(checkPoint);
 				for (SampleName sampleName : myChoose) {
-					PlayRecordDTO playRecordDTO = txt2img(Prompt.PORN_M_LEG, checkPoint, sampleName, 1);
+					PlayRecordDTO playRecordDTO = txt2img(Prompt.PORN_GIRL4, checkPoint, sampleName, 1);
 					if (playRecordDTO == null) {
 						System.out.println("\n\n work failed!");
 						break;
