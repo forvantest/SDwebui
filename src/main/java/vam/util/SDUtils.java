@@ -18,7 +18,14 @@ public class SDUtils {
 			Txt2ImgDTO txt2ImgDTO) {
 		List<Object> dataList = new ArrayList<>();
 		dataList.add("task(dob24x4iiky9vcv)");// 0
-		dataList.add(playRecordDTO.getPrompt().getPositive()+playRecordDTO.getLoraList().get(0).appendLora());// 1
+		
+		StringBuffer sb=new StringBuffer();
+		sb.append(playRecordDTO.getPrompt().getPositive());
+		if(playRecordDTO.changeLoraWeight)
+			sb.append(playRecordDTO.getLoraList().get(0).appendLora());
+		else
+			sb.append(playRecordDTO.getTextualInversionList().get(0).appendTextualInversion());
+		dataList.add(sb.toString());// 1
 		dataList.add(playRecordDTO.getPrompt().getNegative());// 2
 		dataList.add(new ArrayList<>());// 3
 		dataList.add(playRecordDTO.getSteps());// 4

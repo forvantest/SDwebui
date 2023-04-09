@@ -4,7 +4,7 @@ import org.springframework.util.StringUtils;
 
 public enum Lora  {
 	_3LORAGUOFENG3LORA_V32LORABIGLIGHT( "3loraGuofeng3Lora_v32LoraBigLight.safetensors"),
-//	AHEGAOROLLINGEYES_V1114( "ahegaoRollingEyes_v1114.safetensors"),
+	AHEGAOROLLINGEYES_V1114( "ahegaoRollingEyes_v1114.safetensors"),
 	AIAVYUAXX_V1( "aiAVYUAXx_v1.safetensors"),
 	ANGELABABY_1( "angelababy_1.safetensors"),
 	ASIAGIRLINUNIFORM_CHILLOUTMIX( "asiaGirlInUniform_chilloutmix.safetensors"),
@@ -43,6 +43,7 @@ public enum Lora  {
 	SPREADPUSSY_V11( "spreadPussy_v11.safetensors"),
 	STANDINGDOGGYSTYLE_V11A( "StandingDoggystyle_v11a.safetensors"),
 	TAIWANDOLLLIKENESS_V10( "taiwanDollLikeness_v10.safetensors"),
+	NONE( ""),
 	;
 
 	private String filename;
@@ -54,6 +55,9 @@ public enum Lora  {
 	}
 
 	public String appendLora() {
+		if(this==Lora.NONE)
+			return "";
+		
 		String loraName=StringUtils.replace(filename, ".safetensors", "");
 		String loraWeight=String.format(",<lora:%s:%.1f>", loraName,weight); 
 		return loraWeight;

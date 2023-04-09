@@ -59,4 +59,5 @@ public enum CheckPoint {
 			return o1.getRank().compareTo(o2.getRank());
 		}).toArray(CheckPoint[]::new);
 	}
+
 }

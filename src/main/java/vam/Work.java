@@ -59,6 +59,7 @@ import vam.dto.enumration.CheckPoint;
 import vam.dto.enumration.Lora;
 import vam.dto.enumration.Prompt;
 import vam.dto.enumration.SampleName;
+import vam.dto.enumration.TextualInversion;
 import vam.dto.meta.Dependence;
 import vam.util.FileUtil;
 import vam.util.SDUtils;
@@ -631,12 +632,14 @@ public class Work extends WorkDeployVarFile {
 		return null;
 	}
 
-	private PlayRecordDTO txt2img(Prompt prompt, Lora lora, CheckPoint checkPoint, SampleName sampleName, int batch) {
+	private PlayRecordDTO txt2img(Prompt prompt, Lora lora, TextualInversion textualInversion, CheckPoint checkPoint,
+			SampleName sampleName, int batch) {
 		PlayRecordDTO playRecordDTO = new PlayRecordDTO();
 		playRecordDTO.setPrompt(prompt);
 		playRecordDTO.setCheckPoint(checkPoint);
 		playRecordDTO.setSamplerName(sampleName);
 		playRecordDTO.getLoraList().add(lora);
+		playRecordDTO.getTextualInversionList().add(textualInversion);
 		for (int i = 0; i < batch; i++) {
 			log.info("txt2img {}:{} {}", checkPoint.name(), i, sampleName.name());
 			String filename = doPost2(playRecordDTO);
@@ -728,6 +731,10 @@ public class Work extends WorkDeployVarFile {
 	}
 
 	private void switchCheckPoint(CheckPoint checkPoint) {
+		if (checkPoint == checkPointNow)
+			return;
+		checkPointNow = checkPoint;
+
 		List<Object> data = new ArrayList<>();
 		data.add(checkPoint.getFilename());
 		PredictDTO predict = new PredictDTO(647, data);
@@ -756,43 +763,60 @@ public class Work extends WorkDeployVarFile {
 		}
 	}
 
-	public void txt2img() {
+	static CheckPoint checkPointNow = null;
+
+	public void txt2img_test() {
 		List<SampleName> mySample = Arrays.asList(SampleName.DPM_PLUS_SDE_KARRAS, SampleName.DPM_PLUS_2M_KARRAS,
 				SampleName.DPM_PLUS_2S_A_KARRAS, SampleName.EULER_A);
+//		List<SampleName> mySample = Arrays.asList( SampleName.DPM_PLUS_2M_KARRAS);
 		// CheckPoint[] myCheckPoint = CheckPoint.getSortedValues();
-		Set<CheckPoint> myCheckPoint = Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX);
+		Set<CheckPoint> myCheckPoint = Sets.newHashSet(CheckPoint.UBERREALISTICPORNMERGE_URPMV13);
 //		Set<CheckPoint> myCheckPoint = Prompt.PORN_M_LEG.getCheckPointSet();
 
-		HashSet<Lora> myLora = new LinkedHashSet<>();
-		myLora.add(Lora.TAIWANDOLLLIKENESS_V10);
-		myLora.add(Lora.CUTEGIRLMIX4_V10);
-		myLora.add(Lora.CUTEKOREANGIRLLORA_CUTEKOREANGIRLLORA);
-		myLora.add(Lora.KOREAN_BEAUTIFULGIRL);
-		myLora.add(Lora.KOREAN_DOLL_LIKENESS);
-		myLora.add(Lora.KOREANDOLLLIKENESS_V10066);
-		myLora.add(Lora.KOREANDOLLLIKENESS_V15);
-		myLora.add(Lora.KOREANGALLOCONLORA_1);
-		myLora.add(Lora.KOREANGIRLS_KGIRLSCC);
-		myLora.add(Lora.KBEAUKOREANBEAUTY_V15);
-		myLora.add(Lora.EASTASIANDOLL_V40);
-		
+		HashSet<Lora> myLora = new LinkedHashSet<>(Arrays.asList(Lora.KOREAN_BEAUTIFULGIRL));
+
+//		myLora.add(Lora.TAIWANDOLLLIKENESS_V10);
+//		myLora.add(Lora.CUTEGIRLMIX4_V10);//  0.4 0.5 0.6
+//		myLora.add(Lora.CUTEKOREANGIRLLORA_CUTEKOREANGIRLLORA);//  0.4 0.5 0.6 固定臉
+		/*
+		 * myLora.add(Lora.KOREAN_BEAUTIFULGIRL);//perfect good 0.3 0.9 //
+		 * myLora.add(Lora.KOREAN_DOLL_LIKENESS);//冷白 0.4 0.5 0.6, but still 外國人 //
+		 * myLora.add(Lora.KOREANDOLLLIKENESS_V10066);//good, but still 外國人
+		 * myLora.add(Lora.KOREANDOLLLIKENESS_V15);//very good 0.6 ->
+		 * myLora.add(Lora.KOREANGALLOCONLORA_1);//very good 0.4 0.5 -> //
+		 * myLora.add(Lora.KOREANGIRLS_KGIRLSCC); //
+		 * myLora.add(Lora.KBEAUKOREANBEAUTY_V15);//0.5 0.6 完全外國人 //
+		 * myLora.add(Lora.EASTASIANDOLL_V40); //0.3 0.5 0.6 不夠亞洲
+		 */
+		TextualInversion textualInversion=TextualInversion.NONE;
 		for (int i = 0; i < 10000; i++) {
 			for (CheckPoint checkPoint : myCheckPoint) {
 				System.out.println("\n\n checkpoint: " + checkPoint.name());
-				// switchCheckPoint(checkPoint);
+				switchCheckPoint(checkPoint);
 				for (Lora lora : myLora) {
-					for (float j = 0.1f; j <= 1f; j += 0.2f) {
-						lora.setWeight(j);
+					for (float j = 0.1f; j <= 1.2f; j += 0.1f) {
+						if (lora == Lora.NONE)
+							lora.setWeight(0.4f);
+						else 
+							lora.setWeight(j);
+						
+						if (textualInversion == TextualInversion.NONE)
+							textualInversion.setWeight(0.7f);
+						else 
+							textualInversion.setWeight(j);
+						
 						for (SampleName sampleName : mySample) {
-							PlayRecordDTO playRecordDTO = txt2img(Prompt.PORN_GIRL5, lora, checkPoint, sampleName, 1);
+							PlayRecordDTO playRecordDTO = txt2img(Prompt.PORN_GIRL5, lora,
+									textualInversion, checkPoint, sampleName, 1);
 							if (playRecordDTO == null) {
 								System.out.println("\n\n work failed!");
 								break;
 							} else {
-								String outputDir = String.format("%s_%s", checkPoint.name(), lora.name());
-								FileUtil.moveFileTo(WEBUI_SOME_PATH, outputDir, playRecordDTO, "txt2img over");
+								FileUtil.moveFileTo(WEBUI_SOME_PATH, playRecordDTO, "txt2img over");
 							}
 						}
+//						if (lora == Lora.NONE)
+//							break;
 					}
 				}
 				System.out.println("\n\n finish: " + checkPoint.name());

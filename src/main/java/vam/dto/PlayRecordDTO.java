@@ -15,6 +15,7 @@ import vam.dto.enumration.CheckPoint;
 import vam.dto.enumration.Lora;
 import vam.dto.enumration.Prompt;
 import vam.dto.enumration.SampleName;
+import vam.dto.enumration.TextualInversion;
 
 @Slf4j
 @JsonInclude(Include.NON_NULL)
@@ -38,6 +39,7 @@ public class PlayRecordDTO implements Comparable {
 	private Boolean sepeNet = false;
 	private List<LoraDTO> loraDTOList = new ArrayList<>();
 	private List<Lora> loraList = new ArrayList<>();
+	private List<TextualInversion> textualInversionList = new ArrayList<>();
 
 	private Double clipArt = 0.9;
 	private Integer clipStep = 5;
@@ -95,9 +97,28 @@ public class PlayRecordDTO implements Comparable {
 		return key;
 	}
 
+	public static boolean changeLoraWeight = true;
+
 	public String getIdentifyName() {
-		String identifyName = String.format("%s lora_%s weight_%.1f sample_%s step_%s.png", getKey(), loraList.get(0).name(),
-				loraList.get(0).getWeight(), samplerName, steps);
+		String identifyName = "";
+		if (changeLoraWeight) {
+			identifyName = String.format("weight_%.1f sample_%s lora_%s %s step_%s.png", loraList.get(0).getWeight(),
+					samplerName, loraList.get(0).name(), getKey(), steps);
+		} else {
+			identifyName = String.format("weight_%.1f %s TextualInversion_%s sample_%s step_%s.png",
+					textualInversionList.get(0).getWeight(), getKey(), textualInversionList.get(0).name(), samplerName,
+					steps);
+		}
 		return identifyName;
+	}
+
+	public String getOutputDir() {
+		String outputDir = "";
+		if (changeLoraWeight) {
+			outputDir = String.format("%s_%s", checkPoint.name(), loraList.get(0).name());
+		} else {
+			outputDir = String.format("%s_%s", checkPoint.name(), textualInversionList.get(0).name());
+		}
+		return outputDir;
 	}
 }

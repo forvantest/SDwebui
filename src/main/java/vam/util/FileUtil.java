@@ -184,10 +184,11 @@ public class FileUtil {
 		}
 	}
 
-	public static void moveFileTo(String WEBUI_SOME_PATH, String model, PlayRecordDTO playRecordDTO, String reason) {
+	public static void moveFileTo(String WEBUI_SOME_PATH, PlayRecordDTO playRecordDTO, String reason) {
+		String outputDir=playRecordDTO.getOutputDir();
 		String srcPath = playRecordDTO.getFullpath();
 		Path sDir = Paths.get(srcPath);
-		String targetPath = WEBUI_SOME_PATH + "txt2img-images\\" + model + "\\";
+		String targetPath = WEBUI_SOME_PATH + "txt2img-images\\" + outputDir + "\\";
 		FileUtil.checkFolderExist(targetPath);
 		Path tDir = Paths.get(targetPath, playRecordDTO.getIdentifyName());
 		if (!FileUtil.checkFileExist(srcPath)) {
