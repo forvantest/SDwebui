@@ -10,6 +10,7 @@ import vam.dto.LoraDTO;
 import vam.dto.OutputFileDTO;
 import vam.dto.PlayRecordDTO;
 import vam.dto.Txt2ImgDTO;
+import vam.dto.enumration.Lora;
 
 @Slf4j
 @Component
@@ -18,12 +19,14 @@ public class SDUtils {
 			Txt2ImgDTO txt2ImgDTO) {
 		List<Object> dataList = new ArrayList<>();
 		dataList.add("task(dob24x4iiky9vcv)");// 0
-		
-		StringBuffer sb=new StringBuffer();
+
+		StringBuffer sb = new StringBuffer();
 		sb.append(playRecordDTO.getPrompt().getPositive());
-		if(playRecordDTO.changeLoraWeight)
-			sb.append(playRecordDTO.getLoraList().get(0).appendLora());
-		else
+		if (playRecordDTO.changeLoraWeight) {
+			for (Lora lora : playRecordDTO.getLoraList()) {
+				sb.append(lora.appendLora());
+			}
+		} else
 			sb.append(playRecordDTO.getTextualInversionList().get(0).appendTextualInversion());
 		dataList.add(sb.toString());// 1
 		dataList.add(playRecordDTO.getPrompt().getNegative());// 2

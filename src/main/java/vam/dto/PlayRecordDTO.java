@@ -102,8 +102,15 @@ public class PlayRecordDTO implements Comparable {
 	public String getIdentifyName() {
 		String identifyName = "";
 		if (changeLoraWeight) {
-			identifyName = String.format("weight_%.1f sample_%s lora_%s %s step_%s.png", loraList.get(0).getWeight(),
-					samplerName, loraList.get(0).name(), getKey(), steps);
+			if (loraList.size() == 2) {
+				identifyName = String.format(
+						"weight1__%.1f weight2__%.1f sample__%s lora1__%s lora2__%s %s step_%s.png",
+						loraList.get(0).getWeight(), loraList.get(1).getWeight(), samplerName, loraList.get(0).name(),
+						loraList.get(1).name(), getKey(), steps);
+			} else {
+				identifyName = String.format("weight__%.1f sample__%s lora__%s %s step_%s.png",
+						loraList.get(0).getWeight(), samplerName, loraList.get(0).name(), getKey(), steps);
+			}
 		} else {
 			identifyName = String.format("weight_%.1f %s TextualInversion_%s sample_%s step_%s.png",
 					textualInversionList.get(0).getWeight(), getKey(), textualInversionList.get(0).name(), samplerName,
