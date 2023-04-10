@@ -633,13 +633,14 @@ public class Work extends WorkDeployVarFile {
 	}
 
 	private PlayRecordDTO txt2img(Prompt prompt, Lora lora, TextualInversion textualInversion, CheckPoint checkPoint,
-			SampleName sampleName, int batch) {
+			SampleName sampleName, int batch,Integer step) {
 		PlayRecordDTO playRecordDTO = new PlayRecordDTO();
 		playRecordDTO.setPrompt(prompt);
 		playRecordDTO.setCheckPoint(checkPoint);
 		playRecordDTO.setSamplerName(sampleName);
 		playRecordDTO.getLoraList().add(lora);
 		playRecordDTO.getTextualInversionList().add(textualInversion);
+		playRecordDTO.setSteps(step);
 		for (int i = 0; i < batch; i++) {
 			log.info("txt2img {}:{} {}", checkPoint.name(), i, sampleName.name());
 			String filename = doPost2(playRecordDTO);
@@ -731,7 +732,7 @@ public class Work extends WorkDeployVarFile {
 	}
 
 	private void switchCheckPoint(CheckPoint checkPoint) {
-		if (checkPoint == checkPointNow)
+		if (checkPoint.equals(checkPointNow))
 			return;
 		checkPointNow = checkPoint;
 
@@ -765,6 +766,59 @@ public class Work extends WorkDeployVarFile {
 
 	static CheckPoint checkPointNow = null;
 
+	public void txt2img_main() {
+
+		List<SampleName> mySample = Arrays.asList(SampleName.DPM_PLUS_SDE_KARRAS, SampleName.DPM_PLUS_2M_KARRAS,
+				SampleName.DPM_PLUS_2S_A_KARRAS, SampleName.EULER_A);
+		for (int i = 0; i < 10000; i++) {
+			txt2img_mainTask(Sets.newHashSet(CheckPoint.CHIKMIX_V1), mySample, Prompt.PORN_M_LEG, new LinkedHashSet<>(Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114)), 0.1f, 0.4f,20);
+			txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08A), mySample, Prompt.PORN_M_LEG, new LinkedHashSet<>(Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114)), 0.1f, 0.4f,20);
+			txt2img_mainTask(Sets.newHashSet(CheckPoint.CHIKMIX_V2), mySample, Prompt.PORN_M_LEG, new LinkedHashSet<>(Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114)), 0.1f, 0.4f,20);
+			
+//			txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08), mySample, Prompt.PORN_M_LEG, new LinkedHashSet<>(Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114)), 0.1f, 0.4f,20);
+//			txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08), mySample, Prompt.PORN_M_LEG, new LinkedHashSet<>(Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114)), 0.1f, 0.4f,35);
+//			txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08), mySample, Prompt.PORN_M_LEG, new LinkedHashSet<>(Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114)), 0.1f, 0.4f,50);
+//			txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08), mySample, Prompt.PORN_M_LEG, new LinkedHashSet<>(Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114)), 0.1f, 0.4f,75);
+//			txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08), mySample, Prompt.PORN_M_LEG, new LinkedHashSet<>(Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114)), 0.1f, 0.4f,100);
+		}
+	}
+
+	public void txt2img_mainTask(Set<CheckPoint> myCheckPoint, List<SampleName> mySample, Prompt prompt,
+			HashSet<Lora> myLora, float loraStart, float loraEnd ,Integer step) {
+		TextualInversion textualInversion = TextualInversion.NONE;
+		for (CheckPoint checkPoint : myCheckPoint) {
+			System.out.println("\n\n checkpoint: " + checkPoint.name());
+			switchCheckPoint(checkPoint);
+			for (Lora lora : myLora) {
+				for (float j = loraStart; j <= loraEnd; j += 0.1f) {
+					if (lora == Lora.NONE)
+						lora.setWeight(0.4f);
+					else
+						lora.setWeight(j);
+
+					if (textualInversion == TextualInversion.NONE)
+						textualInversion.setWeight(0.7f);
+					else
+						textualInversion.setWeight(j);
+
+					for (SampleName sampleName : mySample) {
+						PlayRecordDTO playRecordDTO = txt2img(prompt, lora, textualInversion, checkPoint,
+								sampleName, 1,step);
+						if (playRecordDTO == null) {
+							System.out.println("\n\n work failed!");
+							break;
+						} else {
+							FileUtil.moveFileTo(WEBUI_SOME_PATH, playRecordDTO, "txt2img over");
+						}
+					}
+//						if (lora == Lora.NONE)
+//							break;
+				}
+			}
+			System.out.println("\n\n finish: " + checkPoint.name());
+		}
+	}
+
 	public void txt2img_test() {
 		List<SampleName> mySample = Arrays.asList(SampleName.DPM_PLUS_SDE_KARRAS, SampleName.DPM_PLUS_2M_KARRAS,
 				SampleName.DPM_PLUS_2S_A_KARRAS, SampleName.EULER_A);
@@ -788,7 +842,7 @@ public class Work extends WorkDeployVarFile {
 		 * myLora.add(Lora.KBEAUKOREANBEAUTY_V15);//0.5 0.6 完全外國人 //
 		 * myLora.add(Lora.EASTASIANDOLL_V40); //0.3 0.5 0.6 不夠亞洲
 		 */
-		TextualInversion textualInversion=TextualInversion.NONE;
+		TextualInversion textualInversion = TextualInversion.NONE;
 		for (int i = 0; i < 10000; i++) {
 			for (CheckPoint checkPoint : myCheckPoint) {
 				System.out.println("\n\n checkpoint: " + checkPoint.name());
@@ -797,17 +851,17 @@ public class Work extends WorkDeployVarFile {
 					for (float j = 0.1f; j <= 1.2f; j += 0.1f) {
 						if (lora == Lora.NONE)
 							lora.setWeight(0.4f);
-						else 
+						else
 							lora.setWeight(j);
-						
+
 						if (textualInversion == TextualInversion.NONE)
 							textualInversion.setWeight(0.7f);
-						else 
+						else
 							textualInversion.setWeight(j);
-						
+
 						for (SampleName sampleName : mySample) {
-							PlayRecordDTO playRecordDTO = txt2img(Prompt.PORN_GIRL5, lora,
-									textualInversion, checkPoint, sampleName, 1);
+							PlayRecordDTO playRecordDTO = txt2img(Prompt.PORN_GIRL5, lora, textualInversion, checkPoint,
+									sampleName, 1,35);
 							if (playRecordDTO == null) {
 								System.out.println("\n\n work failed!");
 								break;

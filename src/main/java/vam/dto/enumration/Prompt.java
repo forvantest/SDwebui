@@ -8,9 +8,9 @@ public enum Prompt {
 	PORN_M_LEG(
 			"1boy, 1girl, hetero, vaginal, sex, mating press, folded, missionary, head on pillow, m_legs, skirt lift,hair ornament,jewelry,"
 					+ " blush, solo_focus, large penis,pussy,sweat,focus pussy,labia, porn, blurry_background, depth_of_field, pov,"
-					+ " lips, open mouth, tongue out, tongue, ahegao, rolling eyes, half-closed eyes, <lora:ahegaoRollingEyes_v1114:0.3>, aegyo sal,"
+					+ " lips, open mouth, tongue out, tongue, ahegao, rolling eyes, half-closed eyes, aegyo sal,"
 					+ " lying, high heels, on bed, on back, cum, bukkake, facial, cum in pussy, cum on body, overflow, drooling, puffy nipples, male pubic hair,"
-					+ " thighhighs, best quality, masterpiece, realistic, photorealistic, 8K, RAW photo, ultra highres, ((smooth thighs))",
+					+ " thighhighs, best quality, masterpiece, realistic, photorealistic, 8K, RAW photo, ultra highres, ((smooth thighs)) ",
 			"(bad-artist:0.7), (worst quality, low quality:1.4), anal, (closed eyes: 1.4), bad-hands-5, mole, skin spots, acnes, skin blemishes, age spot",
 			768, 1024,
 			Sets.newHashSet(CheckPoint.V08_V08, CheckPoint.CHIKMIX_V2, CheckPoint.YORRRLMIX_V21,

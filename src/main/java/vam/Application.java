@@ -110,7 +110,9 @@ public class Application extends SpringBootServletInitializer {
 //		work.switchAuthor("Eros");
 //		work.switchCheckPoint(CheckPoint.FANTASTICMIXREAL_V10);
 
-		work.txt2img_test();
+		work.txt2img_main();
+		
+//		work.txt2img_test();
 
 //		work.unDeploy(BestGirl.Archer);
 //		work.unDeploy("Dnaddr");
