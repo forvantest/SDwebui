@@ -705,7 +705,9 @@ public class Work extends WorkDeployVarFile {
 		try {
 			Txt2ImgDTO txt2ImgDTO = new Txt2ImgDTO();
 			PredictDTO predict = new PredictDTO();
-			predict.setData(SDUtils.toDataList(1, 1, playRecordDTO, txt2ImgDTO));
+			List<Object> objList=SDUtils.toDataList(1, 1, playRecordDTO, txt2ImgDTO);
+			SDUtils.appendHiRES(objList);
+			predict.setData(objList);
 			String requestJSON = objectMapper.writeValueAsString(predict);
 			ResponseEntity<String> rs = callRestClientAPI(endpoint2, requestJSON, HttpMethod.POST);
 			if (rs == null) {
@@ -767,32 +769,88 @@ public class Work extends WorkDeployVarFile {
 	static CheckPoint checkPointNow = null;
 
 	public void txt2img_main() {
-
 		for (int i = 0; i < 10000; i++) {
-			txt2img_mainTask(Sets.newHashSet(CheckPoint.UBERREALISTICPORNMERGE_URPMV13), Prompt.PORN_M_LEG,
-					Arrays.asList(Lora.KOREANDOLLLIKENESS_V15.initWeight(0.0f, 0.8f),
-							Lora.TAIWANDOLLLIKENESS_V10.initWeight(0.0f, 0.6f)),
-					20);
+			long time1, time2;
 
-//			txt2img_mainTask(Sets.newHashSet(CheckPoint.CHIKMIX_V1), Prompt.PORN_M_LEG,
-//					Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114.initWeight(0.0f, 0.4f)), 20);
-//			txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08A), Prompt.PORN_M_LEG,
-//					Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114.initWeight(0.0f, 0.4f)), 20);
-//			txt2img_mainTask(Sets.newHashSet(CheckPoint.CHIKMIX_V2), Prompt.PORN_M_LEG,
-//					Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114.initWeight(0.0f, 0.4f)), 20);
-
-//			txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08), mySample, Prompt.PORN_M_LEG, new LinkedHashSet<>(Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114)), 0.1f, 0.4f,20);
-//			txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08), mySample, Prompt.PORN_M_LEG, new LinkedHashSet<>(Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114)), 0.1f, 0.4f,35);
-//			txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08), mySample, Prompt.PORN_M_LEG, new LinkedHashSet<>(Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114)), 0.1f, 0.4f,50);
-//			txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08), mySample, Prompt.PORN_M_LEG, new LinkedHashSet<>(Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114)), 0.1f, 0.4f,75);
-//			txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08), mySample, Prompt.PORN_M_LEG, new LinkedHashSet<>(Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114)), 0.1f, 0.4f,100);
+			time1 = System.currentTimeMillis();
+			txt2img_main_sub();
+			time2 = System.currentTimeMillis();
+			System.out.println("mission 花了：" + (time2 - time1) / 1000 + "秒");
 		}
+	}
+
+	public void txt2img_main_sub() {
+		txt2img_mainTask(Sets.newHashSet(CheckPoint._2GUOFENG2_V20), Prompt.PORN_M_LEG,
+				Arrays.asList(Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11.initWeight(0.1f, 0.7f)), 20);
+
+		txt2img_mainTask(Sets.newHashSet(CheckPoint._3GUOFENG3_V32LIGHT), Prompt.PORN_M_LEG,
+				Arrays.asList(Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11.initWeight(0.1f, 0.7f)), 20);
+
+		Set<Lora> mySingleLora = new LinkedHashSet<>(Arrays.asList( Lora.ANGELABABY_1,
+				Lora.ASIAGIRLINUNIFORM_CHILLOUTMIX, Lora.ASIANGIRLSABRINALORA_NOTUPDATE,
+				Lora.ASIANGIRLXYBOBOLORA_NOTUPDATE, Lora.ASIANGIRLZHAOXMLORA_NOTUPDATE, Lora.EASTASIANDOLL_V40,
+				Lora.FASHIONGIRL_V51, Lora.FRAMEBINDER_V10, Lora.HIPOLY3DMODELLORA_V10, Lora.JAPANESE_DOLL_LIKENESS,
+				Lora.KRISWUEXGIRLFRIEND_V10, Lora.MIKUYA_V15, Lora.MINESFIXASIANLIKENESS_V10,
+				Lora.MLEGGESTUREULTIMATE_V51, Lora.SHOJOVIBE_V11, Lora.SOPHONJAPENESEGIRL_SOPHONV12,
+				Lora.STANDINGDOGGYSTYLE_V11A));
+
+		for (Lora myLora : mySingleLora) {
+			txt2img_mainTask(Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX), Prompt.PORN_GIRL5,
+					Arrays.asList(myLora.initWeight(0.1f, 1.0f)), 20);// 影響不大
+		}
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint._3Guofeng3_v33), Prompt.PORN_M_LEG,
+//				Arrays.asList(Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11.initWeight(0.1f, 0.7f)), 35);
+		
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.UBERREALISTICPORNMERGE_URPMV13), Prompt.PORN_GIRL2,
+//				Arrays.asList(Lora.KOREANDOLLLIKENESS_V15.initWeight(0.4f, 0.9f),
+//						Lora.TAIWANDOLLLIKENESS_V10.initWeight(0.1f, 0.7f)),
+//				35);
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint._3Guofeng3_v33), Prompt.PORN_M_LEG,
+//				Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114.initWeight(0.0f, 0.4f)), 20);
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX), Prompt.PORN_GIRL5,
+//				Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114.initWeight(0.0f, 0.4f)), 20);//影響不大
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX), Prompt.PORN_GIRL5,
+//				Arrays.asList(Lora.TAIWANDOLLLIKENESS_V10.initWeight(0.1f, 0.7f)), 35);//很明顯的影響
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX), Prompt.PORN_GIRL5,
+//				Arrays.asList(Lora.KOREANDOLLLIKENESS_V15.initWeight(0.1f, 1.0f)), 35);//很明顯的影響
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX), Prompt.PORN_GIRL5,
+//				Arrays.asList(Lora.CUTEGIRLMIX4_V10.initWeight(0.1f, 0.6f)), 35);
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX), Prompt.PORN_GIRL5,
+//				Arrays.asList(Lora.CUTEKOREANGIRLLORA_CUTEKOREANGIRLLORA.initWeight(0.2f, 1.0f)), 35);//再高 臉會太大
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX), Prompt.PORN_GIRL5,
+//				Arrays.asList(Lora.KBEAUKOREANBEAUTY_V15.initWeight(0.7f, 1.0f)), 20);//影響不大
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX), Prompt.PORN_GIRL5,
+//				Arrays.asList(Lora._3LORAGUOFENG3LORA_V32LORABIGLIGHT.initWeight(0.1f, 1.0f)), 20);//影響不大
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX), Prompt.PORN_GIRL5,
+//				Arrays.asList(Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11.initWeight(0.1f, 1.0f)), 20);//容易Bx2
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.FANTASTICMIXREAL_V10), Prompt.PORN_M_LEG,
+//				Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114.initWeight(0.0f, 0.4f)), 20);
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.CHIKMIX_V1), Prompt.PORN_M_LEG,
+//				Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114.initWeight(0.0f, 0.4f)), 20);
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.CHIKMIX_V2), Prompt.PORN_M_LEG,
+//				Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114.initWeight(0.0f, 0.4f)), 20);
+
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08A), Prompt.PORN_M_LEG,
+//				Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114.initWeight(0.0f, 0.4f)), 20);
 	}
 
 	public void txt2img_mainTask(Set<CheckPoint> myCheckPoint, Prompt prompt, List<Lora> myLora, Integer step) {
 		for (CheckPoint checkPoint : myCheckPoint) {
 			System.out.println("\n\n checkpoint: " + checkPoint.name());
-			// switchCheckPoint(checkPoint);
+			switchCheckPoint(checkPoint);
 			for (int i = 0; i < 10000; i++) {
 				if (!nextWeight(myLora)) {
 					for (Lora lora : myLora) {

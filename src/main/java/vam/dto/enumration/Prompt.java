@@ -89,7 +89,7 @@ public enum Prompt {
 					+ "(photorealistic:1.4), ((puffy eyes)), full body, ((legs spread on cock)), ((super wet skin)), (moaning), horny, pussy, ((Sexual intercourse)),"
 					+ " ((sex)), ((fucked by man)), ((POV from below)), ((Sexual penetration)), ((vast cum on woman's legs)), ((vast cum on woman's pussy)), "
 					+ "((5 fingers)), hetero, ((1girl above 1man)), ((1man below 1girl)), (((cowgirl position))), (straddling), luxury hotel, ((suite room)), "
-					+ "bed, side lighting, high contrast, sexy lingeries,<lora:koreanDollLikeness_v15:0.5>,<lora:taiwanDollLikeness_v10:0.4>",
+					+ "bed, side lighting, high contrast, sexy lingeries ",
 			"((blurry)), animated, cartoon, duplicate, child, childish, paintings, sketches", 512, 768,
 			Sets.newHashSet()),
 	PORN_GIRL3(
@@ -131,7 +131,7 @@ public enum Prompt {
 			+ "glamour photo, vogue style, RAW, high detail, sharp focus, smooth, aesthetic, extremely detailed, "
 			+ "photo_\\(ultra\\), photorealistic, realistic, post-processing, max detail, roughness, real life, "
 			+ "ultra realistic, photorealism, photography, 8k uhd, photography, perfect hands, nipples, french manicure, "
-			+ "(big breasts, pink nipples:1.2), ",// + "<lora:samdoesartsSamYang_offset:0.6> <lora:cuteGirlMix4_v10:0.4> ",
+			+ "(big breasts, pink nipples:1.2) ",
 			"pubic hair not visible, animal ears, large breasts, large boobs, text, logo, "
 					+ "((big hands, un-detailed skin, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime)), "
 					+ "((ugly mouth, ugly eyes, missing teeth, crooked teeth, close up, cropped, out of frame)), "
@@ -145,7 +145,7 @@ public enum Prompt {
 					+ "non-linear background, elf-ears, hair crosses the screen border, obesity, fat, lowres, worst quality, "
 					+ "low quality, blurry, mutated hands and fingers, disfigured, fused, cloned, duplicate, artist name, "
 					+ "giantess, odd eyes, long fingers, long neck, watermarked ",
-			496, 784, Sets.newHashSet()),
+			512, 768, Sets.newHashSet()),
 
 	PORN_GIRL6("nsfw, masterpiece, best quality, realistic, 1girl, high heels, " + "((legs spread on cock)) ",
 			"(bad-artist:0.7), (worst quality, low quality:1.4),anal ", 512, 768, Sets.newHashSet()),

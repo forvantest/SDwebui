@@ -127,4 +127,15 @@ public class SDUtils {
 		return dataList;
 
 	}
+
+	public static void appendHiRES(List<Object> dataList) {
+		dataList.set(16,false);// 16
+		dataList.set(17,512);// 17
+		dataList.set(18,512);// 18
+		dataList.set(19,true);// 19
+		dataList.set(20,0.7);// 20
+		dataList.set(21,2);// 21
+		dataList.set(22,"ESRGAN_4x");// 22
+		dataList.set(23,30);// 23
+	}
 }

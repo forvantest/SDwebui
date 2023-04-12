@@ -122,9 +122,13 @@ public class PlayRecordDTO implements Comparable {
 	public String getOutputDir() {
 		String outputDir = "";
 		if (changeLoraWeight) {
-			outputDir = String.format("%s_%s", checkPoint.name(), loraList.get(0).name());
+			if (loraList.size() == 2) {
+				outputDir = String.format("%s__%s__%s", checkPoint.name(), loraList.get(0).name(),loraList.get(1).name());
+			} else {
+				outputDir = String.format("%s__%s", checkPoint.name(), loraList.get(0).name());
+			}
 		} else {
-			outputDir = String.format("%s_%s", checkPoint.name(), textualInversionList.get(0).name());
+			outputDir = String.format("%s__%s", checkPoint.name(), textualInversionList.get(0).name());
 		}
 		return outputDir;
 	}

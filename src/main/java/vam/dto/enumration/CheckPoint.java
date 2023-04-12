@@ -3,12 +3,17 @@ package vam.dto.enumration;
 import java.util.stream.Stream;
 
 public enum CheckPoint {
-	_2GUOFENG2_V20(14, "2Guofeng2_v20.safetensors"), _3GUOFENG3_V32LIGHT(0, "3Guofeng3_v32Light.safetensors"), // not very good
+	// @formatter:off
+	_2GUOFENG2_V20(14, "2Guofeng2_v20.safetensors"),
+	 _3GUOFENG3_V32LIGHT(0, "3Guofeng3_v32Light.safetensors"),
+	 _3Guofeng3_v33(0, "3Guofeng3_v33.safetensors"), 
 	_3MOONNIREAL_3MOONNIREALV2(4, "3moonNIReal_3moonNIRealV2.safetensors"), // real
 	ABYSSORANGEMIX2_HARD(0, "abyssorangemix2_Hard.safetensors"), // cartoon
-	BASIL_MIX_FIXED(31, "Basil_mix_fixed.safetensors"), BEAUTYPROMIX_V1(32, "beautypromix_v1.safetensors"),
+	BASIL_MIX_FIXED(31, "Basil_mix_fixed.safetensors"), 
+	BEAUTYPROMIX_V1(32, "beautypromix_v1.safetensors"),
 	BLEND2SEXY_BTSFP16(15, "blend2sexy_btsFp16.safetensors"), // face good, but too many failed
-	CHIKMIX_V1(3, "chikmix_V1.safetensors"), CHIKMIX_V2(3, "chikmix_V2.safetensors"), 
+	CHIKMIX_V1(3, "chikmix_V1.safetensors"), 
+	CHIKMIX_V2(3, "chikmix_V2.safetensors"), 
 	CHILLOUTMIX_NIPRUNEDFP32FIX(17, "chilloutmix_NiPrunedFp32Fix.safetensors"),
 	CHILLOUTMIX_NI_FP16(33, "ChilloutMix-ni-fp16.safetensors"), 
 	DREAMFUL_V10LIGHT(15, "dreamful_v10Light.safetensors"), // face good, but too many failed
@@ -27,12 +32,13 @@ public enum CheckPoint {
 	PFG_111SAFETENSORS(38, "pfg_111Safetensors.safetensors"), 
 	REALDOSMIX_(8, "realdosmix_.safetensors"), // age under 12
 	REALISTICASIADOLLPEEING_V10(9, "realisticAsiaDollPeeing_v10.ckpt"), // real, not good enough
-
 	SUNSHINEMIX_SUNLIGHTMIXPRUNED(11, "sunshinemix_sunlightmixPruned.safetensors"), // cartoon
 	UBERREALISTICPORNMERGE_URPMV13(10, "uberRealisticPornMerge_urpmv13.safetensors"),
+	V08_V08(1, "V08_V08.safetensors"),
+	V08_V08A(1, "V08_V08a.safetensors"), 
+	YORRRLMIX_V21(4, "yorrrlmix_v21.safetensors"),;
 
-	V08_V08(1, "V08_V08.safetensors"),V08_V08A(1, "V08_V08a.safetensors"), YORRRLMIX_V21(4, "yorrrlmix_v21.safetensors"),;
-
+	// @formatter:on
 	private Integer rank;
 
 	private String filename;
