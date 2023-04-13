@@ -6,7 +6,7 @@ public enum Lora {
 	// @formatter:off
 	_3LORAGUOFENG3LORA_V32LORABIGLIGHT("3loraGuofeng3Lora_v32LoraBigLight.safetensors"),
 	AHEGAOROLLINGEYES_V1114("ahegaoRollingEyes_v1114.safetensors"), 
-	AIAVYUAXX_V1("aiAVYUAXx_v1.safetensors"),
+//	AIAVYUAXX_V1("aiAVYUAXx_v1.safetensors"),
 	ANGELABABY_1("angelababy_1.safetensors"),
 	ASIAGIRLINUNIFORM_CHILLOUTMIX("asiaGirlInUniform_chilloutmix.safetensors"),
 	ASIANGIRLSABRINALORA_NOTUPDATE("asianGirlSabrinaLora_notUpdate.safetensors"),
@@ -16,6 +16,7 @@ public enum Lora {
 	CREAMPIEHAIRYPUSSY_CREAMPIEV11("creampieHairyPussy_creampieV11.safetensors"),
 	CUTEGIRLMIX4_V10("cuteGirlMix4_v10.safetensors"),
 	CUTEKOREANGIRLLORA_CUTEKOREANGIRLLORA("cuteKoreanGirlLora_cuteKoreanGirlLora.safetensors"),
+	doasHealerAngelOf_v10("doasHealerAngelOf_v10.safetensors"),
 	EASTASIANDOLL_V40("eastasianDoll_v40.safetensors"), 
 	FASHIONGIRL_V51("fashionGirl_v51.safetensors"),
 	FRAMEBINDER_V10("frameBinder_v10.safetensors"), 

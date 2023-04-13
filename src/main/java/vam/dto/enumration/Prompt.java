@@ -154,7 +154,18 @@ public enum Prompt {
 					+ "pussy juice, sweat, pussy peek, pussy juice puddle, pussy juice trail ",
 			"(bad-artist:0.7), (worst quality, low quality:1.4),anal,age spot, lowres, bad anatomy, "
 					+ "bad thigh gap, extra legs, futa with female,futanari, long face, missing arms, extra arm ",
-			512, 768, Sets.newHashSet()),;
+			512, 768, Sets.newHashSet()),
+	
+	PORN_NURSE(
+			"angel_all_suit, 1girl, realistic, a 18 year old girl, young girl, (blonde hair:1.2), black eyes, "
+			+ "puffy eyes, round face,short hair, smile, looking at viewer, cafe, short hair, shiny skin, "
+			+ "garter belt, detailed face, from front, detailed eyes, soft lights, masterpiece, "
+			+ "highly detailed, best quality, 8K, ultra high resolution, ultra-detailed, photorealistic, an extremely delicate and beautiful, "
+			+ "cityscape, night, rain, wet, full body, blurry, (hotel room:1.2), on bed, <lora:doasHealerAngelOf_v10:0.8> ",
+			"EasyNegative, paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), "
+			+ "((grayscale)), skin spots, acnes, skin blemishes, age spot, glans,extra fingers,fewer fingers,strange fingers,bad hand, bad leg, "
+			+ "bad hands, bad eyes, extra leg, extra hand , extra foot, rock, palm tree, beach, day, muscle ",
+			512, 512, Sets.newHashSet()),;
 
 	private String positive;
 //	private String lora;
