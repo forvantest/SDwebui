@@ -774,6 +774,7 @@ public class Work extends WorkDeployVarFile {
 
 			time1 = System.currentTimeMillis();
 			txt2img_main_sub();
+			txt2img_main_sub2();
 			time2 = System.currentTimeMillis();
 			System.out.println("mission 花了：" + (time2 - time1) / 1000 + "秒");
 		}
@@ -781,10 +782,14 @@ public class Work extends WorkDeployVarFile {
 
 	public void txt2img_main_sub() {
 		Set<Lora> mySingleLora = new LinkedHashSet<>(
-				Arrays.asList(Lora.POVMISSIONARYVAGINAL_V1, Lora.PUSSYSPREAD_V01, Lora.REALISTICVAGINASGOD_GODPUSSY1V1,
+				Arrays.asList(Lora.REALISTICVAGINASGOD_GODPUSSY1V1,
 						Lora.REALISTICVAGINASGOD_GODPUSSY1V2, Lora.REALISTICVAGINASWET_WETPUSSYGROOL,
 						Lora.REALSPREADPUSSY_SPPSPREADPUSSYV3, Lora.REALSPREADPUSSY_SPPSPREADPUSSYWV1));
-
+// Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11 best 0.6
+//Lora.POVMISSIONARYVAGINAL_V1 影響人物卡通化
+//Lora.SPREADPUSSY_V11 一般anal 不太好用 0.7
+//Lora.PUSSYSPREAD_V01 不太好用 0.4
+//Lora.REALISTICVAGINASGOD_GODPUSSY1V1 還可以 0.6極限
 		for (Lora myLora : mySingleLora) {
 			txt2img_mainTask(Sets.newHashSet(CheckPoint._2GUOFENG2_V20), Prompt.PORN_M_LEG,
 					Arrays.asList(myLora.initWeight(0.1f, 1.0f)), 20);// 影響不大
@@ -796,48 +801,37 @@ public class Work extends WorkDeployVarFile {
 	}
 
 	public void txt2img_main_sub2() {
-		txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08), Prompt.PORN_NURSE,
-				Arrays.asList(Lora.KOREANDOLLLIKENESS_V15.initWeight(0.1f, 0.9f)), 20);
-
-		txt2img_mainTask(Sets.newHashSet(CheckPoint._2GUOFENG2_V20), Prompt.PORN_M_LEG,
-				Arrays.asList(Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11.initWeight(0.1f, 1.0f)), 20);
-
-		txt2img_mainTask(Sets.newHashSet(CheckPoint._2GUOFENG2_V20), Prompt.PORN_M_LEG,
-				Arrays.asList(Lora.SPREADPUSSY_V11.initWeight(0.1f, 1.0f)), 20);
-
-		txt2img_mainTask(Sets.newHashSet(CheckPoint._3GUOFENG3_V32LIGHT), Prompt.PORN_M_LEG,
-				Arrays.asList(Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11.initWeight(0.1f, 1.0f)), 20);
-
-		txt2img_mainTask(Sets.newHashSet(CheckPoint._3GUOFENG3_V32LIGHT), Prompt.PORN_M_LEG,
-				Arrays.asList(Lora.SPREADPUSSY_V11.initWeight(0.1f, 1.0f)), 20);
-
-//		txt2img_mainTask(Sets.newHashSet(CheckPoint._3GUOFENG3_V32LIGHT), Prompt.PORN_M_LEG,
-//				Arrays.asList(Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11.initWeight(0.1f, 0.9f),
-//						Lora.SPREADPUSSY_V11.initWeight(0.1f, 0.9f)),
-//				20);
-
-		txt2img_mainTask(Sets.newHashSet(CheckPoint._3Guofeng3_v33), Prompt.PORN_M_LEG,
-				Arrays.asList(Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11.initWeight(0.1f, 1.0f)), 20);
-
-		txt2img_mainTask(Sets.newHashSet(CheckPoint._3Guofeng3_v33), Prompt.PORN_M_LEG,
-				Arrays.asList(Lora.SPREADPUSSY_V11.initWeight(0.1f, 1.0f)), 20);
+//		txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08), Prompt.PORN_NURSE,
+//				Arrays.asList(Lora.KOREANDOLLLIKENESS_V15.initWeight(0.1f, 0.9f)), 20);
 
 //		txt2img_mainTask(Sets.newHashSet(CheckPoint._3Guofeng3_v33), Prompt.PORN_M_LEG,
 //				Arrays.asList(Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11.initWeight(0.1f, 1.0f),
 //						Lora.SPREADPUSSY_V11.initWeight(0.1f, 1.0f)),
 //				20);
 
-		Set<Lora> mySingleLora = new LinkedHashSet<>(
-				Arrays.asList(Lora.ANGELABABY_1, Lora.ASIAGIRLINUNIFORM_CHILLOUTMIX,
-						Lora.ASIANGIRLSABRINALORA_NOTUPDATE, Lora.ASIANGIRLXYBOBOLORA_NOTUPDATE,
-						Lora.ASIANGIRLZHAOXMLORA_NOTUPDATE, Lora.EASTASIANDOLL_V40, Lora.FRAMEBINDER_V10,
-						Lora.HIPOLY3DMODELLORA_V10, Lora.JAPANESE_DOLL_LIKENESS, Lora.KRISWUEXGIRLFRIEND_V10,
-						Lora.MIKUYA_V15, Lora.MINESFIXASIANLIKENESS_V10, Lora.MLEGGESTUREULTIMATE_V51,
-						Lora.SHOJOVIBE_V11, Lora.SOPHONJAPENESEGIRL_SOPHONV12, Lora.STANDINGDOGGYSTYLE_V11A));
+		Set<Lora> mySingleLora = new LinkedHashSet<>(Arrays.asList(Lora.ASIANGIRLXYBOBOLORA_NOTUPDATE,
+				Lora.ASIANGIRLZHAOXMLORA_NOTUPDATE, Lora.MINESFIXASIANLIKENESS_V10, Lora.SHOJOVIBE_V11));
+		//Lora.ANGELABABY_1   不像
+		// Lora.ASIAGIRLINUNIFORM_CHILLOUTMIX 不夠好
+		// Lora.ASIANGIRLSABRINALORA_NOTUPDATE 不夠好
+		// Lora.ASIANGIRLXYBOBOLORA_NOTUPDATE 好一點 0.9-->
+		// Lora.ASIANGIRLZHAOXMLORA_NOTUPDATE 好一點 0.9-->
+		// Lora.EASTASIANDOLL_V40 卡通
+		// Lora.FASHIONGIRL_V51
+		// Lora.HIPOLY3DMODELLORA_V10 醜
+		// Lora.JAPANESE_DOLL_LIKENESS 不夠好
+		// Lora.KRISWUEXGIRLFRIEND_V10 下巴短
+		// Lora.MIKUYA_V15 尚可 出圖率高
+		// Lora.MINESFIXASIANLIKENESS_V10 尚可 出圖率高
+		// Lora.SHOJOVIBE_V11 best 國光
+		// Lora.SOPHONJAPENESEGIRL_SOPHONV12 太老
 
+		// Lora.FRAMEBINDER_V10, 綑綁
+		// Lora.MLEGGESTUREULTIMATE_V51, M_Leg 0.2
+		// Lora.STANDINGDOGGYSTYLE_V11A, 站立後背 0.2
 		for (Lora myLora : mySingleLora) {
 			txt2img_mainTask(Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX), Prompt.PORN_M_LEG,
-					Arrays.asList(myLora.initWeight(0.1f, 1.0f)), 20);// 影響不大
+					Arrays.asList(myLora.initWeight(0.1f, 2.0f)), 20);// 影響不大
 		}
 
 //		txt2img_mainTask(Sets.newHashSet(CheckPoint._3Guofeng3_v33), Prompt.PORN_M_LEG,

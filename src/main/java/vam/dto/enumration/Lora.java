@@ -18,7 +18,7 @@ public enum Lora {
 	CREAMPIEHAIRYPUSSY_CREAMPIEV11("creampieHairyPussy_creampieV11.safetensors"),
 	CUTEGIRLMIX4_V10("cuteGirlMix4_v10.safetensors"),
 	CUTEKOREANGIRLLORA_CUTEKOREANGIRLLORA("cuteKoreanGirlLora_cuteKoreanGirlLora.safetensors"),
-	doasHealerAngelOf_v10("doasHealerAngelOf_v10.safetensors"),
+	
 	EASTASIANDOLL_V40("eastasianDoll_v40.safetensors"), 
 	FASHIONGIRL_V51("fashionGirl_v51.safetensors"),
 	FRAMEBINDER_V10("frameBinder_v10.safetensors"), 
@@ -57,6 +57,8 @@ public enum Lora {
 	SPREADPUSSY_V11("spreadPussy_v11.safetensors"), 
 	STANDINGDOGGYSTYLE_V11A("StandingDoggystyle_v11a.safetensors"),
 	TAIWANDOLLLIKENESS_V10("taiwanDollLikeness_v10.safetensors"),
+	
+	DOASHEALERANGELOF_V10("doasHealerAngelOf_v10.safetensors"),
 	NONE(""),
 	;
 	// @formatter:on
