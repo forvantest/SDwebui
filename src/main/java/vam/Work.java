@@ -56,6 +56,7 @@ import vam.dto.VarFileDTO;
 import vam.dto.enumration.BestGirl;
 import vam.dto.enumration.BestScene;
 import vam.dto.enumration.CheckPoint;
+import vam.dto.enumration.CheckPointType;
 import vam.dto.enumration.Lora;
 import vam.dto.enumration.LoraType;
 import vam.dto.enumration.Prompt;
@@ -774,7 +775,7 @@ public class Work extends WorkDeployVarFile {
 			long time1, time2;
 
 			time1 = System.currentTimeMillis();
-			txt2img_main_sub();
+//			txt2img_main_sub();
 //			txt2img_main_sub1();
 //			txt2img_main_sub2();
 			txt2img_main_sub_random();
@@ -791,9 +792,9 @@ public class Work extends WorkDeployVarFile {
 	}
 
 	public void txt2img_main_sub_random() {
-		Set<CheckPoint> myCheckPoint = CheckPoint.getNormal();
+		Set<CheckPoint> myCheckPoint = CheckPoint.getBy(CheckPointType.NONE);
 		CheckPoint checkPoint = randomCheckPoint(myCheckPoint);
-		Set<Lora> myLora = Lora.getBy(LoraType.BEAUTY);
+		Set<Lora> myLora = Lora.getBy(LoraType.COUNTRY_IDOLL);
 		Lora lora = randomLora(myLora);
 		txt2img_mainTask(checkPoint, Prompt.PORN_M_LEG, Arrays.asList(lora.initWeight(0.1f, 1.0f)), 20);// 影響不大
 	}
@@ -811,9 +812,7 @@ public class Work extends WorkDeployVarFile {
 	}
 
 	public void txt2img_main_sub1() {
-		Set<Lora> mySingleLora = new LinkedHashSet<>(Arrays.asList(Lora.REALISTICVAGINASGOD_GODPUSSY1V1,
-				Lora.REALISTICVAGINASGOD_GODPUSSY1V2, Lora.REALISTICVAGINASWET_WETPUSSYGROOL,
-				Lora.REALSPREADPUSSY_SPPSPREADPUSSYV3, Lora.REALSPREADPUSSY_SPPSPREADPUSSYWV1));
+		Set<Lora> mySingleLora =Lora.getBy(LoraType.PUSSY) ;
 // Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11 best 0.6
 //Lora.POVMISSIONARYVAGINAL_V1 影響人物卡通化
 //Lora.SPREADPUSSY_V11 一般anal 不太好用 0.7
@@ -821,11 +820,11 @@ public class Work extends WorkDeployVarFile {
 //Lora.REALISTICVAGINASGOD_GODPUSSY1V1 還可以 0.6極限
 		for (Lora myLora : mySingleLora) {
 			txt2img_mainTask(Sets.newHashSet(CheckPoint._2GUOFENG2_V20), Prompt.PORN_M_LEG,
-					Arrays.asList(myLora.initWeight(0.1f, 1.0f)), 20);// 影響不大
+					Arrays.asList(myLora.initWeight(0.2f, 0.7f)), 20);// 影響不大
 			txt2img_mainTask(Sets.newHashSet(CheckPoint._3GUOFENG3_V32LIGHT), Prompt.PORN_M_LEG,
-					Arrays.asList(myLora.initWeight(0.1f, 1.0f)), 20);// 影響不大
+					Arrays.asList(myLora.initWeight(0.2f, 0.7f)), 20);// 影響不大
 			txt2img_mainTask(Sets.newHashSet(CheckPoint._3Guofeng3_v33), Prompt.PORN_M_LEG,
-					Arrays.asList(myLora.initWeight(0.1f, 1.0f)), 20);// 影響不大
+					Arrays.asList(myLora.initWeight(0.2f, 0.7f)), 20);// 影響不大
 		}
 	}
 
