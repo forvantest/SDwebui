@@ -796,7 +796,7 @@ public class Work extends WorkDeployVarFile {
 		CheckPoint checkPoint = randomCheckPoint(myCheckPoint);
 		Set<Lora> myLora = Lora.getBy(LoraType.COUNTRY_IDOLL);
 		Lora lora = randomLora(myLora);
-		txt2img_mainTask(checkPoint, Prompt.PORN_M_LEG, Arrays.asList(lora.initWeight(0.1f, 1.0f)), 20);// 影響不大
+		txt2img_mainTask(checkPoint, Prompt.PORN_M_LEG, Arrays.asList(lora.initWeight(0.2f, 0.7f)), 20);// 影響不大
 	}
 
 	private CheckPoint randomCheckPoint(Set<CheckPoint> myCheckPoint) {

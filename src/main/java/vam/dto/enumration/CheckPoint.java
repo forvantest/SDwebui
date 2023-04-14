@@ -11,7 +11,7 @@ public enum CheckPoint {
 	 _3GUOFENG3_V32LIGHT(0, "3Guofeng3_v32Light.safetensors",CheckPointType.LEGEND),
 	 _3Guofeng3_v33(0, "3Guofeng3_v33.safetensors",CheckPointType.LEGEND), 
 	_3MOONNIREAL_3MOONNIREALV2(4, "3moonNIReal_3moonNIRealV2.safetensors",CheckPointType.NORMAL), // very real, 
-	ABYSSORANGEMIX2_HARD(0, "abyssorangemix2_Hard.safetensors",CheckPointType.NONE), // cartoon
+	ABYSSORANGEMIX2_HARD(0, "abyssorangemix2_Hard.safetensors",CheckPointType.CARTOON), // cartoon
 	ABYSSORANGEMIX3AOM3_AOM3A1B(0, "abyssorangemix3AOM3_aom3a1b.safetensors",CheckPointType.NONE), // cartoon
 	BASIL_MIX_FIXED(31, "Basil_mix_fixed.safetensors",CheckPointType.NONE), 
 	BEAUTYPROMIX_V1(32, "beautypromix_v1.safetensors",CheckPointType.NONE),
@@ -29,16 +29,16 @@ public enum CheckPoint {
 	KOREANSTYLE25D_KOREANSTYLE25DBAKED(12, "koreanstyle25D_koreanstyle25DBaked.safetensors",CheckPointType.CARTOON),
 	KOTOSMIX_V10(12, "kotosmix_v10.safetensors",CheckPointType.NONE),
 	LAZYMIXREALAMATEUR_V10(36, "lazymixRealAmateur_v10.safetensors",CheckPointType.NONE),
-	LUCKYSTRIKEMIX_V02REALISTIC(5, "luckyStrikeMix_V02Realistic.safetensors",CheckPointType.NONE), // too ugly
-	NEVERENDINGDREAMNED_BAKEDVAE(14, "neverendingDreamNED_bakedVae.safetensors",CheckPointType.NONE),
-	NEWMARSMIX_N(0, "newmarsmix_N.safetensors",CheckPointType.NONE), // not good enough
+	//LUCKYSTRIKEMIX_V02REALISTIC(5, "luckyStrikeMix_V02Realistic.safetensors",CheckPointType.NORMAL), // too ugly
+	NEVERENDINGDREAMNED_BAKEDVAE(14, "neverendingDreamNED_bakedVae.safetensors",CheckPointType.CARTOON_BETTER),
+	NEWMARSMIX_N(0, "newmarsmix_N.safetensors",CheckPointType.NORMAL), // not good enough
 	PERFECTWORLD_V1(37, "perfectWorld_v1.safetensors",CheckPointType.NONE), // real, not good enough
-	PERFECTWORLD_V1BAKED(6, "perfectWorld_v1Baked.safetensors",CheckPointType.NONE),
-	PERFECTWORLD_V2BAKED(7, "perfectWorld_v2Baked.safetensors",CheckPointType.NONE),
-	PFG_111SAFETENSORS(38, "pfg_111Safetensors.safetensors",CheckPointType.NONE), 
-	REALDOSMIX_(8, "realdosmix_.safetensors",CheckPointType.NONE), // age under 12
+	//PERFECTWORLD_V1BAKED(6, "perfectWorld_v1Baked.safetensors",CheckPointType.NONE),
+	PERFECTWORLD_V2BAKED(7, "perfectWorld_v2Baked.safetensors",CheckPointType.NORMAL),
+	//PFG_111SAFETENSORS(38, "pfg_111Safetensors.safetensors",CheckPointType.CARTOON), 
+	REALDOSMIX_(8, "realdosmix_.safetensors",CheckPointType.CHILDREN), // age under 12
 	REALISTICASIADOLLPEEING_V10(9, "realisticAsiaDollPeeing_v10.ckpt",CheckPointType.NORMAL), // real, not good enough
-	SUNSHINEMIX_SUNLIGHTMIXPRUNED(11, "sunshinemix_sunlightmixPruned.safetensors",CheckPointType.NONE), // cartoon
+	SUNSHINEMIX_SUNLIGHTMIXPRUNED(11, "sunshinemix_sunlightmixPruned.safetensors",CheckPointType.CARTOON), // cartoon
 	UBERREALISTICPORNMERGE_URPMV13(10, "uberRealisticPornMerge_urpmv13.safetensors",CheckPointType.NONE),
 	V08_V08(1, "V08_V08.safetensors",CheckPointType.LEGEND),
 	V08_V08A(1, "V08_V08a.safetensors",CheckPointType.LEGEND), 
@@ -91,7 +91,6 @@ public enum CheckPoint {
 				CheckPoint.BLEND2SEXY_BTSFP16,
 				CheckPoint.REALISTICASIADOLLPEEING_V10,
 				CheckPoint.PERFECTWORLD_V1,
-				CheckPoint.PERFECTWORLD_V1BAKED,
 				CheckPoint.PERFECTWORLD_V2BAKED,
 				CheckPoint._3MOONNIREAL_3MOONNIREALV2));
 	}
@@ -104,12 +103,9 @@ public enum CheckPoint {
 				CheckPoint.HENMIXREAL_V10,
 				CheckPoint.KOREANSTYLE25D_KOREANSTYLE25DBAKED,
 				CheckPoint.LAZYMIXREALAMATEUR_V10,
-				CheckPoint.LUCKYSTRIKEMIX_V02REALISTIC,
 				CheckPoint.NEVERENDINGDREAMNED_BAKEDVAE,
 				CheckPoint.NEWMARSMIX_N,
-				CheckPoint.PFG_111SAFETENSORS,
-				CheckPoint.REALDOSMIX_,
-				CheckPoint.LUCKYSTRIKEMIX_V02REALISTIC));
+				CheckPoint.REALDOSMIX_));
 	}
 	
 	public static Set<CheckPoint> getCartoon() {
