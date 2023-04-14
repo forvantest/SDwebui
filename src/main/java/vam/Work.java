@@ -57,6 +57,7 @@ import vam.dto.enumration.BestGirl;
 import vam.dto.enumration.BestScene;
 import vam.dto.enumration.CheckPoint;
 import vam.dto.enumration.Lora;
+import vam.dto.enumration.LoraType;
 import vam.dto.enumration.Prompt;
 import vam.dto.enumration.SampleName;
 import vam.dto.enumration.TextualInversion;
@@ -776,6 +777,7 @@ public class Work extends WorkDeployVarFile {
 			txt2img_main_sub();
 //			txt2img_main_sub1();
 //			txt2img_main_sub2();
+			txt2img_main_sub_random();
 			time2 = System.currentTimeMillis();
 			System.out.println("mission 花了：" + (time2 - time1) / 1000 + "秒");
 		}
@@ -783,10 +785,29 @@ public class Work extends WorkDeployVarFile {
 
 	public void txt2img_main_sub() {
 		Set<CheckPoint> myCheckPoint = CheckPoint.getNormal();
-		Set<Lora> mySingleLora = new LinkedHashSet<>(Arrays.asList(Lora.NONE));
-		for (Lora myLora : mySingleLora) {
-			txt2img_mainTask(myCheckPoint, Prompt.PORN_M_LEG, Arrays.asList(myLora.initWeight(0.1f, 1.0f)), 20);// 影響不大
+		for (CheckPoint checkPoint : myCheckPoint) {
+			txt2img_mainTask(checkPoint, Prompt.PORN_M_LEG, Arrays.asList(Lora.NONE.initWeight(0.1f, 1.0f)), 20);// 影響不大
 		}
+	}
+
+	public void txt2img_main_sub_random() {
+		Set<CheckPoint> myCheckPoint = CheckPoint.getNormal();
+		CheckPoint checkPoint = randomCheckPoint(myCheckPoint);
+		Set<Lora> myLora = Lora.getBy(LoraType.BEAUTY);
+		Lora lora = randomLora(myLora);
+		txt2img_mainTask(checkPoint, Prompt.PORN_M_LEG, Arrays.asList(lora.initWeight(0.1f, 1.0f)), 20);// 影響不大
+	}
+
+	private CheckPoint randomCheckPoint(Set<CheckPoint> myCheckPoint) {
+		CheckPoint[] ayCheckPoint = myCheckPoint.toArray(new CheckPoint[myCheckPoint.size()]);
+		int index = (int) (Math.random() * ayCheckPoint.length);
+		return ayCheckPoint[index];
+	}
+
+	private Lora randomLora(Set<Lora> mySingleLora) {
+		Lora[] ayLora = mySingleLora.toArray(new Lora[mySingleLora.size()]);
+		int index = (int) (Math.random() * ayLora.length);
+		return ayLora[index];
 	}
 
 	public void txt2img_main_sub1() {
@@ -892,22 +913,25 @@ public class Work extends WorkDeployVarFile {
 
 	public void txt2img_mainTask(Set<CheckPoint> myCheckPoint, Prompt prompt, List<Lora> myLora, Integer step) {
 		for (CheckPoint checkPoint : myCheckPoint) {
-			System.out.println("\n\n checkpoint: " + checkPoint.name());
-			switchCheckPoint(checkPoint);
-			for (int i = 0; i < 10000; i++) {
-				if (!nextWeight(myLora)) {
-					for (Lora lora : myLora) {
-						System.out.print("  " + lora.appendLora());
-					}
-					System.out.println(" ");
-					txt2img_mainTask_render(checkPoint, prompt, myLora, step);
-				} else {
-					break;
-				}
-			}
-
-			System.out.println("\n\n finish: " + checkPoint.name());
+			txt2img_mainTask(checkPoint, prompt, myLora, step);
 		}
+	}
+
+	public void txt2img_mainTask(CheckPoint checkPoint, Prompt prompt, List<Lora> myLora, Integer step) {
+		System.out.println("\n\n checkpoint: " + checkPoint.name());
+		switchCheckPoint(checkPoint);
+		for (int i = 0; i < 10000; i++) {
+			if (!nextWeight(myLora)) {
+				for (Lora lora : myLora) {
+					System.out.print("  " + lora.appendLora());
+				}
+				System.out.println(" ");
+				txt2img_mainTask_render(checkPoint, prompt, myLora, step);
+			} else {
+				break;
+			}
+		}
+		System.out.println("\n\n finish: " + checkPoint.name());
 	}
 
 	private boolean nextWeight(List<Lora> myLora) {
