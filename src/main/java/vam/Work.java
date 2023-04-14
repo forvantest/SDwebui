@@ -774,17 +774,25 @@ public class Work extends WorkDeployVarFile {
 
 			time1 = System.currentTimeMillis();
 			txt2img_main_sub();
-			txt2img_main_sub2();
+//			txt2img_main_sub1();
+//			txt2img_main_sub2();
 			time2 = System.currentTimeMillis();
 			System.out.println("mission 花了：" + (time2 - time1) / 1000 + "秒");
 		}
 	}
 
 	public void txt2img_main_sub() {
-		Set<Lora> mySingleLora = new LinkedHashSet<>(
-				Arrays.asList(Lora.REALISTICVAGINASGOD_GODPUSSY1V1,
-						Lora.REALISTICVAGINASGOD_GODPUSSY1V2, Lora.REALISTICVAGINASWET_WETPUSSYGROOL,
-						Lora.REALSPREADPUSSY_SPPSPREADPUSSYV3, Lora.REALSPREADPUSSY_SPPSPREADPUSSYWV1));
+		Set<CheckPoint> myCheckPoint = CheckPoint.getNormal();
+		Set<Lora> mySingleLora = new LinkedHashSet<>(Arrays.asList(Lora.NONE));
+		for (Lora myLora : mySingleLora) {
+			txt2img_mainTask(myCheckPoint, Prompt.PORN_M_LEG, Arrays.asList(myLora.initWeight(0.1f, 1.0f)), 20);// 影響不大
+		}
+	}
+
+	public void txt2img_main_sub1() {
+		Set<Lora> mySingleLora = new LinkedHashSet<>(Arrays.asList(Lora.REALISTICVAGINASGOD_GODPUSSY1V1,
+				Lora.REALISTICVAGINASGOD_GODPUSSY1V2, Lora.REALISTICVAGINASWET_WETPUSSYGROOL,
+				Lora.REALSPREADPUSSY_SPPSPREADPUSSYV3, Lora.REALSPREADPUSSY_SPPSPREADPUSSYWV1));
 // Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11 best 0.6
 //Lora.POVMISSIONARYVAGINAL_V1 影響人物卡通化
 //Lora.SPREADPUSSY_V11 一般anal 不太好用 0.7
@@ -811,7 +819,7 @@ public class Work extends WorkDeployVarFile {
 
 		Set<Lora> mySingleLora = new LinkedHashSet<>(Arrays.asList(Lora.ASIANGIRLXYBOBOLORA_NOTUPDATE,
 				Lora.ASIANGIRLZHAOXMLORA_NOTUPDATE, Lora.MINESFIXASIANLIKENESS_V10, Lora.SHOJOVIBE_V11));
-		//Lora.ANGELABABY_1   不像
+		// Lora.ANGELABABY_1 不像
 		// Lora.ASIAGIRLINUNIFORM_CHILLOUTMIX 不夠好
 		// Lora.ASIANGIRLSABRINALORA_NOTUPDATE 不夠好
 		// Lora.ASIANGIRLXYBOBOLORA_NOTUPDATE 好一點 0.9-->

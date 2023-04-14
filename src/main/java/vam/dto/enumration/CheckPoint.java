@@ -1,5 +1,8 @@
 package vam.dto.enumration;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public enum CheckPoint {
@@ -38,7 +41,7 @@ public enum CheckPoint {
 	V08_V08A(1, "V08_V08a.safetensors"), 
 	YORRRLMIX_V21(4, "yorrrlmix_v21.safetensors"),;
 
-	// @formatter:on
+	
 	private Integer rank;
 
 	private String filename;
@@ -60,10 +63,59 @@ public enum CheckPoint {
 		return rank;
 	}
 
+	public static Set<CheckPoint> getReal() {
+		return new LinkedHashSet<>(Arrays.asList(
+				CheckPoint.V08_V08, 
+				CheckPoint.V08_V08A,
+				CheckPoint._2GUOFENG2_V20,
+				CheckPoint._3GUOFENG3_V32LIGHT,
+				CheckPoint._3Guofeng3_v33,
+				CheckPoint.CHIKMIX_V1,
+				CheckPoint.CHIKMIX_V2,
+				CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX,
+				CheckPoint.CHILLOUTMIX_NI_FP16,
+				CheckPoint.UBERREALISTICPORNMERGE_URPMV13));
+	}
+	
+	public static Set<CheckPoint> getNormal() {
+		return new LinkedHashSet<>(Arrays.asList(
+				CheckPoint.DREAMFUL_V10LIGHT, 
+				CheckPoint.FANTASTICMIXREAL_V10,
+				CheckPoint.BLEND2SEXY_BTSFP16,
+				CheckPoint.REALISTICASIADOLLPEEING_V10,
+				CheckPoint.PERFECTWORLD_V1,
+				CheckPoint.PERFECTWORLD_V1BAKED,
+				CheckPoint.PERFECTWORLD_V2BAKED,
+				CheckPoint._3MOONNIREAL_3MOONNIREALV2));
+	}
+	
+	public static Set<CheckPoint> getBad() {
+		return new LinkedHashSet<>(Arrays.asList(
+				CheckPoint.BASIL_MIX_FIXED, 
+				CheckPoint.BEAUTYPROMIX_V1,
+				CheckPoint.GOODASIANGIRLFACE_GOODASIANGIRLFACEV12,
+				CheckPoint.HENMIXREAL_V10,
+				CheckPoint.KOREANSTYLE25D_KOREANSTYLE25DBAKED,
+				CheckPoint.LAZYMIXREALAMATEUR_V10,
+				CheckPoint.LUCKYSTRIKEMIX_V02REALISTIC,
+				CheckPoint.NEVERENDINGDREAMNED_BAKEDVAE,
+				CheckPoint.NEWMARSMIX_N,
+				CheckPoint.PFG_111SAFETENSORS,
+				CheckPoint.REALDOSMIX_,
+				CheckPoint.LUCKYSTRIKEMIX_V02REALISTIC));
+	}
+	
+	public static Set<CheckPoint> getCartoon() {
+		return new LinkedHashSet<>(Arrays.asList(
+				CheckPoint.ABYSSORANGEMIX2_HARD, 
+				CheckPoint.SUNSHINEMIX_SUNLIGHTMIXPRUNED,
+				CheckPoint.YORRRLMIX_V21));
+	}
+	
 	public static CheckPoint[] getSortedValues() {
 		return Stream.of(values()).sorted((o1, o2) -> {
 			return o1.getRank().compareTo(o2.getRank());
 		}).toArray(CheckPoint[]::new);
 	}
-
+	// @formatter:on
 }
