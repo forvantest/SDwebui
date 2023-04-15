@@ -12,7 +12,7 @@ public enum CheckPoint {
 	 _3Guofeng3_v33(0, "3Guofeng3_v33.safetensors",CheckPointType.LEGEND), 
 	_3MOONNIREAL_3MOONNIREALV2(4, "3moonNIReal_3moonNIRealV2.safetensors",CheckPointType.NORMAL), // very real, 
 	ABYSSORANGEMIX2_HARD(0, "abyssorangemix2_Hard.safetensors",CheckPointType.CARTOON), // cartoon
-	ABYSSORANGEMIX3AOM3_AOM3A1B(0, "abyssorangemix3AOM3_aom3a1b.safetensors",CheckPointType.NONE), // cartoon
+	ABYSSORANGEMIX3AOM3_AOM3A1B(0, "abyssorangemix3AOM3_aom3a1b.safetensors",CheckPointType.CARTOON), // cartoon
 	BASIL_MIX_FIXED(31, "Basil_mix_fixed.safetensors",CheckPointType.LEGEND), 
 	BEAUTYPROMIX_V1(32, "beautypromix_v1.safetensors",CheckPointType.NORMAL),
 	BLEND2SEXY_BTSFP16(15, "blend2sexy_btsFp16.safetensors",CheckPointType.NORMAL), // face good, but not very beautiful
