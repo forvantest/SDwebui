@@ -27,9 +27,10 @@ public enum CheckPoint {
 	//GOODASIANGIRLFACE_GOODASIANGIRLFACEV12(34, "goodAsianGirlFace_goodAsianGirlFaceV12.safetensors",CheckPointType.NONE),// fat face
 	HENMIXREAL_V10(35, "henmixReal_v10.safetensors",CheckPointType.NORMAL),
 	KOREANSTYLE25D_KOREANSTYLE25DBAKED(12, "koreanstyle25D_koreanstyle25DBaked.safetensors",CheckPointType.CARTOON),
-	KOTOSMIX_V10(12, "kotosmix_v10.safetensors",CheckPointType.NONE),
+	KOTOSMIX_V10(12, "kotosmix_v10.safetensors",CheckPointType.CARTOON_BETTER),
 	//LAZYMIXREALAMATEUR_V10(36, "lazymixRealAmateur_v10.safetensors",CheckPointType.NONE),// too ugly
 	//LUCKYSTRIKEMIX_V02REALISTIC(5, "luckyStrikeMix_V02Realistic.safetensors",CheckPointType.NORMAL), // too ugly
+	MEINAHENTAI_V21(5, "meinahentai_v21.safetensors",CheckPointType.CARTOON), 
 	NEVERENDINGDREAMNED_BAKEDVAE(14, "neverendingDreamNED_bakedVae.safetensors",CheckPointType.CARTOON_BETTER),
 	NEWMARSMIX_N(0, "newmarsmix_N.safetensors",CheckPointType.NORMAL), // not good enough
 	PERFECTWORLD_V1(37, "perfectWorld_v1.safetensors",CheckPointType.NORMAL), // real, not good enough

@@ -27,6 +27,7 @@ public enum Lora {
 	//FRAMEBINDER_V10("frameBinder_v10.safetensors",LoraType.NONE), 
 	GANYUGENSHINIMPACT_OFFSET("ganyuGenshinImpact_offset.safetensors",LoraType.BETTER),
 	HIPOLY3DMODELLORA_V10("hipoly3DModelLora_v10.safetensors",LoraType.BETTER),
+	HIPOLY3DMODELLORA_V20("hipoly3DModelLora_v20.safetensors",LoraType.BETTER),
 	JAPANESE_DOLL_LIKENESS("Japanese-doll-likeness.safetensors",LoraType.COUNTRY_IDOLL),
 	KBEAUKOREANBEAUTY_V15("kbeauKoreanBeauty_v15.safetensors",LoraType.COUNTRY_IDOLL),
 	KOREAN_BEAUTIFULGIRL("korean_beautifulGirl.safetensors",LoraType.COUNTRY_IDOLL), 

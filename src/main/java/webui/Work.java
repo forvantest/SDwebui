@@ -289,10 +289,10 @@ public class Work  {
 			long time1, time2;
 
 			time1 = System.currentTimeMillis();
-			txt2img_main_sub();
+//			txt2img_main_sub();
 //			txt2img_main_sub1();
 //			txt2img_main_sub2();
-//			txt2img_main_sub_random();
+			txt2img_main_sub_random();
 			time2 = System.currentTimeMillis();
 			System.out.println("mission 花了：" + (time2 - time1) / 1000 + "秒");
 		}
@@ -306,9 +306,9 @@ public class Work  {
 	}
 
 	public void txt2img_main_sub_random() {
-		Set<CheckPoint> myCheckPoint = CheckPoint.getBy(CheckPointType.LEGEND);
+		Set<CheckPoint> myCheckPoint = CheckPoint.getBy(CheckPointType.NORMAL);
 		CheckPoint checkPoint = randomCheckPoint(myCheckPoint);
-		Set<Lora> myLora = Lora.getBy(LoraType.COUNTRY_IDOLL);
+		Set<Lora> myLora = Lora.getBy(LoraType.BETTER);
 		Lora lora = randomLora(myLora);
 		txt2img_mainTask(checkPoint, Prompt.PORN_M_LEG, Arrays.asList(lora.initWeight(0.2f, 0.7f)), 20);// 影響不大
 	}
