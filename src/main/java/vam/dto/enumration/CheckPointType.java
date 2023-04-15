@@ -5,7 +5,11 @@ public enum CheckPointType {
 		CARTOON,
 		LEGEND,
 		NORMAL,
-		NONE, CARTOON_FAILED, CARTOON_BETTER, CHILDREN, 
+		NONE, 
+		CARTOON_FAILED, 
+		CARTOON_BETTER, 
+		CHILDREN, 
+		ENGLISH, 
 		;
 		
 	// @formatter:on
