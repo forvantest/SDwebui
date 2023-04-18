@@ -306,11 +306,16 @@ public class Work  {
 	}
 
 	public void txt2img_main_sub_random() {
-		Set<CheckPoint> myCheckPoint = CheckPoint.getBy(CheckPointType.NORMAL);
+		Set<CheckPoint> myCheckPoint = CheckPoint.getBy(CheckPointType.LEGEND);
 		CheckPoint checkPoint = randomCheckPoint(myCheckPoint);
 		Set<Lora> myLora = Lora.getBy(LoraType.BETTER);
 		Lora lora = randomLora(myLora);
-		txt2img_mainTask(checkPoint, Prompt.PORN_M_LEG, Arrays.asList(lora.initWeight(0.2f, 0.7f)), 20);// 影響不大
+		txt2img_mainTask(checkPoint, Prompt.PORN_DOGGY, Arrays.asList(lora.initWeight(0.2f, 1.1f)), 20);// 影響不大
+		
+//		Set<Lora> myLora2 = Lora.getBy(LoraType.COWGIRL);
+//		Lora lora2 = randomLora(myLora2);
+//		txt2img_mainTask(checkPoint, Prompt.PORN_GIRL6, Arrays.asList(lora2.initWeight(0.2f, 1.1f)), 20);// 影響不大
+		
 	}
 
 	private CheckPoint randomCheckPoint(Set<CheckPoint> myCheckPoint) {

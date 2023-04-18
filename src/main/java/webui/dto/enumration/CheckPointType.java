@@ -3,7 +3,7 @@ package webui.dto.enumration;
 public enum CheckPointType {
 	// @formatter:off
 		CARTOON,
-		LEGEND,
+		LEGEND,LEGEND_BLACKWHITE,
 		NORMAL,
 		NONE, 
 		CARTOON_FAILED, 

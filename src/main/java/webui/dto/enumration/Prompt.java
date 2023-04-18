@@ -165,6 +165,21 @@ public enum Prompt {
 			"EasyNegative, paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), "
 			+ "((grayscale)), skin spots, acnes, skin blemishes, age spot, glans,extra fingers,fewer fingers,strange fingers,bad hand, bad leg, "
 			+ "bad hands, bad eyes, extra leg, extra hand , extra foot, rock, palm tree, beach, day, muscle ",
+			512, 512, Sets.newHashSet()),
+	
+	PORN_DOGGY(
+			"(masterpiece:1.0), (best quality:1.0), ((ultra realistic:1.0)), ((detailed:1.0)), (pov:1.0), "
+			+ "(black hair:1.0), ((bursting large breasts:1.0)), round hips, narrow waist, (fluid long hair:1.0), "
+			+ "(athletic:1.0), cleavage, skindentation , .((slim legs)), orgasm, ((midriff)), nipples, ((nude)), "
+			+ "(((beautiful face))), (bare thigh), (bare shoulders),nsfw,high heels,on bed, ((cum on body)), ((gorgeous hanfu)), "
+			+ "(1girl, 1boy, sex , from behind),breast grab, grabbing from behind, ",
+			" reyscale, monochrome, lowres,bad anatomy, bad proportions, bad hands, multiple arms, multiple legs, "
+			+ "deformed, text, error, missing fingers, extra fingers, extra digit, extra limb, extra nipple, "
+			+ "extra breast, missing limb, floating limbs, disconnected limbs, severed, dismembered, corpse, "
+			+ "malformed hands, long neck, long body, fewer digits, deformed, disfigured, amputee, mutated, "
+			+ "mutation, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, "
+			+ "watermark, username, blurry, artist name, censored, fat, long body, poorly drawn face, "
+			+ "futanari,2girl,3girl,pubic hair, anal, ",
 			512, 512, Sets.newHashSet()),;
 
 	private String positive;

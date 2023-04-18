@@ -9,7 +9,7 @@ public enum LoraType {
 	BEAUTY,
 	PUSSY,
 	CHECK_POINT,
-	NONE,
+	NONE, DOGGY, COWGIRL, CARTOON,
 	;
 	
 	// @formatter:on

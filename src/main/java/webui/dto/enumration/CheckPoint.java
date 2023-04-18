@@ -13,7 +13,7 @@ public enum CheckPoint {
 	_3MOONNIREAL_3MOONNIREALV2(4, "3moonNIReal_3moonNIRealV2.safetensors",CheckPointType.NORMAL), // very real, 
 	ABYSSORANGEMIX2_HARD(0, "abyssorangemix2_Hard.safetensors",CheckPointType.CARTOON), // cartoon
 	ABYSSORANGEMIX3AOM3_AOM3A1B(0, "abyssorangemix3AOM3_aom3a1b.safetensors",CheckPointType.CARTOON), // cartoon
-	BASIL_MIX_FIXED(31, "Basil_mix_fixed.safetensors",CheckPointType.LEGEND), 
+	BASIL_MIX_FIXED(31, "Basil_mix_fixed.safetensors",CheckPointType.LEGEND_BLACKWHITE), 
 	BEAUTYPROMIX_V1(32, "beautypromix_v1.safetensors",CheckPointType.NORMAL),
 	BLEND2SEXY_BTSFP16(15, "blend2sexy_btsFp16.safetensors",CheckPointType.NORMAL), // face good, but not very beautiful
 	CHIKMIX_V1(3, "chikmix_V1.safetensors",CheckPointType.LEGEND), 
@@ -22,7 +22,7 @@ public enum CheckPoint {
 	CHILLOUTMIX_NI_FP16(33, "ChilloutMix-ni-fp16.safetensors",CheckPointType.LEGEND), 
 	DREAMFUL_V10LIGHT(15, "dreamful_v10Light.safetensors",CheckPointType.CARTOON_FAILED), // face good, but too many failed
 	FACEBOMBMIX_V1BAKEDVAE(15, "facebombmix_v1Bakedvae.safetensors",CheckPointType.CARTOON_BETTER), // face good 
-	FANTASTICMIXREAL_V10(13, "fantasticmixReal_v10.safetensors",CheckPointType.LEGEND), // face good, but too many failed
+	FANTASTICMIXREAL_V10(13, "fantasticmixReal_v10.safetensors",CheckPointType.LEGEND_BLACKWHITE), // face good, but too many failed
 	FINAL_PRUNE(99, "final-prune.ckpt",CheckPointType.CARTOON),
 	//GOODASIANGIRLFACE_GOODASIANGIRLFACEV12(34, "goodAsianGirlFace_goodAsianGirlFaceV12.safetensors",CheckPointType.NONE),// fat face
 	HENMIXREAL_V10(35, "henmixReal_v10.safetensors",CheckPointType.NORMAL),
