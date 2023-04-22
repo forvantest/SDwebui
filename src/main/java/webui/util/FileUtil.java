@@ -188,14 +188,14 @@ public class FileUtil {
 		String outputDir = playRecordDTO.getOutputDir();
 		String srcPath = playRecordDTO.getFullpath();
 		Path sDir = Paths.get(srcPath);
-		String targetPath = WEBUI_SOME_PATH + "txt2img-images\\" + outputDir + "\\";
+		String targetPath = WEBUI_SOME_PATH + outputDir + "\\";
 		FileUtil.checkFolderExist(targetPath);
 		Path tDir = Paths.get(targetPath, playRecordDTO.getIdentifyName());
 		if (!FileUtil.checkFileExist(srcPath)) {
 			System.out.println("\n--X--moving failed src not exist " + reason + ": " + srcPath);
 		} else if (!sDir.endsWith(tDir)) {
 			try {
-				log.info("+++moving %s: %s from %s", reason, tDir, sDir);
+				log.info("+++moving {}: {} from {}", reason, tDir, sDir);
 				Files.move(sDir, tDir, StandardCopyOption.REPLACE_EXISTING);
 			} catch (IOException e) {
 				e.printStackTrace();

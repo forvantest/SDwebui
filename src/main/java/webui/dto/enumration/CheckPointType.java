@@ -9,7 +9,7 @@ public enum CheckPointType {
 		CARTOON_FAILED, 
 		CARTOON_BETTER, 
 		CHILDREN, 
-		ENGLISH, 
+		ENGLISH, LOST_COLOR_LORA, 
 		;
 		
 	// @formatter:on

@@ -40,7 +40,7 @@ public enum Prompt {
 	PORN_SPREAD(
 			"picture-perfect face, flawless, clean, masterpiece, professional artwork, famous artwork, cinematic lighting, cinematic bloom, "
 					+ "perfect face, beautiful face, beautiful eyes, ((perfect female body)), divine, goddess, godlike, fantasy, dreamlike, unreal, "
-					+ "science fiction, huge breasts:1.7,nsfw, breasts out, intricate detail, delicate pattern, sexy, charming, alluring, seductive, "
+					+ "science fiction, huge breasts:1.7,nsfw,high heels, breasts out, intricate detail, delicate pattern, sexy, charming, alluring, seductive, "
 					+ "erotic, enchanting, 1girl,puffy nipples, nude, pussy, hairy pussy hairs:1.2,gape,creampie,extreme close up,(spread legs:1.3),",
 			"watermark, text, error, blurry, jpeg artifacts, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, username, "
 					+ "artist name, (worst quality, low quality:1.4), ((bad anatomy)), signature, text, logo,contact, ((extra limbs)), Six fingers,"

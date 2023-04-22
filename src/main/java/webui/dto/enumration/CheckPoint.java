@@ -32,8 +32,8 @@ public enum CheckPoint {
 	//LUCKYSTRIKEMIX_V02REALISTIC(5, "luckyStrikeMix_V02Realistic.safetensors",CheckPointType.NORMAL), // too ugly
 	MEINAHENTAI_V21(5, "meinahentai_v21.safetensors",CheckPointType.CARTOON), 
 	NEVERENDINGDREAMNED_BAKEDVAE(14, "neverendingDreamNED_bakedVae.safetensors",CheckPointType.CARTOON_BETTER),
-	NEWMARSMIX_N(0, "newmarsmix_N.safetensors",CheckPointType.NORMAL), // not good enough
-	PERFECTWORLD_V1(37, "perfectWorld_v1.safetensors",CheckPointType.NORMAL), // real, not good enough
+	NEWMARSMIX_N(0, "newmarsmix_N.safetensors",CheckPointType.LOST_COLOR_LORA), // not good enough
+	PERFECTWORLD_V1(37, "perfectWorld_v1.safetensors",CheckPointType.LOST_COLOR_LORA), // real, not good enough
 	//PERFECTWORLD_V1BAKED(6, "perfectWorld_v1Baked.safetensors",CheckPointType.NONE),
 	PERFECTWORLD_V2BAKED(7, "perfectWorld_v2Baked.safetensors",CheckPointType.NORMAL),
 	//PFG_111SAFETENSORS(38, "pfg_111Safetensors.safetensors",CheckPointType.CARTOON), 
