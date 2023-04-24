@@ -12,7 +12,7 @@ public enum Rescale {
 	LANCZOS("Lanczos"), 
 	NEAREST("Nearest"), 
 	ESRGAN_4X("ESRGAN_4x"), 
-	LDSR("LDSR"), 
+//	LDSR("LDSR"), 
 	SWINIR_4X("SwinIR_4x"), 
 	;
 
