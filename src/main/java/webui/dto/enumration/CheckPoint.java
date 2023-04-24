@@ -137,4 +137,13 @@ public enum CheckPoint {
 		}
 		return set;
 	}
+
+	public static CheckPoint findByFilename(String filename2) {
+		for (CheckPoint checkPoint : CheckPoint.values()) {
+			if (checkPoint.getFilename().equals(filename2))
+				return checkPoint;
+		}
+		return null;
+	}
+
 }

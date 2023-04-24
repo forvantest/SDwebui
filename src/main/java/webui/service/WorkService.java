@@ -1,4 +1,4 @@
-package webui;
+package webui.service;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +27,7 @@ public class WorkService extends WorkServiceAbstract {
 
 			time1 = System.currentTimeMillis();
 
-			doPost3();
+			modelService.loadModel();
 
 //			txt2img_main_sub1();
 			txt2img_main_sub();

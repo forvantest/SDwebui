@@ -1,6 +1,7 @@
 package webui.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ import webui.dto.enumration.Lora;
 @Component
 public class SDUtils {
 	public static List<Object> toDataList(int batch, int batch_amount, PlayRecordDTO playRecordDTO,
-			Txt2ImgDTO txt2ImgDTO) {
+			Txt2ImgDTO txt2ImgDTO, String model) {
 		List<Object> dataList = new ArrayList<>();
 		dataList.add("task(dob24x4iiky9vcv)");// 0
 
@@ -34,7 +35,7 @@ public class SDUtils {
 		}
 		dataList.add(sb.toString());// 1
 		dataList.add(playRecordDTO.getPrompt().getNegative());// 2
-		dataList.add(new ArrayList<>());// 3
+		dataList.add(Arrays.asList(model));// 3
 		dataList.add(playRecordDTO.getSteps());// 4
 		dataList.add(playRecordDTO.getSamplerName().getOpCode());// 5
 		dataList.add(txt2ImgDTO.getRestore_faces());// 6

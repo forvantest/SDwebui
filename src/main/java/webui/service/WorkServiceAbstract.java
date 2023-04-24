@@ -1,4 +1,4 @@
-package webui;
+package webui.service;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -68,6 +68,9 @@ public abstract class WorkServiceAbstract {
 	String endpoint2 = "/run/predict/";
 
 	protected String WEBUI_SOME_PATH = "C:\\Games\\";
+
+	@Autowired
+	ModelService modelService;
 
 	@Autowired
 	public ObjectMapper objectMapper;
@@ -229,7 +232,8 @@ public abstract class WorkServiceAbstract {
 		try {
 			Txt2ImgDTO txt2ImgDTO = new Txt2ImgDTO();
 			PredictDTO predict = new PredictDTO();
-			List<Object> objList = SDUtils.toDataList(1, 1, playRecordDTO, txt2ImgDTO);
+			List<Object> objList = SDUtils.toDataList(1, 1, playRecordDTO, txt2ImgDTO,
+					ModelService.getModel(playRecordDTO.getCheckPoint()));
 			SDUtils.appendHiRES(objList, playRecordDTO);
 			predict.setData(objList);
 			String requestJSON = objectMapper.writeValueAsString(predict);
@@ -258,9 +262,9 @@ public abstract class WorkServiceAbstract {
 	}
 
 	private void switchCheckPoint(CheckPoint checkPoint) {
-		if (checkPoint.equals(checkPointNow))
+		if (checkPoint.equals(modelService.checkPointNow))
 			return;
-		checkPointNow = checkPoint;
+		modelService.checkPointNow = checkPoint;
 
 		List<Object> data = new ArrayList<>();
 		data.add(checkPoint.getFilename());
@@ -290,25 +294,22 @@ public abstract class WorkServiceAbstract {
 		}
 	}
 
-	protected boolean doPost3() {
+	protected List<ModelDTO> doPost3() {
 		try {
 			ResponseEntity<String> rs = callRestClientAPI(endpoint3, "", HttpMethod.GET);
 			if (rs.getStatusCodeValue() == 200) {
 				List<ModelDTO> modelDTOList = objectMapper.readValue(rs.getBody(), new TypeReference<List<ModelDTO>>() {
 				});
-
 				log.info("post done models:{}", modelDTOList.size());
-				return true;
+				return modelDTOList;
 			}
 			log.info("post error: {}", rs.getStatusCodeValue());
-			return false;
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
-
-	static CheckPoint checkPointNow = null;
 
 	public void txt2img_main_sub_random_do(CheckPointType checkPointType, LoraType loraType, Prompt prompt,
 			TextualInversion textualInversion, String targetDir) {
