@@ -31,12 +31,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Sets;
 
 import lombok.extern.slf4j.Slf4j;
+import webui.dto.ModelDTO;
 import webui.dto.PlayRecordDTO;
 import webui.dto.PredictDTO;
 import webui.dto.ResultDTO;
@@ -292,7 +294,10 @@ public abstract class WorkServiceAbstract {
 		try {
 			ResponseEntity<String> rs = callRestClientAPI(endpoint3, "", HttpMethod.GET);
 			if (rs.getStatusCodeValue() == 200) {
-				log.info("post done");
+				List<ModelDTO> modelDTOList = objectMapper.readValue(rs.getBody(), new TypeReference<List<ModelDTO>>() {
+				});
+
+				log.info("post done models:{}", modelDTOList.size());
 				return true;
 			}
 			log.info("post error: {}", rs.getStatusCodeValue());
