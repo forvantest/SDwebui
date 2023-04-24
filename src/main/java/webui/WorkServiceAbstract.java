@@ -62,6 +62,7 @@ public abstract class WorkServiceAbstract {
 	private String host;
 
 	String endpoint1 = "/sdapi/v1/txt2img";
+	String endpoint3 = "/sdapi/v1/sd-models";
 	String endpoint2 = "/run/predict/";
 
 	protected String WEBUI_SOME_PATH = "C:\\Games\\";
@@ -103,16 +104,16 @@ public abstract class WorkServiceAbstract {
 		return headers;
 	}
 
-	private ResponseEntity<String> callRestClientAPI(String endpoint2, String requestJSON, HttpMethod method) {
+	private ResponseEntity<String> callRestClientAPI(String endpoint, String requestJSON, HttpMethod method) {
 		HttpHeaders headers = buildRequestHeader(null);
-		final URI uri = buildUri(host, endpoint2);
+		final URI uri = buildUri(host, endpoint);
 		try {
 			final Stopwatch sw = Stopwatch.createStarted();
 
 			final HttpEntity<String> request = new HttpEntity<>(requestJSON, headers);
 
 			final RestTemplate template = new RestTemplate();
-			final RetryTemplate retryTemplate = retryTemplate(endpoint2);
+			final RetryTemplate retryTemplate = retryTemplate(endpoint);
 			final ResponseEntity<String> response = retryTemplate
 					.execute(retryContetx -> template.exchange(uri, method, request, String.class));
 
@@ -282,6 +283,21 @@ public abstract class WorkServiceAbstract {
 			log.info("post error: {}", rs.getStatusCodeValue());
 			return false;
 		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	protected boolean doPost3() {
+		try {
+			ResponseEntity<String> rs = callRestClientAPI(endpoint3, "", HttpMethod.GET);
+			if (rs.getStatusCodeValue() == 200) {
+				log.info("post done");
+				return true;
+			}
+			log.info("post error: {}", rs.getStatusCodeValue());
+			return false;
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}

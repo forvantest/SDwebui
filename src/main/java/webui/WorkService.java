@@ -26,6 +26,9 @@ public class WorkService extends WorkServiceAbstract {
 			long time1, time2;
 
 			time1 = System.currentTimeMillis();
+
+			doPost3();
+
 //			txt2img_main_sub1();
 			txt2img_main_sub();
 //			txt2img_main_sub_random();
