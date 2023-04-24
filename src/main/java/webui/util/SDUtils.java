@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import webui.dto.LoraDTO;
@@ -22,12 +23,15 @@ public class SDUtils {
 
 		StringBuffer sb = new StringBuffer();
 		sb.append(playRecordDTO.getPrompt().getPositive());
-		if (playRecordDTO.changeLoraWeight) {
-			for (Lora lora : playRecordDTO.getLoraList()) {
-				sb.append(lora.appendLora());
+//		if (playRecordDTO.changeLoraWeight) {
+		for (Lora lora : playRecordDTO.getLoraList()) {
+			sb.append(lora.appendLora());
+		}
+		if (!CollectionUtils.isEmpty(playRecordDTO.getTextualInversionList())) {
+			if (playRecordDTO.getTextualInversionList().get(0) != null) {
+				sb.append(playRecordDTO.getTextualInversionList().get(0).appendTextualInversionPT());
 			}
-		} else
-			sb.append(playRecordDTO.getTextualInversionList().get(0).appendTextualInversion());
+		}
 		dataList.add(sb.toString());// 1
 		dataList.add(playRecordDTO.getPrompt().getNegative());// 2
 		dataList.add(new ArrayList<>());// 3
@@ -38,7 +42,7 @@ public class SDUtils {
 		dataList.add(batch);// 8
 		dataList.add(batch_amount);// 9
 		dataList.add(playRecordDTO.getCfg_scale());// 10
-		dataList.add(playRecordDTO.getSeed());// 11
+		dataList.add(playRecordDTO.getPrompt().getSeed() == null ? -1 : playRecordDTO.getPrompt().getSeed());// 11
 		dataList.add(playRecordDTO.getN_iter());// 12
 		dataList.add(0);// 13
 		dataList.add(0);// 14
@@ -49,7 +53,7 @@ public class SDUtils {
 		dataList.add(false);// 19
 		dataList.add(0);// 20
 		dataList.add(2);// 21
-		dataList.add("Latent");// 22
+		dataList.add(playRecordDTO.getRescale().getRescaleDesc());// 22
 		dataList.add(0);// 23
 		dataList.add(0);// 24
 		dataList.add(0);// 25
@@ -128,14 +132,14 @@ public class SDUtils {
 
 	}
 
-	public static void appendHiRES(List<Object> dataList) {
-		dataList.set(16,false);// 16
-		dataList.set(17,512);// 17
-		dataList.set(18,512);// 18
-		dataList.set(19,true);// 19
-		dataList.set(20,0.48);// 20
-		dataList.set(21,2);// 21
-		dataList.set(22,"ESRGAN_4x");// 22
-		dataList.set(23,10);// 23
+	public static void appendHiRES(List<Object> dataList, PlayRecordDTO playRecordDTO) {
+		dataList.set(16, false);// 16
+		// dataList.set(17, 512);// 17
+		// dataList.set(18, 384);// 18
+		dataList.set(19, true);// 19
+		dataList.set(20, playRecordDTO.getDenoising());// 20
+		dataList.set(21, 2);// 21
+		dataList.set(22, playRecordDTO.getRescale().getRescaleDesc());// 22
+		dataList.set(23, playRecordDTO.getHiresFixTimes());// 23
 	}
 }

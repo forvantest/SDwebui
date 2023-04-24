@@ -48,6 +48,7 @@ import webui.dto.enumration.CheckPointType;
 import webui.dto.enumration.Lora;
 import webui.dto.enumration.LoraType;
 import webui.dto.enumration.Prompt;
+import webui.dto.enumration.Rescale;
 import webui.dto.enumration.SampleName;
 import webui.dto.enumration.TextualInversion;
 import webui.util.FileUtil;
@@ -150,14 +151,17 @@ public abstract class WorkServiceAbstract {
 	}
 
 	private PlayRecordDTO txt2img(Prompt prompt, List<Lora> loraList, TextualInversion textualInversion,
-			CheckPoint checkPoint, SampleName sampleName, int batch, Integer step) {
+			CheckPoint checkPoint, SampleName sampleName, Rescale rescale, int batch, Integer step) {
 		PlayRecordDTO playRecordDTO = new PlayRecordDTO();
 		playRecordDTO.setPrompt(prompt);
 		playRecordDTO.setCheckPoint(checkPoint);
 		playRecordDTO.setSamplerName(sampleName);
 		playRecordDTO.getLoraList().addAll(loraList);
 		playRecordDTO.getTextualInversionList().add(textualInversion);
+		playRecordDTO.setRescale(rescale);
 		playRecordDTO.setSteps(step);
+		playRecordDTO.setDenoising(0.7f);
+		playRecordDTO.setHiresFixTimes(0);
 		for (int i = 0; i < batch; i++) {
 			log.info("txt2img {}:{} {}", checkPoint.name(), i, sampleName.name());
 			String filename = doPost2(playRecordDTO);
@@ -223,7 +227,7 @@ public abstract class WorkServiceAbstract {
 			Txt2ImgDTO txt2ImgDTO = new Txt2ImgDTO();
 			PredictDTO predict = new PredictDTO();
 			List<Object> objList = SDUtils.toDataList(1, 1, playRecordDTO, txt2ImgDTO);
-			SDUtils.appendHiRES(objList);
+			SDUtils.appendHiRES(objList,playRecordDTO);
 			predict.setData(objList);
 			String requestJSON = objectMapper.writeValueAsString(predict);
 			ResponseEntity<String> rs = callRestClientAPI(endpoint2, requestJSON, HttpMethod.POST);
@@ -286,7 +290,7 @@ public abstract class WorkServiceAbstract {
 	static CheckPoint checkPointNow = null;
 
 	public void txt2img_main_sub_random_do(CheckPointType checkPointType, LoraType loraType, Prompt prompt,
-			String targetDir) {
+			TextualInversion textualInversion, String targetDir) {
 		List<SeedDTO> aySeed = new ArrayList<>();
 
 		Set<CheckPoint> myCheckPoint = CheckPoint.getBy(checkPointType);
@@ -306,8 +310,8 @@ public abstract class WorkServiceAbstract {
 			if (Objects.isNull(seedDTO))
 				break;
 			log.info("{} {} {}/{}", seedDTO.getCheckPoint(), seedDTO.getLora(), i, total_size);
-			txt2img_mainTask(seedDTO.getCheckPoint(), prompt,
-					Arrays.asList(seedDTO.getLora().initWeight(0.2f, 1.1f)), 20, targetDir);// 影響不大
+			txt2img_mainTask(seedDTO.getCheckPoint(), prompt, Arrays.asList(seedDTO.getLora().initWeight(0.2f, 1.1f)),
+					textualInversion, 20, targetDir);// 影響不大
 		}
 	}
 
@@ -321,7 +325,7 @@ public abstract class WorkServiceAbstract {
 		return seedDTO;
 	}
 
-	private CheckPoint randomCheckPoint(Set<CheckPoint> myCheckPoint) {
+	protected CheckPoint randomCheckPoint(Set<CheckPoint> myCheckPoint) {
 		CheckPoint[] ayCheckPoint = myCheckPoint.toArray(new CheckPoint[myCheckPoint.size()]);
 		int index = (int) (Math.random() * ayCheckPoint.length);
 		return ayCheckPoint[index];
@@ -333,23 +337,23 @@ public abstract class WorkServiceAbstract {
 		return ayLora[index];
 	}
 
-	public void txt2img_main_sub1() {
-		Set<Lora> mySingleLora = Lora.getBy(LoraType.PUSSY);
-// Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11 best 0.6
-//Lora.POVMISSIONARYVAGINAL_V1 影響人物卡通化
-//Lora.SPREADPUSSY_V11 一般anal 不太好用 0.7
-//Lora.PUSSYSPREAD_V01 不太好用 0.4
-//Lora.REALISTICVAGINASGOD_GODPUSSY1V1 還可以 0.6極限
-		String targetDir = "default\\";
-		for (Lora myLora : mySingleLora) {
-			txt2img_mainTask(Sets.newHashSet(CheckPoint._2GUOFENG2_V20), Prompt.PORN_M_LEG,
-					Arrays.asList(myLora.initWeight(0.2f, 0.7f)), 20, targetDir);// 影響不大
-			txt2img_mainTask(Sets.newHashSet(CheckPoint._3GUOFENG3_V32LIGHT), Prompt.PORN_M_LEG,
-					Arrays.asList(myLora.initWeight(0.2f, 0.7f)), 20, targetDir);// 影響不大
-			txt2img_mainTask(Sets.newHashSet(CheckPoint._3Guofeng3_v33), Prompt.PORN_M_LEG,
-					Arrays.asList(myLora.initWeight(0.2f, 0.7f)), 20, targetDir);// 影響不大
-		}
-	}
+//	public void txt2img_main_sub1() {
+//		Set<Lora> mySingleLora = Lora.getBy(LoraType.PUSSY);
+//// Lora.CREAMPIEHAIRYPUSSY_CREAMPIEV11 best 0.6
+////Lora.POVMISSIONARYVAGINAL_V1 影響人物卡通化
+////Lora.SPREADPUSSY_V11 一般anal 不太好用 0.7
+////Lora.PUSSYSPREAD_V01 不太好用 0.4
+////Lora.REALISTICVAGINASGOD_GODPUSSY1V1 還可以 0.6極限
+//		String targetDir = "default\\";
+//		for (Lora myLora : mySingleLora) {
+//			txt2img_mainTask(Sets.newHashSet(CheckPoint._2GUOFENG2_V20), Prompt.PORN_M_LEG,
+//					Arrays.asList(myLora.initWeight(0.2f, 0.7f)), 20, targetDir);// 影響不大
+//			txt2img_mainTask(Sets.newHashSet(CheckPoint._3GUOFENG3_V32LIGHT), Prompt.PORN_M_LEG,
+//					Arrays.asList(myLora.initWeight(0.2f, 0.7f)), 20, targetDir);// 影響不大
+//			txt2img_mainTask(Sets.newHashSet(CheckPoint._3Guofeng3_v33), Prompt.PORN_M_LEG,
+//					Arrays.asList(myLora.initWeight(0.2f, 0.7f)), 20, targetDir);// 影響不大
+//		}
+//	}
 
 	public void txt2img_main_sub2() {
 //		txt2img_mainTask(Sets.newHashSet(CheckPoint.V08_V08), Prompt.PORN_NURSE,
@@ -435,24 +439,28 @@ public abstract class WorkServiceAbstract {
 //				Arrays.asList(Lora.AHEGAOROLLINGEYES_V1114.initWeight(0.0f, 0.4f)), 20);
 	}
 
-	public void txt2img_mainTask(Set<CheckPoint> myCheckPoint, Prompt prompt, List<Lora> myLora, Integer step,
-			String targetDir) {
+	public void txt2img_mainTask(Set<CheckPoint> myCheckPoint, Prompt prompt, List<Lora> myLora,
+			TextualInversion textualInversion, Integer step, String targetDir) {
 		for (CheckPoint checkPoint : myCheckPoint) {
-			txt2img_mainTask(checkPoint, prompt, myLora, step, targetDir);
+			txt2img_mainTask(checkPoint, prompt, myLora, textualInversion, step, targetDir);
 		}
 	}
 
-	public void txt2img_mainTask(CheckPoint checkPoint, Prompt prompt, List<Lora> myLora, Integer step,
-			String targetDir) {
+	public void txt2img_mainTask(CheckPoint checkPoint, Prompt prompt, List<Lora> myLora,
+			TextualInversion textualInversion, Integer step, String targetDir) {
 		System.out.println("\n\n checkpoint: " + checkPoint.name());
 		switchCheckPoint(checkPoint);
+		
 		for (int i = 0; i < 10000; i++) {
-			if (!nextWeight(myLora)) {
+			if(myLora.get(0).getWeightEnd()==null) {
+				txt2img_mainTask_render(checkPoint, prompt, myLora, textualInversion, step, targetDir);
+				break;
+			}else if (!nextWeight(myLora)) {
 				for (Lora lora : myLora) {
 					System.out.print("  " + lora.appendLora());
 				}
 				System.out.println(" ");
-				txt2img_mainTask_render(checkPoint, prompt, myLora, step, targetDir);
+				txt2img_mainTask_render(checkPoint, prompt, myLora, textualInversion, step, targetDir);
 			} else {
 				break;
 			}
@@ -483,7 +491,9 @@ public abstract class WorkServiceAbstract {
 	private boolean nextWeight(Lora lora) {
 		if (lora == null)
 			return true;
-
+		if (lora.getWeightEnd() == null)
+			return false;
+		
 		if (lora.getWeight() + 0.1f > lora.getWeightEnd()) {
 			lora.setWeight(lora.getWeightStart());
 			return true;
@@ -493,18 +503,22 @@ public abstract class WorkServiceAbstract {
 		}
 	}
 
-	public void txt2img_mainTask_render(CheckPoint checkPoint, Prompt prompt, List<Lora> loraList, Integer step,
-			String targetDir) {
-		List<SampleName> mySample = Arrays.asList(SampleName.DPM_PLUS_SDE_KARRAS, SampleName.DPM_PLUS_2M_KARRAS,
-				SampleName.DPM_PLUS_2S_A_KARRAS, SampleName.EULER_A);
-		TextualInversion textualInversion = TextualInversion.NONE;
+	public void txt2img_mainTask_render(CheckPoint checkPoint, Prompt prompt, List<Lora> loraList,
+			TextualInversion textualInversion, Integer step, String targetDir) {
+//		List<SampleName> mySample = Arrays.asList(SampleName.DPM_PLUS_SDE_KARRAS, SampleName.DPM_PLUS_2M_KARRAS,
+//				SampleName.DPM_PLUS_2S_A_KARRAS, SampleName.EULER_A);
+		List<SampleName> mySample = Arrays.asList( SampleName.DPM_PLUS_2M_KARRAS);
+		List<Rescale> myRescale = Arrays.asList(Rescale.values());
 		for (SampleName sampleName : mySample) {
-			PlayRecordDTO playRecordDTO = txt2img(prompt, loraList, textualInversion, checkPoint, sampleName, 1, step);
-			if (playRecordDTO == null) {
-				System.out.println("\n\n work failed!");
-				break;
-			} else {
-				FileUtil.moveFileTo(WEBUI_SOME_PATH+targetDir, playRecordDTO, "txt2img over");
+			for (Rescale rescale : myRescale) {
+				PlayRecordDTO playRecordDTO = txt2img(prompt, loraList, textualInversion, checkPoint, sampleName,
+						rescale, 1, step);
+				if (playRecordDTO == null) {
+					System.out.println("\n\n work failed!");
+					break;
+				} else {
+					FileUtil.moveFileTo(WEBUI_SOME_PATH + targetDir, playRecordDTO,rescale, "txt2img over");
+				}
 			}
 		}
 	}

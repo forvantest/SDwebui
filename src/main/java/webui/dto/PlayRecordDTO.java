@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import webui.dto.enumration.CheckPoint;
 import webui.dto.enumration.Lora;
 import webui.dto.enumration.Prompt;
+import webui.dto.enumration.Rescale;
 import webui.dto.enumration.SampleName;
 import webui.dto.enumration.TextualInversion;
 
@@ -31,8 +32,10 @@ public class PlayRecordDTO implements Comparable {
 	private Integer cfg_scale = 7;
 //	private Integer width = 768;
 //	private Integer height = 1024;
+	private Rescale rescale;
+	private Float denoising = 0.7f;
+	private Integer hiresFixTimes = 0;
 
-	private Integer seed = -1;
 	private Integer n_iter = -1;
 
 	private Boolean loRA = false;
@@ -69,7 +72,7 @@ public class PlayRecordDTO implements Comparable {
 	@Override
 	public int compareTo(Object o) {
 		PlayRecordDTO playRecordDTO = (PlayRecordDTO) o;
-		return seed - playRecordDTO.getSeed();
+		return 1;
 	}
 
 	public Object getHeight() {
@@ -99,7 +102,7 @@ public class PlayRecordDTO implements Comparable {
 
 	public static boolean changeLoraWeight = true;
 
-	public String getIdentifyName() {
+	public String getIdentifyName(Rescale rescale) {
 		String identifyName = "";
 		if (changeLoraWeight) {
 			if (loraList.size() == 2) {
@@ -108,8 +111,9 @@ public class PlayRecordDTO implements Comparable {
 						loraList.get(0).getWeight(), loraList.get(1).getWeight(), samplerName, loraList.get(0).name(),
 						loraList.get(1).name(), getKey(), steps);
 			} else {
-				identifyName = String.format("weight__%.1f sample__%s lora__%s %s step_%s.png",
-						loraList.get(0).getWeight(), samplerName, loraList.get(0).name(), getKey(), steps);
+				identifyName = String.format("weight__%.1f %s lora__%s sample__%s %s step_%s.png",
+						loraList.get(0).getWeight(), rescale.name(), loraList.get(0).name(), samplerName, getKey(),
+						steps);
 			}
 		} else {
 			identifyName = String.format("weight_%.1f %s TextualInversion_%s sample_%s step_%s.png",
@@ -123,7 +127,8 @@ public class PlayRecordDTO implements Comparable {
 		String outputDir = "";
 		if (changeLoraWeight) {
 			if (loraList.size() == 2) {
-				outputDir = String.format("%s__%s__%s", checkPoint.name(), loraList.get(0).name(),loraList.get(1).name());
+				outputDir = String.format("%s__%s__%s", checkPoint.name(), loraList.get(0).name(),
+						loraList.get(1).name());
 			} else {
 				outputDir = String.format("%s__%s", checkPoint.name(), loraList.get(0).name());
 			}
@@ -132,4 +137,5 @@ public class PlayRecordDTO implements Comparable {
 		}
 		return outputDir;
 	}
+
 }

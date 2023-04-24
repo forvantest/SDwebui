@@ -149,4 +149,9 @@ public enum Lora {
 		return set;
 	}
 
+	public Lora initWeight(Float weight) {
+		this.weight = weight;
+		return this;
+	}
+
 }
