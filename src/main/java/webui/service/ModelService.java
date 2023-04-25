@@ -20,14 +20,14 @@ public class ModelService extends WorkServiceAbstract {
 	public void loadModel() {
 		List<ModelDTO> modelDTOList = doPost3();
 		for (ModelDTO modelDTO : modelDTOList) {
-			CheckPoint checkPoint = CheckPoint.findByFilename(modelDTO.getFilename());
+			CheckPoint checkPoint = CheckPoint.findByFilename(modelDTO.getModel_name());
 			mapModel.put(checkPoint, modelDTO);
 		}
 	}
 
 	public static String getModel(CheckPoint checkPoint) {
 		ModelDTO modelDTO = mapModel.get(checkPoint);
-		String ss = String.format("%s %s", modelDTO.getModel_name(), modelDTO.getHash());
+		String ss = String.format("Model hash: %s", modelDTO.getHash());
 		return ss;
 	}
 

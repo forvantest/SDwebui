@@ -28,13 +28,11 @@ public class PlayRecordDTO implements Comparable {
 	private CheckPoint checkPoint = null;
 	private SampleName samplerName = null;
 	private Prompt prompt = Prompt.PORN_M_LEG;
-	private Integer steps = 35;
+//	private Integer steps = 35;
 	private Integer cfg_scale = 7;
-//	private Integer width = 768;
-//	private Integer height = 1024;
-	private Rescale rescale;
-	private Float denoising = 0.7f;
-	private Integer hiresFixTimes = 0;
+//	private Rescale rescale;
+//	private Float denoising = 0.7f;
+//	private Integer hiresFixTimes = 0;
 
 	private Integer n_iter = -1;
 
@@ -109,16 +107,16 @@ public class PlayRecordDTO implements Comparable {
 				identifyName = String.format(
 						"weight1__%.1f weight2__%.1f sample__%s lora1__%s lora2__%s %s step_%s.png",
 						loraList.get(0).getWeight(), loraList.get(1).getWeight(), samplerName, loraList.get(0).name(),
-						loraList.get(1).name(), getKey(), steps);
+						loraList.get(1).name(), getKey(), prompt.getSteps());
 			} else {
 				identifyName = String.format("weight__%.1f %s lora__%s sample__%s %s step_%s.png",
 						loraList.get(0).getWeight(), rescale.name(), loraList.get(0).name(), samplerName, getKey(),
-						steps);
+						prompt.getSteps());
 			}
 		} else {
 			identifyName = String.format("weight_%.1f %s TextualInversion_%s sample_%s step_%s.png",
 					textualInversionList.get(0).getWeight(), getKey(), textualInversionList.get(0).name(), samplerName,
-					steps);
+					prompt.getSteps());
 		}
 		return identifyName;
 	}

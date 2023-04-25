@@ -2,7 +2,7 @@ package webui.dto.enumration;
 
 public enum Rescale {
 	// @formatter:off
-	Latent("Latent"), 
+	LATENT("Latent"), 
 	LATENT_ANTIALIASED("Latent (antialiased)"),
 	LATENT_BICUBIC("Latent (bicubic)"),
 	LATENT_BICUBIC_ANTIALIASED("Latent (bicubic antialiased)"), 

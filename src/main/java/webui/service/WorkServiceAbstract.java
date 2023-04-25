@@ -162,12 +162,8 @@ public abstract class WorkServiceAbstract {
 		playRecordDTO.setPrompt(prompt);
 		playRecordDTO.setCheckPoint(checkPoint);
 		playRecordDTO.setSamplerName(sampleName);
-		playRecordDTO.getLoraList().addAll(loraList);
+		playRecordDTO.setLoraList(loraList);
 		playRecordDTO.getTextualInversionList().add(textualInversion);
-		playRecordDTO.setRescale(rescale);
-		playRecordDTO.setSteps(step);
-		playRecordDTO.setDenoising(0.7f);
-		playRecordDTO.setHiresFixTimes(0);
 		for (int i = 0; i < batch; i++) {
 			log.info("txt2img {}:{} {}", checkPoint.name(), i, sampleName.name());
 			String filename = doPost2(playRecordDTO);

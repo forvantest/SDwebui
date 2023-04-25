@@ -22,12 +22,11 @@ import webui.dto.enumration.TextualInversion;
 public class WorkService extends WorkServiceAbstract {
 
 	public void txt2img_main() {
-		for (int i = 0; i < 10000; i++) {
+		modelService.loadModel();
+		for (int i = 0; i < 1; i++) {
 			long time1, time2;
 
 			time1 = System.currentTimeMillis();
-
-			modelService.loadModel();
 
 //			txt2img_main_sub1();
 			txt2img_main_sub();
@@ -53,7 +52,7 @@ public class WorkService extends WorkServiceAbstract {
 		String targetDir = "default\\";
 //		Set<CheckPoint> myCheckPoint = CheckPoint.getBy(CheckPointType.LEGEND);
 		Set<CheckPoint> myCheckPoint = Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX);
-		List<Lora> myLora = Arrays.asList(Lora.CUTEGIRLMIX4_V10.initWeight(0.4f));
+		List<Lora> myLora = Arrays.asList(Lora.CUTEGIRLMIX4_V10.initWeight(0.4f) );
 		TextualInversion textualInversion = null;// TextualInversion.ULZZANG.initWeight(0.0f);
 		Set<Rescale> myRescale = Sets.newHashSet(Rescale.values());
 

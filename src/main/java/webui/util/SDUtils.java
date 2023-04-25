@@ -35,8 +35,8 @@ public class SDUtils {
 		}
 		dataList.add(sb.toString());// 1
 		dataList.add(playRecordDTO.getPrompt().getNegative());// 2
-		dataList.add(Arrays.asList(model));// 3
-		dataList.add(playRecordDTO.getSteps());// 4
+		dataList.add(new ArrayList<>());// 3
+		dataList.add(playRecordDTO.getPrompt().getSteps());// 4
 		dataList.add(playRecordDTO.getSamplerName().getOpCode());// 5
 		dataList.add(txt2ImgDTO.getRestore_faces());// 6
 		dataList.add(txt2ImgDTO.getTiling());// 7
@@ -54,11 +54,11 @@ public class SDUtils {
 		dataList.add(false);// 19
 		dataList.add(0);// 20
 		dataList.add(2);// 21
-		dataList.add(playRecordDTO.getRescale().getRescaleDesc());// 22
+		dataList.add(playRecordDTO.getPrompt().getRescale().getRescaleDesc());// 22
 		dataList.add(0);// 23
 		dataList.add(0);// 24
 		dataList.add(0);// 25
-		dataList.add(new ArrayList<>());// 26
+		dataList.add(Arrays.asList(model));// 26
 		dataList.add("None");// 27
 		dataList.add(playRecordDTO.getLoRA());// 28
 		dataList.add(playRecordDTO.getSepeNet());// 29
@@ -138,9 +138,9 @@ public class SDUtils {
 		// dataList.set(17, 512);// 17
 		// dataList.set(18, 384);// 18
 		dataList.set(19, true);// 19
-		dataList.set(20, playRecordDTO.getDenoising());// 20
+		dataList.set(20, playRecordDTO.getPrompt().getDenoising());// 20
 		dataList.set(21, 2);// 21
-		dataList.set(22, playRecordDTO.getRescale().getRescaleDesc());// 22
-		dataList.set(23, playRecordDTO.getHiresFixTimes());// 23
+		dataList.set(22, playRecordDTO.getPrompt().getRescale().getRescaleDesc());// 22
+		dataList.set(23, playRecordDTO.getPrompt().getHiresFixTimes());// 23
 	}
 }

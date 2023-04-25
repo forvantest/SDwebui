@@ -63,7 +63,7 @@ public enum Lora {
 	REALISTICVAGINASWET_WETPUSSYGROOL("realisticVaginasWet_wetpussygrool.safetensors",LoraType.PUSSY),
 	REALSPREADPUSSY_SPPSPREADPUSSYV3("realSpreadPussy_sppSpreadpussyV3.safetensors",LoraType.PUSSY),
 	REALSPREADPUSSY_SPPSPREADPUSSYWV1("realSpreadPussy_sppSpreadpussyWV1.safetensors",LoraType.PUSSY),
-	SAMDOESARTSSAMYANG_OFFSET("samdoesartsSamYang_offset.safetensors",LoraType.BETTER), 
+	SAMDOESARTSSAMYANG_OFFSETRIGHTFILESIZE("samdoesartsSamYang_offsetRightFilesize.safetensors",LoraType.BETTER), 
 	SHOJOVIBE_V11("shojovibe_v11.safetensors",LoraType.AV),
 	SOPHONJAPENESEGIRL_SOPHONV12("sophonJapeneseGirl_sophonV12.safetensors",LoraType.AV),
 //	SPREADPUSSY_V11("spreadPussy_v11.safetensors",LoraType.PUSSY), 

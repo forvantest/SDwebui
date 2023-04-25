@@ -5,6 +5,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public enum CheckPoint {
 	// @formatter:off
 	_2GUOFENG2_V20(14, "2Guofeng2_v20.safetensors",CheckPointType.LEGEND),
@@ -140,9 +143,10 @@ public enum CheckPoint {
 
 	public static CheckPoint findByFilename(String filename2) {
 		for (CheckPoint checkPoint : CheckPoint.values()) {
-			if (checkPoint.getFilename().equals(filename2))
+			if (checkPoint.getFilename().startsWith(filename2))
 				return checkPoint;
 		}
+		log.warn("---failed match CheckPoint:{} " , filename2);
 		return null;
 	}
 

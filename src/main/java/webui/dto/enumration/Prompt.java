@@ -16,7 +16,8 @@ public enum Prompt {
 			Sets.newHashSet(CheckPoint.V08_V08, CheckPoint.CHIKMIX_V2, CheckPoint.YORRRLMIX_V21,
 					CheckPoint.FANTASTICMIXREAL_V10, CheckPoint.KOREANSTYLE25D_KOREANSTYLE25DBAKED,
 					CheckPoint.PERFECTWORLD_V2BAKED, CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX, CheckPoint.REALDOSMIX_,
-					CheckPoint._2GUOFENG2_V20, CheckPoint._3GUOFENG3_V32LIGHT),null),
+					CheckPoint._2GUOFENG2_V20, CheckPoint._3GUOFENG3_V32LIGHT),
+			1354857510, Rescale.LATENT, 35, 0.7f, 0),
 
 	PORN_AFTER(
 			"ultra realistic 8k cg, picture-perfect face, flawless, masterpiece, professional artwork, famous artwork,"
@@ -28,7 +29,7 @@ public enum Prompt {
 			"(worst quality, low quality:1.3), simple background, logo, watermark, text, (fused fingers), (too many fingers),crossed fingers,"
 					+ "((multiple anus:1.5)), prolapse, (low quality, worst quality:1.4),(bad_prompt_version2:0.8), (monochrome:1.1), extra fingers,blurry,"
 					+ " ((bad anatomy)), (((bad proportions))),loli, child, (low quality, worst quality:1.4),(bad_prompt_version2:0.8), (monochrome:1.1)",
-			768, 1024, Sets.newHashSet(),null),
+			768, 1024, Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),
 	PORN_SHOW(
 			"best quality, masterpiece, upper body,extremely detailed 8K wallpaper, {an extremely delicate and beautiful},"
 					+ "colorful,intricate detail,artbook,highly detailed,lying, legs up,spread anus, (gaping pussy:1.2),(A gaping ass:1.2),12-year-old girl,"
@@ -36,7 +37,7 @@ public enum Prompt {
 			"(low quality, worst quality:1.4),(bad_prompt:0.8), (monochrome:1.1),Thick lips,penis,Multiple asshole,macropenis,Two vulvas,man,semen,"
 					+ "extra limbs,duplicate, multiple anal,missing toes,deformed legs,deformed legs,missing toes,extra legs,(((canvas frame))), "
 					+ "cartoon, 3d, ((disfigured))",
-			512, 512, Sets.newHashSet(),null),
+			512, 512, Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),
 	PORN_SPREAD(
 			"picture-perfect face, flawless, clean, masterpiece, professional artwork, famous artwork, cinematic lighting, cinematic bloom, "
 					+ "perfect face, beautiful face, beautiful eyes, ((perfect female body)), divine, goddess, godlike, fantasy, dreamlike, unreal, "
@@ -45,7 +46,7 @@ public enum Prompt {
 			"watermark, text, error, blurry, jpeg artifacts, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, username, "
 					+ "artist name, (worst quality, low quality:1.4), ((bad anatomy)), signature, text, logo,contact, ((extra limbs)), Six fingers,"
 					+ "Low quality fingers,EasyNegative:0.5,monochrome:1.5, easynegative,",
-			512, 512, Sets.newHashSet(),null),
+			512, 512, Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),
 
 	PORN_BACK(
 			"picture-perfect face, flawless, clean, masterpiece, professional artwork, famous artwork, cinematic lighting, cinematic bloom, "
@@ -55,7 +56,7 @@ public enum Prompt {
 			"watermark, text, error, blurry, jpeg artifacts, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, username, "
 					+ "artist name, (worst quality, low quality:1.4), ((bad anatomy)), signature, text, logo,contact, ((extra limbs)), Six fingers,"
 					+ "Low quality fingers,EasyNegative:0.5,monochrome:1.5, easynegative,",
-			640, 360, Sets.newHashSet(),null),
+			640, 360, Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),
 
 	PORN_SQUAT(
 			"masterpiece, best quality, realistic, extremely intricate, exquisitely detailed, ((cum in pussy)), juicy pussy, flawless, clean, "
@@ -66,11 +67,11 @@ public enum Prompt {
 					+ " drooling, busty, (stationary restraints:1.3), (suspension:1.3), arms behind back, frame binder,"
 					+ " K pop idol, Korean mixed",
 			"(worst quality, low quality:1.4), penis, EasyNegative, signature, words, futanari", 640, 360,
-			Sets.newHashSet(),null),
+			Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),
 
 	PORN_SIT("absurdres, 1girl, 1boy, blonde hair, vaginal, sex, (cowgirl position:1.1), penis",
 			"Negative prompt: (worst quality:1.2), (low quality:1.2), (lowres:1.1), (monochrome:1.1), (greyscale), multiple views, comic, sketch",
-			512, 512, Sets.newHashSet(),null),
+			512, 512, Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),
 
 	PORN_GIRL1(
 			"(8k, RAW photo, best quality, masterpiece:1.2), 1girl, (light brown cardigan),checkered_skirt,white beret,black sailor_shirt, ((skinny)), "
@@ -82,7 +83,7 @@ public enum Prompt {
 					+ " bed, side lighting, high contrast, sexy lingeries,<lora:koreanDollLikeness_v15:0.6>,<lora:Taiwan-doll-likeness:0.15>,",
 			"paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)),"
 					+ " skin spots, acnes, skin blemishes, age spot, glans",
-			512, 768, Sets.newHashSet(),null),
+			512, 768, Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),
 	PORN_GIRL2(
 			"1 girl having sex with 1 man, (sharp focus:1.4), (smile:1.1), (realistic humid skin:1.4), (beautiful face:1.1), detailed eyes,sweet,slime girl,high heels, "
 					+ "detailed face, (curvy body:0.8), (long black ponytail hair:1.2), bangs, depth of field, nude, naked, best quality, ultra high res, "
@@ -91,7 +92,7 @@ public enum Prompt {
 					+ "((5 fingers)), hetero, ((1girl above 1man)), ((1man below 1girl)), (((cowgirl position))), (straddling), luxury hotel, ((suite room)), "
 					+ "bed, side lighting, high contrast, sexy lingeries ",
 			"((blurry)), animated, cartoon, duplicate, child, childish, paintings, sketches", 512, 768,
-			Sets.newHashSet(),null),
+			Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),
 	PORN_GIRL3(
 			"1 girl having sex with 1 man, (sharp focus:1.4), (realistic humid skin:1.4), (beautiful face:1.1), detailed eyes,sweet,slime girl,high heels, "
 					+ "(curvy body:0.8),  depth of field,   best quality, ultra high res, "
@@ -106,7 +107,7 @@ public enum Prompt {
 					+ "bed, side lighting, high contrast, sexy lingeries,<lora:koreanDollLikeness_v15:0.15>,<lora:taiwanDollLikeness_v10:0.4>",
 			"((blurry)), animated, cartoon, duplicate, paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, "
 					+ "normal quality, ((monochrome)), ((grayscale)),skin spots, acnes, skin blemishes, age spot, glans",
-			512, 768, Sets.newHashSet(),null),
+			512, 768, Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),
 	PORN_GIRL4(
 			"1 girl having sex with 1 man, (sharp focus:1.4), (realistic humid skin:1.4),sweet,slime girl,high heels,((legs spread on cock)), "
 					+ "((super wet skin)), (moaning), ((Sexual intercourse)), "
@@ -118,80 +119,80 @@ public enum Prompt {
 					+ "horny, (Kpop idol),  doggystyle, perfect hand ",
 			"paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, "
 					+ "acnes, skin blemishes, age spot, glans,",
-			512, 768, Sets.newHashSet(),null),
+			512, 768, Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),
 	PORN_GIRL5("very attractive Beautiful nude 18 years old girl, shy smile , lying in bed, (((full body))) "
 			+ "(((bukkake))):1.6, (((creampie))):1.9, (((she is having anal sex with long dildo))):1.9, "
 			+ "(((she is having vaginal sex with long dildo))):1.9, (((dildo penetrating wet anus))):1.7, "
-			+ "((huge amount of dripping sperm inside pussy)):1.7, (((anus exposed))), (((bukkake))):1.6, "
-			+ "((huge amount of dripping sperm on legs and belly))1.7, virgin, spreading legs, legs up, "
-			+ "perfect pussy, angelic woman, (acne:0.4),(perfect breast), (((hands behind head)))1.7, nsfw, "
-			+ "8k, GIRL,high heels,((( PERFECT FACE))), DETAILED PUPILS, ,FEMININE, (HIGH DETAIL), LONG HAIR, best quality, "
+			+ "(((dildo penetrating wet vagina))):1.7, ((huge amount of dripping sperm inside pussy)):1.7, "
+			+ "(((anus exposed))), (((bukkake))):1.6, ((huge amount of dripping sperm on legs and belly))1.7, "
+			+ "virgin, spreading legs, legs up, perfect pussy, angelic woman, skin pores, freckles, (skin pores:0.3), "
+			+ "(freckles:0.6), (acne:0.4),(perfect breast),nsfw, 8k, GIRL,(((hands behind head)))1.7,"
+			+ "((( PERFECT FACE))), DETAILED PUPILS, ,FEMININE, (HIGH DETAIL), LONG HAIR, best quality, "
 			+ "full body,high quality, realistic lighting, symmetrical natural eyes, fascinating makeup, "
 			+ "long legs, pale skin, stunning lady, sensual mouth, natural eyes, beautiful realistic face, "
 			+ "glamour photo, vogue style, RAW, high detail, sharp focus, smooth, aesthetic, extremely detailed, "
 			+ "photo_\\(ultra\\), photorealistic, realistic, post-processing, max detail, roughness, real life, "
-			+ "ultra realistic, photorealism, photography, 8k uhd, photography, perfect hands, nipples, french manicure, "
-			+ "(big breasts, pink nipples:1.2) ",
+			+ "ultra realistic, photorealism, photography, 8k uhd, photography, perfect hands, nipples, "
+			+ "french manicure, (big breasts, pink nipples:1.2), ",
 			"pubic hair not visible, animal ears, large breasts, large boobs, text, logo, "
-					+ "((big hands, un-detailed skin, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime)), "
-					+ "((ugly mouth, ugly eyes, missing teeth, crooked teeth, close up, cropped, out of frame)), "
-					+ "worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, "
-					+ "mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, "
-					+ "bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, "
-					+ "malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, "
-					+ "long neck,(more than two arm per body:1.5), (more than two leg per body:1.5), "
-					+ "(more than five fingers on one hand:1.5), multi arms, multi legs, bad arm anatomy, bad leg anatomy, "
-					+ "bad hand anatomy, bad finger anatomy, bad detailed background, unclear architectural outline, "
-					+ "non-linear background, elf-ears, hair crosses the screen border, obesity, fat, lowres, worst quality, "
-					+ "low quality, blurry, mutated hands and fingers, disfigured, fused, cloned, duplicate, artist name, "
-					+ "giantess, odd eyes, long fingers, long neck, watermarked ",
-			496, 784, Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX),1354857510),
+			+ "((big hands, un-detailed skin, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime)), "
+			+ "((ugly mouth, ugly eyes, missing teeth, crooked teeth, close up, cropped, out of frame)), "
+			+ "worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, "
+			+ "mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, "
+			+ "bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, "
+			+ "malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, "
+			+ "too many fingers, long neck,(more than two arm per body:1.5), (more than two leg per body:1.5), "
+			+ "(more than five fingers on one hand:1.5), multi arms, multi legs, bad arm anatomy, bad leg anatomy, "
+			+ "bad hand anatomy, bad finger anatomy, bad detailed background, unclear architectural outline, "
+			+ "non-linear background, elf-ears, hair crosses the screen border, obesity, fat, lowres, worst quality, "
+			+ "low quality, blurry, mutated hands and fingers, disfigured, fused, cloned, duplicate, "
+			+ "artist name, giantess, odd eyes, long fingers, long neck, watermarked ",
+			496, 784, Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX), 1354857510, Rescale.LATENT, 20, 0.7f, 0),
 
 	PORN_GIRL6("nsfw, masterpiece, best quality, realistic, 1girl, high heels, " + "((legs spread on cock)) ",
-			"(bad-artist:0.7), (worst quality, low quality:1.4),anal ", 512, 768, Sets.newHashSet(),null),
+			"(bad-artist:0.7), (worst quality, low quality:1.4),anal ", 512, 768, Sets.newHashSet(), 1354857510,
+			Rescale.LATENT, 35, 0.7f, 0),
 	PORN_GIRL7(
 			"nsfw, masterpiece, best quality, realistic, 1girl, high heels, pussy view, ((legs spread on cock)), "
 					+ "pussy juice, sweat, pussy peek, pussy juice puddle, pussy juice trail ",
 			"(bad-artist:0.7), (worst quality, low quality:1.4),anal,age spot, lowres, bad anatomy, "
 					+ "bad thigh gap, extra legs, futa with female,futanari, long face, missing arms, extra arm ",
-			512, 768, Sets.newHashSet(),null),
-	
-	PORN_NURSE(
-			"nsfw,angel_all_suit, 1girl, realistic, a 18 year old girl, young girl, (blonde hair:1.2), black eyes, "
+			512, 768, Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),
+
+	PORN_NURSE("nsfw,angel_all_suit, 1girl, realistic, a 18 year old girl, young girl, (blonde hair:1.2), black eyes, "
 			+ "puffy eyes, round face,short hair, smile, looking at viewer, cafe, short hair, shiny skin, "
 			+ "garter belt, detailed face, from front, detailed eyes, soft lights, masterpiece, "
 			+ "highly detailed, best quality, 8K, ultra high resolution, ultra-detailed, photorealistic, an extremely delicate and beautiful, "
 			+ "cityscape, night, rain, wet, full body, blurry, (hotel room:1.2), on bed, <lora:doasHealerAngelOf_v10:0.8> ",
 			"EasyNegative, paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), "
-			+ "((grayscale)), skin spots, acnes, skin blemishes, age spot, glans,extra fingers,fewer fingers,strange fingers,bad hand, bad leg, "
-			+ "bad hands, bad eyes, extra leg, extra hand , extra foot, rock, palm tree, beach, day, muscle ",
-			512, 512, Sets.newHashSet(),null),
+					+ "((grayscale)), skin spots, acnes, skin blemishes, age spot, glans,extra fingers,fewer fingers,strange fingers,bad hand, bad leg, "
+					+ "bad hands, bad eyes, extra leg, extra hand , extra foot, rock, palm tree, beach, day, muscle ",
+			512, 512, Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),
 	BEST_NURSE(
 			"delicate, masterpiece, beautiful detailed,nsfw, high heels,naked,full body, colourful, finely detailed, intricate details,detailed lips,"
-			+ "elegance,pornography,doggystyle, (1 girl:1.1), (a beautiful 22 age years old sexy Korean girl:1.2), (kpop idol, korean mixed), "
-			+ "(hair+tied up:1.3),(large breast:1.1), "
-			+ "(photorealistic:0.8),sunshine,(sexy nurse, nurse cap :1.2),happy smile,earrings, <lora:Lora_v10:0.6>, ",
+					+ "elegance,pornography,doggystyle, (1 girl:1.1), (a beautiful 22 age years old sexy Korean girl:1.2), (kpop idol, korean mixed), "
+					+ "(hair+tied up:1.3),(large breast:1.1), "
+					+ "(photorealistic:0.8),sunshine,(sexy nurse, nurse cap :1.2),happy smile,earrings, <lora:Lora_v10:0.6>, ",
 			" paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), "
-			+ "((grayscale)), skin spots, acnes, skin blemishes, age spot, manboobs, backlight, glasses, panty, anime, cartoon, drawing, "
-			+ "illustration, boring, out of frame, extra fingers, mutated hands, monochrome, ((poorly drawn hands)), "
-			+ "((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), "
-			+ "((extra limbs)), cloned face, glitchy, bokeh, (((long neck))), ((flat chested)), red eyes, extra heads, close up, "
-			+ "text ,watermarks, logo ",
-			512, 512, Sets.newHashSet(),null),
-	PORN_DOGGY(
-			"(masterpiece:1.0), (best quality:1.0), ((ultra realistic:1.0)), ((detailed:1.0)), (pov:1.0), "
+					+ "((grayscale)), skin spots, acnes, skin blemishes, age spot, manboobs, backlight, glasses, panty, anime, cartoon, drawing, "
+					+ "illustration, boring, out of frame, extra fingers, mutated hands, monochrome, ((poorly drawn hands)), "
+					+ "((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), "
+					+ "((extra limbs)), cloned face, glitchy, bokeh, (((long neck))), ((flat chested)), red eyes, extra heads, close up, "
+					+ "text ,watermarks, logo ",
+			512, 512, Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),
+	PORN_DOGGY("(masterpiece:1.0), (best quality:1.0), ((ultra realistic:1.0)), ((detailed:1.0)), (pov:1.0), "
 			+ "(black hair:1.0), ((bursting large breasts:1.0)), round hips, narrow waist, (fluid long hair:1.0), "
 			+ "(athletic:1.0), cleavage, skindentation , .((slim legs)), orgasm, ((midriff)), nipples, ((nude)), "
 			+ "(((beautiful face))), (bare thigh), (bare shoulders),nsfw,high heels,on bed, ((cum on body)), ((gorgeous hanfu)), "
 			+ "(1girl, 1boy, sex , from behind),breast grab, grabbing from behind, ",
 			" reyscale, monochrome, lowres,bad anatomy, bad proportions, bad hands, multiple arms, multiple legs, "
-			+ "deformed, text, error, missing fingers, extra fingers, extra digit, extra limb, extra nipple, "
-			+ "extra breast, missing limb, floating limbs, disconnected limbs, severed, dismembered, corpse, "
-			+ "malformed hands, long neck, long body, fewer digits, deformed, disfigured, amputee, mutated, "
-			+ "mutation, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, "
-			+ "watermark, username, blurry, artist name, censored, fat, long body, poorly drawn face, "
-			+ "futanari,2girl,3girl,pubic hair, anal, ",
-			512, 512, Sets.newHashSet(),null),;
+					+ "deformed, text, error, missing fingers, extra fingers, extra digit, extra limb, extra nipple, "
+					+ "extra breast, missing limb, floating limbs, disconnected limbs, severed, dismembered, corpse, "
+					+ "malformed hands, long neck, long body, fewer digits, deformed, disfigured, amputee, mutated, "
+					+ "mutation, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, "
+					+ "watermark, username, blurry, artist name, censored, fat, long body, poorly drawn face, "
+					+ "futanari,2girl,3girl,pubic hair, anal, ",
+			512, 512, Sets.newHashSet(), 1354857510, Rescale.LATENT, 35, 0.7f, 0),;
 
 	private String positive;
 	private String negative;
@@ -199,14 +200,23 @@ public enum Prompt {
 	private Integer height;
 	private Set<CheckPoint> checkPointSet;
 	private Integer seed;
+	private Rescale rescale = Rescale.None;
+	private Integer steps = 35;
+	private Float denoising = 0.7f;
+	private Integer hiresFixTimes = 0;
 
-	Prompt(String positive, String negative, Integer width, Integer height, Set<CheckPoint> checkPointSet, Integer seed) {
+	Prompt(String positive, String negative, Integer width, Integer height, Set<CheckPoint> checkPointSet, Integer seed,
+			Rescale rescale, Integer steps, Float denoising, Integer hiresFixTimes) {
 		this.positive = positive;
 		this.negative = negative;
 		this.width = width;
 		this.height = height;
 		this.checkPointSet = checkPointSet;
 		this.seed = seed;
+		this.rescale = rescale;
+		this.steps = steps;
+		this.denoising = denoising;
+		this.hiresFixTimes = hiresFixTimes;
 	}
 
 	public String getPositive() {
@@ -243,6 +253,38 @@ public enum Prompt {
 
 	public void setSeed(Integer seed) {
 		this.seed = seed;
+	}
+
+	public Rescale getRescale() {
+		return rescale;
+	}
+
+	public void setRescale(Rescale rescale) {
+		this.rescale = rescale;
+	}
+
+	public Integer getSteps() {
+		return steps;
+	}
+
+	public void setSteps(Integer steps) {
+		this.steps = steps;
+	}
+
+	public Float getDenoising() {
+		return denoising;
+	}
+
+	public void setDenoising(Float denoising) {
+		this.denoising = denoising;
+	}
+
+	public Integer getHiresFixTimes() {
+		return hiresFixTimes;
+	}
+
+	public void setHiresFixTimes(Integer hiresFixTimes) {
+		this.hiresFixTimes = hiresFixTimes;
 	}
 
 }
