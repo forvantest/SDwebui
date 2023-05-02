@@ -18,8 +18,6 @@ public class MapperUtils {
 	@Autowired
 	public ObjectMapper objectMapper;
 
-	
-
 	public boolean usefull(String key) {
 		if (StringUtils.endsWith(key, ":"))
 			return false;
@@ -41,8 +39,8 @@ public class MapperUtils {
 	public PlayRecord convertPlayRecord(PlayRecordDTO playRecordDTO) {
 		PlayRecord playRecord = new PlayRecord();
 		BeanUtils.copyProperties(playRecordDTO, playRecord);
-		playRecord.setPrompt(playRecordDTO.getPrompt().getPositive());
-		playRecord.setNegative_prompt(playRecordDTO.getPrompt().getNegative());
+		playRecord.setPrompt(playRecordDTO.getPrompt());
+		playRecord.setNegative_prompt(playRecordDTO.getNegative_prompt());
 		playRecord.setTask(findTask(playRecordDTO.getFilename()));
 		playRecord.setCheckPoint(playRecordDTO.getCheckPoint().getFilename());
 		playRecord.setSampler_name(playRecordDTO.getSamplerName().getOpCode());

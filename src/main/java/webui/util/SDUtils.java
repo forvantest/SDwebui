@@ -11,19 +11,18 @@ import lombok.extern.slf4j.Slf4j;
 import webui.dto.LoraDTO;
 import webui.dto.OutputFileDTO;
 import webui.dto.PlayRecordDTO;
-import webui.dto.Txt2ImgDTO;
 import webui.dto.enumration.Lora;
+import webui.service.ModelService;
 
 @Slf4j
 @Component
 public class SDUtils {
-	public static List<Object> toDataList(int batch, int batch_amount, PlayRecordDTO playRecordDTO,
-			Txt2ImgDTO txt2ImgDTO, String model) {
+	public static List<Object> toDataList(int batch, int batch_amount, PlayRecordDTO playRecordDTO) {
 		List<Object> dataList = new ArrayList<>();
 		dataList.add("task(dob24x4iiky9vcv)");// 0
 
 		StringBuffer sb = new StringBuffer();
-		sb.append(playRecordDTO.getPrompt().getPositive());
+		sb.append(playRecordDTO.getPrompt());
 //		if (playRecordDTO.changeLoraWeight) {
 		for (Lora lora : playRecordDTO.getLoraList()) {
 			sb.append(lora.appendLora());
@@ -34,16 +33,16 @@ public class SDUtils {
 			}
 		}
 		dataList.add(sb.toString());// 1
-		dataList.add(playRecordDTO.getPrompt().getNegative());// 2
+		dataList.add(playRecordDTO.getNegative_prompt());// 2
 		dataList.add(new ArrayList<>());// 3
-		dataList.add(playRecordDTO.getPrompt().getSteps());// 4
+		dataList.add(playRecordDTO.getSteps());// 4
 		dataList.add(playRecordDTO.getSamplerName().getOpCode());// 5
-		dataList.add(txt2ImgDTO.getRestore_faces());// 6
-		dataList.add(txt2ImgDTO.getTiling());// 7
+		dataList.add(false);// 6
+		dataList.add(false);// 7
 		dataList.add(batch);// 8
 		dataList.add(batch_amount);// 9
 		dataList.add(playRecordDTO.getCfg_scale());// 10
-		dataList.add(playRecordDTO.getPrompt().getSeed() == null ? -1 : playRecordDTO.getPrompt().getSeed());// 11
+		dataList.add(playRecordDTO.getSeed() == null ? -1 : playRecordDTO.getSeed());// 11
 		dataList.add(playRecordDTO.getN_iter());// 12
 		dataList.add(0);// 13
 		dataList.add(0);// 14
@@ -54,17 +53,17 @@ public class SDUtils {
 		dataList.add(false);// 19
 		dataList.add(0);// 20
 		dataList.add(2);// 21
-		dataList.add(playRecordDTO.getPrompt().getRescale().getRescaleDesc());// 22
+		dataList.add(playRecordDTO.getRescale().getRescaleDesc());// 22
 		dataList.add(0);// 23
 		dataList.add(0);// 24
 		dataList.add(0);// 25
-		dataList.add(Arrays.asList(model));// 26
+		dataList.add(Arrays.asList(ModelService.getModel(playRecordDTO.getCheckPoint())));// 26
 		dataList.add("None");// 27
 		dataList.add(playRecordDTO.getLoRA());// 28
 		dataList.add(playRecordDTO.getSepeNet());// 29
 
 		for (int i = 0; i < 5; i++) {
-			LoraDTO loraDTO = playRecordDTO.getLoraDTOList().get(i);
+			LoraDTO loraDTO = myLoraList(playRecordDTO.getLoraDTOList(), i);
 			dataList.addAll(loraDTO.pack());// 29
 		}
 
@@ -133,14 +132,22 @@ public class SDUtils {
 
 	}
 
+	private static LoraDTO myLoraList(List<LoraDTO> loraDTOList, int i) {
+		try {
+			return loraDTOList.get(i);
+		} catch (Exception ex) {
+			return new LoraDTO();
+		}
+	}
+
 	public static void appendHiRES(List<Object> dataList, PlayRecordDTO playRecordDTO) {
 		dataList.set(16, false);// 16
 		// dataList.set(17, 512);// 17
 		// dataList.set(18, 384);// 18
 		dataList.set(19, true);// 19
-		dataList.set(20, playRecordDTO.getPrompt().getDenoising());// 20
-		dataList.set(21, 2);// 21
-		dataList.set(22, playRecordDTO.getPrompt().getRescale().getRescaleDesc());// 22
-		dataList.set(23, playRecordDTO.getPrompt().getHiresFixTimes());// 23
+		dataList.set(20, playRecordDTO.getDenoising());// 20
+		dataList.set(21, playRecordDTO.getHires_upscale());// 21
+		dataList.set(22, playRecordDTO.getRescale().getRescaleDesc());// 22
+		dataList.set(23, playRecordDTO.getHiresFixTimes());// 23
 	}
 }

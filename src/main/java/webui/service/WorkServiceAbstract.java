@@ -53,6 +53,7 @@ import webui.dto.enumration.Prompt;
 import webui.dto.enumration.Rescale;
 import webui.dto.enumration.SampleName;
 import webui.dto.enumration.TextualInversion;
+import webui.dto.enumration.Vae;
 import webui.util.FileUtil;
 import webui.util.SDUtils;
 
@@ -156,46 +157,54 @@ public abstract class WorkServiceAbstract {
 		return null;
 	}
 
-	private PlayRecordDTO txt2img(Prompt prompt, List<Lora> loraList, TextualInversion textualInversion,
-			CheckPoint checkPoint, SampleName sampleName, Rescale rescale, int batch, Integer step) {
+	private PlayRecordDTO makePlayRecordDTO(String prompt, String Negative_prompt, List<Lora> loraList,
+			TextualInversion textualInversion, CheckPoint checkPoint, SampleName sampleName) {
 		PlayRecordDTO playRecordDTO = new PlayRecordDTO();
 		playRecordDTO.setPrompt(prompt);
+		playRecordDTO.setNegative_prompt(Negative_prompt);
 		playRecordDTO.setCheckPoint(checkPoint);
 		playRecordDTO.setSamplerName(sampleName);
 		playRecordDTO.setLoraList(loraList);
 		playRecordDTO.getTextualInversionList().add(textualInversion);
+		return playRecordDTO;
+	}
+
+	protected PlayRecordDTO txt2img(PlayRecordDTO playRecordDTO, int batch) {
 		for (int i = 0; i < batch; i++) {
-			log.info("txt2img {}:{} {}", checkPoint.name(), i, sampleName.name());
+			log.info("txt2img {}:{} {}", playRecordDTO.getCheckPoint().name(), i,
+					playRecordDTO.getSamplerName().name());
 			String filename = doPost2(playRecordDTO);
 			if (filename != null)
-				log.info("txt2img done {}:{} {}", checkPoint.name(), i, sampleName.name());
+				log.info("txt2img done {}:{} {}", playRecordDTO.getCheckPoint().name(), i,
+						playRecordDTO.getSamplerName().name());
 			else {
-				log.error("txt2img failed {}:{} {}", checkPoint.name(), i, sampleName.name());
+				log.error("txt2img failed {}:{} {}", playRecordDTO.getCheckPoint().name(), i,
+						playRecordDTO.getSamplerName().name());
 				return null;
 			}
 		}
 		return playRecordDTO;
 	}
 
-	private boolean txt2img2(Prompt prompt, CheckPoint checkPoint, SampleName sampleName, int batch) {
-		Txt2ImgDTO txt2ImgDTO = new Txt2ImgDTO();
-		txt2ImgDTO.setPrompt(prompt.getPositive());
-		txt2ImgDTO.setNegative_prompt(prompt.getNegative());
-		txt2ImgDTO.setSampler_name(sampleName.getOpCode());
-		txt2ImgDTO.setWidth(prompt.getWidth());
-		txt2ImgDTO.setHeight(prompt.getHeight());
-		for (int i = 0; i < batch; i++) {
-			log.info("txt2img {}:{} {}", checkPoint.name(), i, sampleName.name());
-			boolean result1 = doPost3(txt2ImgDTO);
-			if (result1)
-				log.info("txt2img done {}:{} {}", checkPoint.name(), i, sampleName.name());
-			else {
-				log.error("txt2img failed {}:{} {}", checkPoint.name(), i, sampleName.name());
-				return false;
-			}
-		}
-		return true;
-	}
+//	private boolean txt2img2(Prompt prompt, CheckPoint checkPoint, SampleName sampleName, int batch) {
+//		Txt2ImgDTO txt2ImgDTO = new Txt2ImgDTO();
+//		txt2ImgDTO.setPrompt(prompt.getPositive());
+//		txt2ImgDTO.setNegative_prompt(prompt.getNegative());
+//		txt2ImgDTO.setSampler_name(sampleName.getOpCode());
+//		txt2ImgDTO.setWidth(prompt.getWidth());
+//		txt2ImgDTO.setHeight(prompt.getHeight());
+//		for (int i = 0; i < batch; i++) {
+//			log.info("txt2img {}:{} {}", checkPoint.name(), i, sampleName.name());
+//			boolean result1 = doPost3(txt2ImgDTO);
+//			if (result1)
+//				log.info("txt2img done {}:{} {}", checkPoint.name(), i, sampleName.name());
+//			else {
+//				log.error("txt2img failed {}:{} {}", checkPoint.name(), i, sampleName.name());
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 
 	private boolean doPost3(Txt2ImgDTO txt2ImgDTO) {
 		ResponseEntity<String> rs = null;
@@ -226,11 +235,10 @@ public abstract class WorkServiceAbstract {
 
 	private String doPost2(PlayRecordDTO playRecordDTO) {
 		try {
-			Txt2ImgDTO txt2ImgDTO = new Txt2ImgDTO();
 			PredictDTO predict = new PredictDTO();
-			List<Object> objList = SDUtils.toDataList(1, 1, playRecordDTO, txt2ImgDTO,
-					ModelService.getModel(playRecordDTO.getCheckPoint()));
-			SDUtils.appendHiRES(objList, playRecordDTO);
+			List<Object> objList = SDUtils.toDataList(1, 1, playRecordDTO);
+			if (playRecordDTO.getHiresFix())
+				SDUtils.appendHiRES(objList, playRecordDTO);
 			predict.setData(objList);
 			String requestJSON = objectMapper.writeValueAsString(predict);
 			ResponseEntity<String> rs = callRestClientAPI(endpoint2, requestJSON, HttpMethod.POST);
@@ -257,19 +265,59 @@ public abstract class WorkServiceAbstract {
 		}
 	}
 
-	private void switchCheckPoint(CheckPoint checkPoint) {
+	protected void switchCheckPoint(CheckPoint checkPoint) {
 		if (checkPoint.equals(modelService.checkPointNow))
 			return;
 		modelService.checkPointNow = checkPoint;
-
+		log.warn("switchCheckPoint: {}", checkPoint);
 		List<Object> data = new ArrayList<>();
 		data.add(checkPoint.getFilename());
 		PredictDTO predict = new PredictDTO(641, data);
+		predict.setSession_hash("h9i4ycj51ig");
 		boolean result1 = doPost1(predict);
 
 		if (result1) {
 			data = new ArrayList<>();
-			predict = new PredictDTO(642, data);
+			predict = new PredictDTO(644, data);
+			predict.setSession_hash("h9i4ycj51ig");
+			boolean result2 = doPost1(predict);
+		}
+	}
+
+	protected void switchVae(Vae vae) {
+		if (vae==modelService.vae)
+			return;
+		modelService.vae = vae;
+		log.warn("switchVae: {}", vae);
+		List<Object> data = new ArrayList<>();
+		data.add(vae.getVaeDesc());
+		PredictDTO predict = new PredictDTO(642, data);
+		predict.setSession_hash("h9i4ycj51ig");
+		boolean result1 = doPost1(predict);
+
+		if (result1) {
+			data = new ArrayList<>();
+			predict = new PredictDTO(644, data);
+			predict.setSession_hash("h9i4ycj51ig");
+			boolean result2 = doPost1(predict);
+		}
+	}
+
+	protected void switchClipSkip(Integer clip_skip) {
+		if (clip_skip.equals(modelService.clip_skip))
+			return;
+		modelService.clip_skip = clip_skip;
+		log.warn("switchClipSkip: {}", clip_skip);
+		List<Object> data = new ArrayList<>();
+		data.add(clip_skip);
+		PredictDTO predict = new PredictDTO(643, data);
+		predict.setSession_hash("ty9xy1um1sl");
+		boolean result1 = doPost1(predict);
+
+		if (result1) {
+			data = new ArrayList<>();
+			predict = new PredictDTO(644, data);
+			predict.setSession_hash("ty9xy1um1sl");
 			boolean result2 = doPost1(predict);
 		}
 	}
@@ -331,11 +379,8 @@ public abstract class WorkServiceAbstract {
 				break;
 			log.info("{} {} {}/{}", seedDTO.getCheckPoint(), seedDTO.getLora(), i, total_size);
 
-			for (Rescale rescale : myRescale) {
-				txt2img_mainTask(seedDTO.getCheckPoint(), prompt,
-						Arrays.asList(seedDTO.getLora().initWeight(0.2f, 1.1f)), textualInversion, rescale, 20,
-						targetDir);// 影響不大
-			}
+			txt2img_mainTask(seedDTO.getCheckPoint(), prompt, Arrays.asList(seedDTO.getLora().initWeight(0.2f, 1.1f)),
+					textualInversion, targetDir);// 影響不大
 		}
 	}
 
@@ -409,7 +454,7 @@ public abstract class WorkServiceAbstract {
 		// Lora.MLEGGESTUREULTIMATE_V51, M_Leg 0.2
 		// Lora.STANDINGDOGGYSTYLE_V11A, 站立後背 0.2
 		for (Lora myLora : mySingleLora) {
-			txt2img2(Prompt.PORN_M_LEG, CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX, SampleName.DPM2_A, 1);
+//			txt2img2(Prompt.PORN_M_LEG, CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX, SampleName.DPM2_A, 1);
 
 //			txt2img_mainTask(Sets.newHashSet(CheckPoint.CHILLOUTMIX_NIPRUNEDFP32FIX), Prompt.PORN_M_LEG,
 //					Arrays.asList(myLora.initWeight(0.1f, 2.0f)), 20);// 影響不大
@@ -471,12 +516,12 @@ public abstract class WorkServiceAbstract {
 //	}
 
 	public void txt2img_mainTask(CheckPoint checkPoint, Prompt prompt, java.util.List<Lora> myLora,
-			TextualInversion textualInversion, Rescale rescale, Integer step, String targetDir) {
+			TextualInversion textualInversion, String targetDir) {
 		System.out.println("\n\n checkpoint: " + checkPoint.name());
 		switchCheckPoint(checkPoint);
 
 		for (int i = 0; i < 10000; i++) {
-			txt2img_mainTask_render(checkPoint, prompt, myLora, textualInversion, rescale, step, targetDir);
+			txt2img_mainTask_render(checkPoint, prompt, myLora, textualInversion, targetDir);
 			if (myLora.get(0).getWeightEnd() == null) {
 				break;
 			} else if (!nextWeight(myLora)) {
@@ -526,18 +571,19 @@ public abstract class WorkServiceAbstract {
 	}
 
 	public void txt2img_mainTask_render(CheckPoint checkPoint, Prompt prompt, List<Lora> loraList,
-			TextualInversion textualInversion, Rescale rescale, Integer step, String targetDir) {
+			TextualInversion textualInversion, String targetDir) {
 //		List<SampleName> mySample = Arrays.asList(SampleName.DPM_PLUS_SDE_KARRAS, SampleName.DPM_PLUS_2M_KARRAS,
 //				SampleName.DPM_PLUS_2S_A_KARRAS, SampleName.EULER_A);
 		List<SampleName> mySample = Arrays.asList(SampleName.DPM_PLUS_2M_KARRAS);
 		for (SampleName sampleName : mySample) {
-			PlayRecordDTO playRecordDTO = txt2img(prompt, loraList, textualInversion, checkPoint, sampleName, rescale,
-					1, step);
+			PlayRecordDTO playRecordDTO = makePlayRecordDTO(prompt.getPositive(), prompt.getNegative(), loraList,
+					textualInversion, checkPoint, sampleName);
+			txt2img(playRecordDTO, 1);
 			if (playRecordDTO == null) {
 				System.out.println("\n\n work failed!");
 				break;
 			} else {
-				FileUtil.moveFileTo(WEBUI_SOME_PATH + targetDir, playRecordDTO, rescale, "txt2img over");
+				FileUtil.moveFileTo(WEBUI_SOME_PATH + targetDir, playRecordDTO, "txt2img over");
 			}
 		}
 	}

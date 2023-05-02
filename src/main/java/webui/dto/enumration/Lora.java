@@ -72,7 +72,7 @@ public enum Lora {
 	TAIWANDOLLLIKENESS_V10("taiwanDollLikeness_v10.safetensors",LoraType.COUNTRY_IDOLL),
 	YAEMIKOREALISTIC_YAEMIKOMIXED("yaeMikoRealistic_yaemikoMixed.safetensors",LoraType.AV),
 	
-	NONE("",LoraType.NONE),
+	NONE("None",LoraType.NONE),
 	;
 	// @formatter:on
 	private LoraType loraType;
@@ -96,11 +96,15 @@ public enum Lora {
 		if (this == Lora.NONE)
 			return "";
 
-		String loraName = StringUtils.replace(filename, ".safetensors", "");
+		String loraName = getLoraName();
 		String loraWeight = String.format(",<lora:%s:%.1f>", loraName, weight);
 		return loraWeight;
 	}
-
+	
+	public String getLoraName() {
+		return StringUtils.replace(filename, ".safetensors", "");
+	}
+	
 	public Float getWeight() {
 		return weight;
 	}

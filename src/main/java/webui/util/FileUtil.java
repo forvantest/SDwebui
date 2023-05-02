@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import webui.dto.PlayRecordDTO;
-import webui.dto.enumration.Rescale;
 
 @Slf4j
 public class FileUtil {
@@ -185,13 +184,13 @@ public class FileUtil {
 		}
 	}
 
-	public static void moveFileTo(String WEBUI_SOME_PATH, PlayRecordDTO playRecordDTO, Rescale rescale, String reason) {
+	public static void moveFileTo(String WEBUI_SOME_PATH, PlayRecordDTO playRecordDTO, String reason) {
 		String outputDir = playRecordDTO.getOutputDir();
 		String srcPath = playRecordDTO.getFullpath();
 		Path sDir = Paths.get(srcPath);
 		String targetPath = WEBUI_SOME_PATH + outputDir + "\\";
 		FileUtil.checkFolderExist(targetPath);
-		Path tDir = Paths.get(targetPath, playRecordDTO.getIdentifyName(rescale));
+		Path tDir = Paths.get(targetPath, playRecordDTO.getIdentifyName());
 		if (!FileUtil.checkFileExist(srcPath)) {
 			System.out.println("\n--X--moving failed src not exist " + reason + ": " + srcPath);
 		} else if (!sDir.endsWith(tDir)) {

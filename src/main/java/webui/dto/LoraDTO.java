@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import webui.dto.enumration.Lora;
 
 @Slf4j
 @JsonInclude(Include.NON_NULL)
@@ -16,7 +17,7 @@ public class LoraDTO {
 
 	private String loraType = "LoRA";
 
-	private String loraName="None";
+	private Lora lora = Lora.NONE;
 
 	private Double uNet = 0d;
 
@@ -26,14 +27,14 @@ public class LoraDTO {
 		super();
 	}
 
-	public LoraDTO(String loraName) {
-		this.loraName = loraName;
+	public LoraDTO(Lora lora) {
+		this.lora = lora;
 	}
 
 	public List<Object> pack() {
 		List ay = new ArrayList<>();
 		ay.add(loraType);
-		ay.add(loraName);
+		ay.add(lora.getLoraName());
 		ay.add(uNet);
 		ay.add(textEncoder);
 		return ay;

@@ -1,5 +1,8 @@
 package webui.dto.enumration;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public enum Rescale {
 	// @formatter:off
 	LATENT("Latent"), 
@@ -12,12 +15,12 @@ public enum Rescale {
 	LANCZOS("Lanczos"), 
 	NEAREST("Nearest"), 
 	ESRGAN_4X("ESRGAN_4x"), 
+	R_ESRGAN_4X_PLUS("R-ESRGAN 4x+"), 
 //	LDSR("LDSR"), 
+	_4X_ULTRASHARP("4x-UltraSharp"), 
 	SWINIR_4X("SwinIR_4x"), 
 	;
 
-
-	
 	private String rescaleDesc;
 
 	// @formatter:on
@@ -32,6 +35,15 @@ public enum Rescale {
 
 	public void setRescaleDesc(String rescaleDesc) {
 		this.rescaleDesc = rescaleDesc;
+	}
+
+	public static Rescale getByUpscaler(String upscaler) {
+		for (Rescale rescale : values()) {
+			if (rescale.getRescaleDesc().equals(upscaler))
+				return rescale;
+		}
+		log.error("Rescale: {}", upscaler);
+		return null;
 	}
 
 }
