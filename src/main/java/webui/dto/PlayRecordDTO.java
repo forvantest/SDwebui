@@ -103,7 +103,7 @@ public class PlayRecordDTO implements Comparable {
 		this.Hires_upscale = myFloat(map.get("Hires upscale:"));
 		this.Hires_steps = myInteger(map.get("Hires steps:"));
 		this.rescale = Rescale.getByUpscaler(map.get("Hires upscaler:"));
-		if (Objects.nonNull(this.rescale))
+		if (this.rescale!=Rescale.None)
 			this.hiresFix = true;
 
 //		"AddNet Enabled:",

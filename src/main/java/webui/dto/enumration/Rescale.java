@@ -43,7 +43,7 @@ public enum Rescale {
 				return rescale;
 		}
 		log.error("Rescale: {}", upscaler);
-		return null;
+		return Rescale.None;
 	}
 
 }

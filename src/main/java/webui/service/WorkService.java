@@ -51,7 +51,7 @@ public class WorkService extends WorkServiceAbstract {
 	}
 
 	public void img2img_main() {
-		List<String> pngList = Arrays.asList("G5.png");
+		List<String> pngList = Arrays.asList("G14.png");
 		for (String png : pngList) {
 			img2img_task(png);
 		}
